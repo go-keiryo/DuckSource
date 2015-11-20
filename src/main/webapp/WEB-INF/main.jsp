@@ -10,21 +10,21 @@
     <meta name="viewport" content="initial-scale = 1.0, maximum-scale = 1.0, user-scalable = no, width = device-width">
 
     <!--[if lt IE 9]><script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" media="screen">
-    <!--[if lte IE 7]><link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.ie7.css" media="screen" /><![endif]-->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.responsive.css" media="all">
+    <link rel="stylesheet" href="<c:url value="/resources/css/style.css" />" media="screen">
+    <!--[if lte IE 7]><link rel="stylesheet" href="<c:url value="/resources/css/style.ie7.css" />" media="screen" /><![endif]-->
+    <link rel="stylesheet" href="<c:url value="/resources/css/style.responsive.css" />" media="all">
 
 
-    <script src="${pageContext.request.contextPath}/resources/js/jquery.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/script.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/script.responsive.js"></script>
+    <script src="<c:url value="/resources/js/jquery.js" />"></script>
+    <script src="<c:url value="/resources/js/script.js" />"></script>
+    <script src="<c:url value="/resources/js/script.responsive.js" />"></script>
 
 
 <style>.art-content .art-postcontent-0 .layout-item-0 { margin-bottom: 0px;  }
 .art-content .art-postcontent-0 .layout-item-1 { padding-right: 10px;padding-left: 10px;  }
 .art-content .art-postcontent-0 .layout-item-2 { border-top-style:solid;border-right-style:solid;border-bottom-style:solid;border-left-style:solid;border-width:0px;border-top-color:#B7C1C2;border-right-color:#B7C1C2;border-bottom-color:#B7C1C2;border-left-color:#B7C1C2; color: #363E3F; background: ; border-spacing: 5px 5px; border-collapse: separate; border-radius: 15px;  }
 .art-content .art-postcontent-0 .layout-item-3 { border-top-style:solid;border-right-style:solid;border-bottom-style:solid;border-left-style:solid;border-top-width:1px;border-right-width:1px;border-bottom-width:1px;border-left-width:1px;border-top-color:#B7C1C2;border-right-color:#B7C1C2;border-bottom-color:#B7C1C2;border-left-color:#B7C1C2; color: #363E3F; padding: 12px; border-radius: 10px;  }
-.art-content .art-postcontent-0 .layout-item-4 { border-top-style:solid;border-right-style:solid;border-bottom-style:solid;border-left-style:solid;border-top-width:1px;border-right-width:1px;border-bottom-width:1px;border-left-width:1px;border-top-color:#B7C1C2;border-right-color:#B7C1C2;border-bottom-color:#B7C1C2;border-left-color:#B7C1C2; color: #B5BEC0; background: #3D3D3D url('${pageContext.request.contextPath}/resources/images/67e7e.png') scroll; padding: 12px; border-radius: 10px;  }
+.art-content .art-postcontent-0 .layout-item-4 { border-top-style:solid;border-right-style:solid;border-bottom-style:solid;border-left-style:solid;border-top-width:1px;border-right-width:1px;border-bottom-width:1px;border-left-width:1px;border-top-color:#B7C1C2;border-right-color:#B7C1C2;border-bottom-color:#B7C1C2;border-left-color:#B7C1C2; color: #B5BEC0; background: #3D3D3D url('<c:url value='/resources/images/67e7e.png' />') scroll; padding: 12px; border-radius: 10px;  }
 .art-content .art-postcontent-0 .layout-item-5 { color: #000000; background: ; padding: 12px; border-radius: 10px;  }
 .ie7 .art-post .art-layout-cell {border:none !important; padding:0 !important; }
 .ie6 .art-post .art-layout-cell {border:none !important; padding:0 !important; }
@@ -103,7 +103,7 @@
                 			<span class="auto-style2">Status</span><br></td></tr><tr>
                 		<td style="border-width: 1px; text-align: center; " colspan="5"><span style="font-weight: bold; ">NO open opportunities to display </span><br></td></tr></tbody></table><p style="text-align: center; "><span style="border-collapse: collapse; -webkit-border-horizontal-spacing: 2px; -webkit-border-vertical-spacing: 2px; "><br></span></p><p><span style="font-weight: bold; color: #169CE3; "><br></span></p><p><span style="font-weight: bold; color: #169CE3; "><br></span></p><p><br></p><p><br></p>
     </div><div class="art-layout-cell layout-item-4" style="width: 24%" >
-        <img width="45" height="80" alt="" src="${pageContext.request.contextPath}/resources/images/medal.png" style="float: left; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; border-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<br><span style="font-size: 26px; font-variant: small-caps; font-weight: bold; line-height: 31px; color: #F4F5F6;">&nbsp; &nbsp; &nbsp;<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Reputation&nbsp;<br></span><p style="text-align: left;"><span style="font-weight: bold;">&nbsp; &nbsp;</span></p><p style="padding-left: 80px;"><span style="font-weight: bold;"><span style="font-family: 'Arial Black'; font-size: 16px;">&nbsp; &nbsp; &nbsp;# &nbsp; &nbsp; &nbsp;&nbsp;</span></span></p><p style="padding-left: 80px;"><span style="font-weight: bold; font-family: 'Arial Black'; font-size: 16px;">Points :</span></p><p>
+        <img width="45" height="80" alt="" src="<c:url value="/resources/images/medal.png" />"style="float: left; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; border-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<br><span style="font-size: 26px; font-variant: small-caps; font-weight: bold; line-height: 31px; color: #F4F5F6;">&nbsp; &nbsp; &nbsp;<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Reputation&nbsp;<br></span><p style="text-align: left;"><span style="font-weight: bold;">&nbsp; &nbsp;</span></p><p style="padding-left: 80px;"><span style="font-weight: bold;"><span style="font-family: 'Arial Black'; font-size: 16px;">&nbsp; &nbsp; &nbsp;# &nbsp; &nbsp; &nbsp;&nbsp;</span></span></p><p style="padding-left: 80px;"><span style="font-weight: bold; font-family: 'Arial Black'; font-size: 16px;">Points :</span></p><p>
         </p>
     </div>
     </div>
@@ -122,33 +122,33 @@
                 }
                         </style>
                        
-                        <h1><span style="font-weight: bold; color: #169CE3; "><span style="font-size: 28px; color: #000000; ">Current Offered Opportunities:</span><br></span></h1><br><table class="art-article" style="width: 100%; "><tbody>
+                        <h1><span style="font-weight: bold; color: #169CE3; "><span style="font-size: 28px; color: #000000; ">Current Offered Opportunities:</span><br></span></h1><br><table class="art-article" style="margin-bottom: 3px; margin-top: 3px; width: 75%; margin-right: auto; margin-left: auto;"><tbody>
 						<tr>
-							<th>ID</th>
-							<th>Title</th>
-							<th>DuckBill$</th>
-							<th>Register</th>
-							<th>Submit</th>
+							<th style="border-width: 1px; text-align: center; width: 12%; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">ID</th>
+							<th style="border-width: 1px; text-align: center; width: 12%; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Title</th>
+							<th style="border-width: 1px; text-align: center; width: 12%; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">DuckBill$</th>
+							<th style="border-width: 1px; text-align: center; width: 12%; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Register</th>
+							<th style="border-width: 1px; text-align: center; width: 12%; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Submit</th>
 						</tr>
 						<c:forEach var="o" items="${opportunties}">
 							<tr>
-								<td>${o.id}</td>
-								<td>${o.opportunityTitle}</td>
-								<td>
+								<td style="border-width: 1px; text-align: center;"><span style="font-weight: bold; ">${o.id}</span></td>
+								<td style="border-width: 1px; text-align: center;"><span style="font-weight: bold; ">${o.opportunityTitle} </span></td>
+								<td style="border-width: 1px; text-align: center;"><span style="font-weight: bold; ">
 									<fmt:setLocale value="en_US"/>
-									<fmt:formatNumber value="${o.duckbills}" type="currency"/>
+									<fmt:formatNumber value="${o.duckbills}" type="currency"/> </span>
 								</td>
-								<td>
+								<td style="border-width: 1px; text-align: center;">
 									<c:set var="regDate">
       									<fmt:formatDate pattern="MM/dd/yyyy" value="${o.registerDate}" />
    									</c:set>
-   									${regDate}
+   									<span style="font-weight: bold; ">${regDate}</span>
 								</td>
-								<td>
+								<td style="border-width: 1px; text-align: center;">
 									<c:set var="subDate">
       									<fmt:formatDate pattern="MM/dd/yyyy" value="${o.submitDate}" />
    									</c:set>
-   									${subDate}
+   									<span style="font-weight: bold; ">${subDate}</span>
 								</td>
 							</tr>
 						</c:forEach>

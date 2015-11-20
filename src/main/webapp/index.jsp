@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>  
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html dir="ltr" lang="en-US"><head>
     <meta charset="utf-8">
@@ -6,24 +7,24 @@
     <meta name="viewport" content="initial-scale = 1.0, maximum-scale = 1.0, user-scalable = no, width = device-width">
 
     <!--[if lt IE 9]><script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" media="screen">
-    <!--[if lte IE 7]><link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.ie7.css" media="screen" /><![endif]-->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.responsive.css" media="all">
+     <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet" media="screen">
+    <!--[if lte IE 7]><link rel="stylesheet" href="<c:url value="/resources/css/style.ie7.css" />" media="screen" /><![endif]-->
+    <link rel="stylesheet" href="<c:url value="/resources/css/style.responsive.css" />" media="all">
 
 
-    <script src="${pageContext.request.contextPath}/resources/js/jquery.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/script.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/script.responsive.js"></script>
+    <script src="<c:url value="/resources/js/jquery.js" />"></script>
+    <script src="<c:url value="/resources/js/script.js" />"></script>
+    <script src="<c:url value="/resources/js/script.responsive.js" />"></script>
 
 
 <style>.art-content .art-postcontent-0 .layout-item-0 { color: #DBE0E1; background: #454545;background: rgba(69, 69, 69, 0.95);  border-collapse: separate; border-radius: 15px;  }
 .art-content .art-postcontent-0 .layout-item-1 { color: #DBE0E1; padding-top: 10px;padding-right: 10px;padding-bottom: 10px;padding-left: 10px; border-top-left-radius: 15px;border-bottom-left-radius: 15px;  }
-.art-content .art-postcontent-0 .layout-item-2 { color: #DBE0E1; background: #454545 url('${pageContext.request.contextPath}/resources/images/dc04a.png') scroll;background: rgba(69, 69, 69, 0.3) url('${pageContext.request.contextPath}/resources/images/dc04a.png') scroll; padding-top: 10px;padding-right: 10px;padding-bottom: 10px;padding-left: 10px;  }
+.art-content .art-postcontent-0 .layout-item-2 { color: #DBE0E1; background: #454545 url('<c:url value='/resources/images/dc04a.png' />') scroll;background: rgba(69, 69, 69, 0.3) url('<c:url value='/resources/images/dc04a.png' />') scroll; padding-top: 10px;padding-right: 10px;padding-bottom: 10px;padding-left: 10px;  }
 .art-content .art-postcontent-0 .layout-item-3 { color: #DBE0E1; padding-top: 10px;padding-right: 10px;padding-bottom: 10px;padding-left: 10px; border-top-right-radius: 15px;border-bottom-right-radius: 15px;  }
 .art-content .art-postcontent-0 .layout-item-4 { padding-right: 10px;padding-left: 10px;  }
 .art-content .art-postcontent-0 .layout-item-5 { border-top-style:solid;border-right-style:solid;border-bottom-style:solid;border-left-style:solid;border-width:0px;border-top-color:#B7C1C2;border-right-color:#B7C1C2;border-bottom-color:#B7C1C2;border-left-color:#B7C1C2; color: #363E3F; background: ; border-spacing: 5px 0px; border-collapse: separate; border-radius: 15px;  }
 .art-content .art-postcontent-0 .layout-item-6 { border-top-style:solid;border-right-style:solid;border-bottom-style:solid;border-left-style:solid;border-top-width:1px;border-right-width:1px;border-bottom-width:1px;border-left-width:1px;border-top-color:#B7C1C2;border-right-color:#B7C1C2;border-bottom-color:#B7C1C2;border-left-color:#B7C1C2; color: #363E3F; background: ; padding-top: 10px;padding-right: 10px;padding-bottom: 10px;padding-left: 10px; border-radius: 15px;  }
-.art-content .art-postcontent-0 .layout-item-7 { color: #B5BEC0; background: #3D3D3D url('${pageContext.request.contextPath}/resources/images/c1b78.png') scroll; padding-top: 10px;padding-right: 10px;padding-bottom: 10px;padding-left: 10px; border-radius: 15px;  }
+.art-content .art-postcontent-0 .layout-item-7 { color: #B5BEC0; background: #3D3D3D url('<c:url value='/resources/images/c1b78.png' />') scroll; padding-top: 10px;padding-right: 10px;padding-bottom: 10px;padding-left: 10px; border-radius: 15px;  }
 .ie7 .art-post .art-layout-cell {border:none !important; padding:0 !important; }
 .ie6 .art-post .art-layout-cell {border:none !important; padding:0 !important; }
 
@@ -116,7 +117,7 @@
                                                         </style>
                                                         
                                                         
-                                                        <img width="45" height="80" alt="" class="art-lightbox" src="${pageContext.request.contextPath}/resources/images/medal.png" style="float: left; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; border-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px;  ">&nbsp; &nbsp; &nbsp;&nbsp;<br><span style="font-size: 26px; font-variant: small-caps; font-weight: bold; line-height: 31px; color: #F4F5F6; ">&nbsp; &nbsp;<br>&nbsp; &nbsp; &nbsp; Reputation List<br><br></span><table class="art-article" style="width: 100%; margin-right: auto; margin-left: auto; "><tbody><tr>
+                                                        <img width="45" height="80" alt="" class="art-lightbox" src="<c:url value="/resources/images/medal.png" />" style="float: left; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; border-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px;  ">&nbsp; &nbsp; &nbsp;&nbsp;<br><span style="font-size: 26px; font-variant: small-caps; font-weight: bold; line-height: 31px; color: #F4F5F6; ">&nbsp; &nbsp;<br>&nbsp; &nbsp; &nbsp; Reputation List<br><br></span><table class="art-article" style="width: 100%; margin-right: auto; margin-left: auto; "><tbody><tr>
                                                         	<td style="text-align: center; width: 50%; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; " class="auto-style2"><span style="font-size: 16px; font-weight: bold; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Username</span></td>
                                                         	<td style="text-align: center; width: 50%; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; " class="auto-style2"><span style="font-size: 16px; font-weight: bold; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Points</span></td></tr><tr><td style="text-align: center; width: 100%; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; " colspan="2"><span style="font-weight: bold;">No users to display&nbsp;</span></td></tr></tbody></table><p><span style="font-weight: bold;"><br></span></p><p>
                                                                                                                                                                                                 </p>
