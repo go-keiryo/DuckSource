@@ -10,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import edu.stevens.ssw690.DuckSource.utilities.DuckUtilities;
 
 @Entity
@@ -30,10 +32,12 @@ public class Opportunity implements Serializable {
     @Column(name="duck_bills")
     private BigDecimal duckbills;
     @Column(name="register_date")
+    @DateTimeFormat(pattern = "MM/dd/yyyy")
     private Date registerDate;
     @Column(name="submit_date")
+    @DateTimeFormat(pattern = "MM/dd/yyyy")
     private Date submitDate;
-    @Column(name="description")
+    @Column(name="description", columnDefinition = "TEXT", length = 65535)
     private String description ;
     @Column(name="creator_id")
     private Integer creatorId;

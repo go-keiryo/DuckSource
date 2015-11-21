@@ -92,7 +92,7 @@ public class OpportunityController extends MultiActionController {
         	ModelAndView modelview = new ModelAndView("createopp", "opportunitySvc", opportunitySvc);
     		return modelview;
         }
-        //Store the opportunity information in database
+        
         Integer creatorId = opportunity.getCreatorId();
     	String opportunitytype = opportunity.getOpportunityType();
 		String opportunitytitle = opportunity.getOpportunityTitle();
