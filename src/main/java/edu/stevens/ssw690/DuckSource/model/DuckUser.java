@@ -1,12 +1,17 @@
 package edu.stevens.ssw690.DuckSource.model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "duck_user")
@@ -29,8 +34,10 @@ public class DuckUser  implements Serializable {
 	    private String userName;
 	    @Column(name="password")
 	    private String password;
-	   
-	 
+	    @Column(name="registration_date")
+	    @DateTimeFormat(pattern = "MM/dd/yyyy")
+	    private Date registrationDate;
+	    
 	    public Integer getId() {
 			return id;
 		}
@@ -78,17 +85,26 @@ public class DuckUser  implements Serializable {
 		public void setPassword(String password) {
 			this.password = password;
 		}
+		
+		public Date getRegistrationDate() {
+			return registrationDate;
+		}
+
+		public void setRegistrationDate(Date registrationDate) {
+			this.registrationDate = registrationDate;
+		}
 
 		// Constructors:
 	    public DuckUser() {
 	    }
 	 
-	    public DuckUser(String firstname, String lastname, String email, String username, String pswd) {
+	    public DuckUser(String firstname, String lastname, String email, String username, String pswd, Date registrationdate) {
 	        this.firstName = firstname;
 	        this.lastName = lastname;
 	        this.emailAddress = email;
 	        this.userName = username;
 	        this.password = pswd;
+	        this.registrationDate = registrationdate;
 	    }
 	 
 	    // String Representation:

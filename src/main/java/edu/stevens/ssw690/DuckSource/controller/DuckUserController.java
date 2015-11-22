@@ -1,5 +1,8 @@
 package edu.stevens.ssw690.DuckSource.controller;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -58,6 +61,7 @@ public class DuckUserController extends MultiActionController {
         user.setEmailAddress(email);
         user.setUserName(username);
         user.setPassword(password);
+        user.setRegistrationDate(Date.from(LocalDateTime.now().toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
        
         if ((DuckUtilities.isStringPopulated(firstname) && (DuckUtilities.isStringPopulated(lastname)) && (DuckUtilities.isStringPopulated(email)) && (DuckUtilities.isStringPopulated(username)) && (DuckUtilities.isStringPopulated(password)))) {
             userSvc.persist(user);
