@@ -114,7 +114,7 @@ public class DuckUserController extends MultiActionController {
     	
     }
 	
-	@RequestMapping(value="/login", method = RequestMethod.POST)
+	@RequestMapping(value="/main", method = RequestMethod.POST)
 	public String login(HttpServletRequest request, Model model) {
       
         String username = request.getParameter("username");

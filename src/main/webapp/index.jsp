@@ -73,7 +73,7 @@
     <div class="art-layout-cell layout-item-1" style="width: 33%" >
         <p><br></p>
     </div><div class="art-layout-cell layout-item-2" style="width: 34%" >
-        <form method="POST" action="login.html"  onsubmit="return validateLogIn()"><table style="margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; width: 100%; "><tbody>
+        <form method="POST" action="main.html"  onsubmit="return validateLogIn()"><table style="margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; width: 100%; "><tbody>
         <tr style="border: none;">
         	<td colspan="2" style="border-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px; padding-top: 4px; padding-right: 4px; padding-bottom: 4px; padding-left: 4px; "><p style="text-align: center;"><span style="font-weight: bold; font-size: 20px;">Sign In</span><span style="font-weight: bold; font-size: 18px;"></span></p>
         	</td>
