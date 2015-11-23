@@ -85,15 +85,16 @@
                         </style>
                         
                         
-                        <h1><span style="font-weight: bold; color: #169CE3; "><span style="font-size: 28px; color: #000000; ">Current Accepted Opportunities:</span><br></span></h1><br><table class="art-article" style="width: 100%; "><tbody><tr></tr></tbody></table><table class="art-article" style="width: 100%; "><tbody><tr><td style="width: 100%; text-align: left; border-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px; "><span style="font-size: 18px; font-weight: bold; ">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Filter by opportunity type : &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<select name="OpportunityType" style="width: 300px; ">
+                        <h1><span style="font-weight: bold; color: #169CE3; "><span style="font-size: 28px; color: #000000; ">Current Accepted Opportunities:</span><br></span></h1><br><table class="art-article"><tbody><tr><td colspan="2" style="width: 100%; text-align: left; border-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px; "><span style="font-size: 18px; font-weight: bold; ">Filter by opportunity type : </td></tr>
+						<tr style="border: none;"><td style="border: none; padding-right:10px;"><select name="OpportunityType" style="width: 300px; ">
                                                                                                                                                                                                                                                                                                           <option value="All types" selected="">All types
                                                                                                                                                                                                                                                                                                           </option><option value="Design">Design
                                                                                                                                                                                                                                                                                                           </option><option value="Development">Development
                                                                                                                                                                                                                                                                                                           </option><option value="Data Science">Data Science
                                                                                                                                                                                                                                                                                                           </option><option value="Engineering">Engineering
                                                                                                                                                                                                                                                                                                         </option></select>
-                                                                                                                                                                                                                                                                                                                </span>&nbsp; 
-                                                                                                                                                                                                                                                                                                                        &nbsp;<span style="font-size: 16px; font-weight: bold; "> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<a href="">Update</a>&nbsp;</span></td></tr></tbody></table><br><table class="art-article" style="margin-bottom: 3px; margin-top: 3px; width: 75%; margin-right: auto; margin-left: auto; "><tbody><tr>
+                                                                                                                                                                                                                                                                                                                </span></td>
+                                                                                                                                                                                                                                                                                                                        <td style="border: none;"><span style="font-size: 16px; font-weight: bold; "><a href="">Update</a></span></td></tr></tbody></table><br><table class="art-article" style="margin-bottom: 3px; margin-top: 3px; width: 75%; margin-right: auto; margin-left: auto; "><tbody><tr>
                         	<td style="border-width: 1px; text-align: center; width: 12%; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Type</span></td>
                         	<td style="border-width: 1px; text-align: center; width: 18%; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Title&nbsp;</span></td>
                         	<td style="border-width: 1px; text-align: center; width: 10%; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Duck Bills</span></td>
@@ -103,8 +104,25 @@
                 			<span class="auto-style2">Status</span><br></td></tr><tr>
                 		<td style="border-width: 1px; text-align: center; " colspan="5"><span style="font-weight: bold; ">NO open opportunities to display </span><br></td></tr></tbody></table><p style="text-align: center; "><span style="border-collapse: collapse; -webkit-border-horizontal-spacing: 2px; -webkit-border-vertical-spacing: 2px; "><br></span></p><p><span style="font-weight: bold; color: #169CE3; "><br></span></p><p><span style="font-weight: bold; color: #169CE3; "><br></span></p><p><br></p><p><br></p>
     </div><div class="art-layout-cell layout-item-4" style="width: 24%" >
-        <img width="45" height="80" alt="" src="<c:url value="/resources/images/medal.png" />"style="float: left; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; border-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<br><span style="font-size: 26px; font-variant: small-caps; font-weight: bold; line-height: 31px; color: #F4F5F6;">&nbsp; &nbsp; &nbsp;<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Reputation&nbsp;<br></span><p style="text-align: left;"><span style="font-weight: bold;">&nbsp; &nbsp;</span></p><p style="padding-left: 80px;"><span style="font-weight: bold;"><span style="font-family: 'Arial Black'; font-size: 16px;">&nbsp; &nbsp; &nbsp;# &nbsp; &nbsp; &nbsp;&nbsp;</span></span></p><p style="padding-left: 80px;"><span style="font-weight: bold; font-family: 'Arial Black'; font-size: 16px;">Points :</span></p><p>
-        </p>
+    	<table>
+    		<tr style="border: none;">
+    			<td style="border: none;" colspan="2">
+    				<img width="45" height="80" alt="" src="<c:url value="/resources/images/medal.png" />"style="float: left; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; border-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px;">
+    			</td>
+    		</tr>
+    		<tr style="border: none;">
+    			<td style="border: none;" colspan="2"><span style="font-size: 26px; font-variant: small-caps; font-weight: bold; line-height: 31px; color: #F4F5F6;">Reputation</span>
+    			</td>
+    		</tr>
+    		<tr>
+    			<td style="border: none;">
+    				<span style="font-weight: bold;"><span style="font-family: 'Arial Black'; font-size: 16px;">#</span></span>
+    			</td>	
+    			<td style="border: none;">
+    				<span style="font-weight: bold; font-family: 'Arial Black'; font-size: 16px;">Points :</span>
+    			</td>
+    		</tr>
+    	</table>
     </div>
     </div>
 </div>

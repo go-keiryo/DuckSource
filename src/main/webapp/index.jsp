@@ -28,7 +28,11 @@
 .ie7 .art-post .art-layout-cell {border:none !important; padding:0 !important; }
 .ie6 .art-post .art-layout-cell {border:none !important; padding:0 !important; }
 
-</style></head>
+</style>
+<style>
+    	.displayerror{color:#ff0000;font-weight:bold; display: block !important;}
+    </style>
+</head>
 <body>
 
 <div id="art-main">
@@ -69,8 +73,36 @@
     <div class="art-layout-cell layout-item-1" style="width: 33%" >
         <p><br></p>
     </div><div class="art-layout-cell layout-item-2" style="width: 34%" >
-        <form method="POST" action="login.html"><table style="margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; width: 100%; "><tbody><tr><td style="border-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px; padding-top: 4px; padding-right: 4px; padding-bottom: 4px; padding-left: 4px; "><p style="text-align: center;"><span style="font-weight: bold; font-size: 20px;">Sign In&nbsp;&nbsp;&nbsp;</span><span style="font-weight: bold; font-size: 18px;">&nbsp;&nbsp;&nbsp;&nbsp;</span></p></td></tr><tr><td class="auto-style" style="border-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px; padding-top: 4px; padding-right: 4px; padding-bottom: 4px; padding-left: 4px; "><input type="text" name="username" value="" placeholder="Username" style="font-size:13px;"></td></tr><tr><td class="auto-style" style="border-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px; padding-top: 4px; padding-right: 4px; padding-bottom: 4px; padding-left: 4px; "><input type="password" name="password" value="" placeholder="Password" style="font-size:13px;"></td></tr><tr><td class="auto-style" style="border-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px; padding-top: 4px; padding-right: 4px; padding-bottom: 4px; padding-left: 4px; text-align: center; ">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<label><a href="forgot-password.html" >Forgot your password?</a>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<input type="submit" value="Sign In"/>&nbsp;</label>
-                                                                                                                		</td></tr></tbody></table></form>
+        <form method="POST" action="login.html"  onsubmit="return validateLogIn()"><table style="margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; width: 100%; "><tbody>
+        <tr style="border: none;">
+        	<td colspan="2" style="border-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px; padding-top: 4px; padding-right: 4px; padding-bottom: 4px; padding-left: 4px; "><p style="text-align: center;"><span style="font-weight: bold; font-size: 20px;">Sign In</span><span style="font-weight: bold; font-size: 18px;"></span></p>
+        	</td>
+        </tr>
+        <tr style="border: none;">
+        	<td colspan= class="auto-style" style="border-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px; padding-top: 4px; padding-right: 4px; padding-bottom: 4px; padding-left: 4px; "><input type="text" id="username" name="username" placeholder="Username" style="font-size:13px;">
+        	</td>
+        	<td style="border: none;">
+        		<label id="username_req" style="display: none;">Username is required</label>
+        	</td>
+        </tr>
+        <tr style="border: none;">
+        	<td class="auto-style" style="border-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px; padding-top: 4px; padding-right: 4px; padding-bottom: 4px; padding-left: 4px; "><input type="password" id="password" name="password" value="" placeholder="Password" style="font-size:13px;">
+        	</td>
+        	<td style="border: none;">
+        		<label id="password_req" style="display: none;">Password is required</label>
+        	</td>
+        </tr>
+        <tr style="border: none;">
+        	<td style="border: none; text-align:left" ><input type="submit" value="Sign In"/>
+        	</td>
+        	<td class="auto-style" style="border-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px; padding-top: 4px; padding-right: 4px; padding-bottom: 4px; padding-left: 4px; text-align: center; "><label><a href="forgot-password.html" >Forgot your password?</a></label>
+        	</td>
+         </tr>
+         <tr style="border: none;">
+         	<td style="border: none; text-align:left" colspan="2">
+         		<label class="displayerror">${message}</label>
+         	</td>
+        </tbody></table></form>
     </div><div class="art-layout-cell layout-item-3" style="width: 33%" >
         <p><br></p>
     </div>
@@ -93,15 +125,30 @@
                                                 </style>
                                                 
                                                 
-                                                <h1><span style="font-weight: bold; color: #169CE3; "><span style="font-size: 28px; color: #000000; ">Current Open Opportunities:</span><br></span></h1><br><table class="art-article" style="width: 100%; "><tbody><tr></tr></tbody></table><table class="art-article" style="width: 100%; "><tbody><tr><td style="width: 100%; text-align: left; border-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px; "><span style="font-size: 18px; font-weight: bold; ">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Filter by opportunity type : &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<select name="OpportunityType" style="width: 300px; ">
-                                                                                                                                                                                                                                                                                                                                  <option value="All types" selected="">All types
-                                                                                                                                                                                                                                                                                                                                  </option><option value="Design">Design
-                                                                                                                                                                                                                                                                                                                                  </option><option value="Development">Development
-                                                                                                                                                                                                                                                                                                                                  </option><option value="Data Science">Data Science
-                                                                                                                                                                                                                                                                                                                                  </option><option value="Engineering">Engineering
-                                                                                                                                                                                                                                                                                                                                </option></select>
-                                                                                                                                                                                                                                                                                                                                        </span>&nbsp; 
-                                                                                                                                                                                                                                                                                                                                                &nbsp;<span style="font-size: 16px; font-weight: bold; "> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<a href="" class="art-button">Update</a>&nbsp;</span></td></tr></tbody></table><br><table class="art-article" style="margin-bottom: 3px; margin-top: 3px; width: 75%; margin-right: auto; margin-left: auto; "><tbody><tr>
+                                                <h1>
+                                               <span style="font-weight: bold; color: #169CE3; "><span style="font-size: 28px; color: #000000; ">Current Open Opportunities:</span><br></span></h1><br>
+                                               <table class="art-article"><tbody><tr></tr></tbody></table><table class="art-article">
+                                                <tbody>
+                                                	<tr style="border: none;">
+                                                		<td style="text-align: left; border-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px; "><span style="font-size: 18px; font-weight: bold; ">Filter by opportunity type : </span>
+                                                		</td>
+                                                		<td style="border: none; padding-left:10px; padding-right:10px;">
+                                                			<select name="OpportunityType" style="width: 300px; ">
+                                                            	<option value="All types" selected="">All types</option>
+                                                            	<option value="Design">Design</option>
+                                                            	<option value="Development">Development</option>
+                                                            	<option value="Data Science">Data Science</option>
+                                                            	<option value="Engineering">Engineering</option>
+                                                            </select>
+                                                        </td>
+                                                        <td style="border: none;">                                                                                                                                                                                                                                                                
+                                                            <span style="font-size: 16px; font-weight: bold; "><a href="" class="art-button">Update</a></span>
+                                                        </td>
+                                                    </tr>
+                                                 </tbody>
+                                                </table>
+                                                <br>
+                                                <table class="art-article" style="margin-bottom: 3px; margin-top: 3px; width: 75%; margin-right: auto; margin-left: auto; "><tbody><tr>
                                                 	<td style="text-align: center; width: 15%; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Type</span></td>
                                                 	<td style="text-align: center; width: 15%; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Title&nbsp;</span></td>
                                                 	<td style="text-align: center; width: 14%; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Duck Bills</span></td>
@@ -115,12 +162,35 @@
                                                         	background-color: #686868;
                                                         }
                                                         </style>
-                                                        
-                                                        
-                                                        <img width="45" height="80" alt="" class="art-lightbox" src="<c:url value="/resources/images/medal.png" />" style="float: left; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; border-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px;  ">&nbsp; &nbsp; &nbsp;&nbsp;<br><span style="font-size: 26px; font-variant: small-caps; font-weight: bold; line-height: 31px; color: #F4F5F6; ">&nbsp; &nbsp;<br>&nbsp; &nbsp; &nbsp; Reputation List<br><br></span><table class="art-article" style="width: 100%; margin-right: auto; margin-left: auto; "><tbody><tr>
-                                                        	<td style="text-align: center; width: 50%; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; " class="auto-style2"><span style="font-size: 16px; font-weight: bold; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Username</span></td>
-                                                        	<td style="text-align: center; width: 50%; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; " class="auto-style2"><span style="font-size: 16px; font-weight: bold; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Points</span></td></tr><tr><td style="text-align: center; width: 100%; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; " colspan="2"><span style="font-weight: bold;">No users to display&nbsp;</span></td></tr></tbody></table><p><span style="font-weight: bold;"><br></span></p><p>
-                                                                                                                                                                                                </p>
+   <table>
+   	<tr style="border: none;">
+   		<td style="border: none;"><img width="45" height="80" alt="" class="art-lightbox" src="<c:url value="/resources/images/medal.png" />" style="float: left; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; border-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px;  ">
+   		</td>
+   	</tr>
+   	<tr style="border: none;">
+   		<td style="border: none;"><span style="font-size: 26px; font-variant: small-caps; font-weight: bold; line-height: 31px; color: #F4F5F6; ">Reputation List</span>
+   		</td>
+   	</tr>	
+   	<tr style="border: none;"><td style="border: none;"></td></tr>
+   	<tr style="border: none;">
+   		<td style="border: none;">
+   			<table class="art-article" style="width: 100%; margin-right: auto; margin-left: auto; ">
+   				<tbody>
+   					<tr>
+                    	<td style="text-align: center; width: 50%; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; " class="auto-style2"><span style="font-size: 16px; font-weight: bold; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Username</span>
+                    	</td>
+                        <td style="text-align: center; width: 50%; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; " class="auto-style2"><span style="font-size: 16px; font-weight: bold; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Points</span>
+                        </td>
+                   </tr>
+                   <tr>
+                   		<td style="text-align: center; width: 100%; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; " colspan="2"><span style="font-weight: bold;">No users to display</span>
+                   		</td>
+                   	</tr>
+               </tbody>
+           </table>
+        </td>
+       </tr>                                                                                                                                                                                        </p>
+    </table>
     </div>
     </div>
 </div>
@@ -137,6 +207,24 @@
 
     </div>
     </div>
+<script>
+	function validateLogIn(){
+		var valid = true;
+		if ($("#username").val() == ""){
+ 			$("#username_req").addClass("displayerror");
+  			valid = false;
+		} else {
+			$("#username_req").removeClass("displayerror")
+		}
+		if ($("#password").val()== ""){
+			$("#password_req").addClass("displayerror");
+  			valid = false;
+		}else {
+			$("#password_req").removeClass("displayerror")
+		}
+		return valid;
+	}		
+</script>
 
 
 </body></html>  

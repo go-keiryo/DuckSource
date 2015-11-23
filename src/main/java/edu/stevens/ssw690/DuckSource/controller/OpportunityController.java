@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import edu.stevens.ssw690.DuckSource.model.DuckUser;
@@ -52,8 +51,8 @@ public class OpportunityController extends MultiActionController {
     }
      
     @RequestMapping(method = RequestMethod.POST)
-    public  ModelAndView submitForm(@ModelAttribute("opportunityForm") Opportunity opportunity,
-                           BindingResult result, SessionStatus status)
+    public  String submitForm(@ModelAttribute("opportunityForm") Opportunity opportunity,
+                           BindingResult result, SessionStatus status, Model model)
     {
     	//Validation code start
         boolean error = false;
@@ -89,8 +88,7 @@ public class OpportunityController extends MultiActionController {
         }
          
         if(error) {
-        	ModelAndView modelview = new ModelAndView("createopp", "opportunitySvc", opportunitySvc);
-    		return modelview;
+    		return "createopp";
         }
         
         Integer creatorId = opportunity.getCreatorId();
@@ -110,11 +108,10 @@ public class OpportunityController extends MultiActionController {
         
         DuckUser user = userSvc.findById(creatorId);
         Integer creator = user.getId();
-        ModelAndView modelview = new ModelAndView("main", "opportunitySvc", opportunitySvc);
-        modelview.addObject("user", user.getFirstName() + " " + user.getLastName());
-        modelview.addObject("opportunties", opportunitySvc.getByCreator(creator));
-        modelview.addObject("userId", creator);
-		return modelview;
+        model.addAttribute("user", user.getFirstName() + " " + user.getLastName());
+        model.addAttribute("opportunties", opportunitySvc.getByCreator(creator));
+        model.addAttribute("userId", creator);
+		return "main";
        
     }
     

@@ -57,5 +57,6 @@ public class DuckUtilities {
 			return true;
 		}
 	}
+	
 
 }

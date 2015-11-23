@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -34,6 +35,8 @@ public class DuckUser  implements Serializable {
 	    private String userName;
 	    @Column(name="password")
 	    private String password;
+	    @Transient
+	    private String confirmPassword;
 	    @Column(name="registration_date")
 	    @DateTimeFormat(pattern = "MM/dd/yyyy")
 	    private Date registrationDate;
@@ -84,6 +87,16 @@ public class DuckUser  implements Serializable {
 
 		public void setPassword(String password) {
 			this.password = password;
+		}
+		
+		@Transient
+		public String getConfirmPassword() {
+			return confirmPassword;
+		}
+
+		@Transient
+		public void setConfirmPassword(String confirmPasswsord) {
+			this.confirmPassword = confirmPasswsord;
 		}
 		
 		public Date getRegistrationDate() {

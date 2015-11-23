@@ -131,7 +131,7 @@
          		<td style="border: none;"><form:errors path="description" cssClass="error" /></td>
          	</tr>
          	<tr style="border: none;">
-         		<td style="border: none;" colspan="3" align="center"> <input type="submit" value="Create" /></td>
+         		<td style="border: none; text-align: center; padding-top: 10px" colspan="3"> <input type="submit" value="Create" /></td>
          	</tr>         
           </tbody>
    </table>
