@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>  
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page import="edu.stevens.ssw690.DuckSource.model.*"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
-<html dir="ltr" lang="en-US"><head>
+<html dir="ltr" lang="en-US"><hed>
     <meta charset="utf-8">
     <title>Index</title>
     <meta name="viewport" content="initial-scale = 1.0, maximum-scale = 1.0, user-scalable = no, width = device-width">
@@ -133,7 +135,7 @@
                                                 		<td style="text-align: left; border-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px; "><span style="font-size: 18px; font-weight: bold; ">Filter by opportunity type : </span>
                                                 		</td>
                                                 		<td style="border: none; padding-left:10px; padding-right:10px;">
-                                                			<select name="OpportunityType" style="width: 300px; ">
+                                                			<select id="oppselect" name="OpportunityType" style="width: 300px; ">
                                                             	<option value="All types" selected="">All types</option>
                                                             	<option value="Design">Design</option>
                                                             	<option value="Development">Development</option>
@@ -142,20 +144,45 @@
                                                             </select>
                                                         </td>
                                                         <td style="border: none;">                                                                                                                                                                                                                                                                
-                                                            <span style="font-size: 16px; font-weight: bold; "><a href="" class="art-button">Update</a></span>
+                                                            <span style="font-size: 16px; font-weight: bold; "><a id="oppupdate" href="indexupdate" class="art-button" onclick="addURL(this)">Update</a></span>
                                                         </td>
                                                     </tr>
                                                  </tbody>
                                                 </table>
                                                 <br>
-                                                <table class="art-article" style="margin-bottom: 3px; margin-top: 3px; width: 75%; margin-right: auto; margin-left: auto; "><tbody><tr>
-                                                	<td style="text-align: center; width: 15%; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Type</span></td>
-                                                	<td style="text-align: center; width: 15%; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Title&nbsp;</span></td>
-                                                	<td style="text-align: center; width: 14%; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Duck Bills</span></td>
-                                                	<td style="text-align: center; width: 14%; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Register BY</span></td>
-                                                	<td style="text-align: center; width: 14%; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Submit By</span></td>
-                                                	<td style="text-align: center; width: 14%; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Registered<br></span></td>
-                                                	<td style="text-align: center; width: 14%; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Submitted</span><br></td></tr><tr><td style="text-align: center; width: 100%; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; " colspan="7"><span style="font-weight: bold; ">NO open opportunities to display </span><br></td></tr></tbody></table><p style="text-align: center; "><span style="border-collapse: collapse; -webkit-border-horizontal-spacing: 2px; -webkit-border-vertical-spacing: 2px; "><br></span></p><p><span style="font-weight: bold; color: #169CE3; "><br></span></p><p><span style="font-weight: bold; color: #169CE3; "><br></span></p><p><br></p><p><br></p>
+                                                <table class="art-article" style="margin-bottom: 3px; margin-top: 3px; width: 75%; margin-right: auto; margin-left: auto; "><tbody>
+                                                <tr>
+							<th style="border-width: 1px; text-align: center; width: 12%; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Type</th>
+							<th style="border-width: 1px; text-align: center; width: 12%; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Title</th>
+							<th style="border-width: 1px; text-align: center; width: 12%; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">DuckBill$</th>
+							<th style="border-width: 1px; text-align: center; width: 12%; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Register By</th>
+							<th style="border-width: 1px; text-align: center; width: 12%; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Submit By</th>
+						</tr>
+						<c:forEach var="o" items="${opportunties}">
+							<tr>
+								<td style="border-width: 1px; text-align: center;"><span style="font-weight: bold; ">${o.opportunityType}</span></td>
+								<td style="border-width: 1px; text-align: center;"><span style="font-weight: bold; ">${o.opportunityTitle} </span></td>
+								<td style="border-width: 1px; text-align: center;"><span style="font-weight: bold; ">
+									<fmt:setLocale value="en_US"/>
+									<fmt:formatNumber value="${o.duckbills}" type="currency"/> </span>
+								</td>
+								<td style="border-width: 1px; text-align: center;">
+									<c:set var="regDate">
+      									<fmt:formatDate pattern="MM/dd/yyyy" value="${o.registerDate}" />
+   									</c:set>
+   									<span style="font-weight: bold; ">${regDate}</span>
+								</td>
+								<td style="border-width: 1px; text-align: center;">
+									<c:set var="subDate">
+      									<fmt:formatDate pattern="MM/dd/yyyy" value="${o.submitDate}" />
+   									</c:set>
+   									<span style="font-weight: bold; ">${subDate}</span>
+								</td>
+							</tr>
+						</c:forEach>
+						</tbody>
+						</table>
+                                                	<p style="text-align: center; "><span style="border-collapse: collapse; -webkit-border-horizontal-spacing: 2px; -webkit-border-vertical-spacing: 2px; "><br></span></p><p><span style="font-weight: bold; color: #169CE3; "><br></span></p><p><span style="font-weight: bold; color: #169CE3; "><br></span></p><p><br></p><p><br></p>
     </div><div class="art-layout-cell layout-item-7" style="width: 24%" >
         <style type="text/css">
                                                         .auto-style2 {
@@ -223,7 +250,13 @@
 			$("#password_req").removeClass("displayerror")
 		}
 		return valid;
-	}		
+	}
+	function addURL(element)
+	{
+	    $(element).attr('href', function() {
+	        return this.href + '?select=' + $("#oppselect").val();
+	    });
+	}
 </script>
 
 

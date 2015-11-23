@@ -30,5 +30,9 @@ public class OpportunityManagerImpl implements OpportunityManager {
 	public List<Opportunity> getByCreator(Integer creator) {
 		return dao.getByCreator(creator);
 	}
+
+	public List<Opportunity> getByType(String oppType) {
+		return  dao.getByType(oppType);
+	}
  
 }

@@ -26,7 +26,7 @@ public class OpportunityDaoImpl implements OpportunityDao {
     // Retrieves all the Opportunities:
     public List<Opportunity> getAllOpportunities() {
         TypedQuery<Opportunity> query = em.createQuery(
-            "SELECT o FROM  Opportunity o ORDER BY o.id",  Opportunity.class);
+            "FROM  Opportunity o ORDER BY o.id",  Opportunity.class);
         return query.getResultList();
     }
     
@@ -48,6 +48,15 @@ public class OpportunityDaoImpl implements OpportunityDao {
     	TypedQuery<Opportunity> query = em.createQuery(
                 "FROM  Opportunity o WHERE o.creatorId=:creator",  Opportunity.class);
     	query.setParameter("creator", creator);  
+    	return query.getResultList();
+    	
+	 }
+    
+    public List<Opportunity> getByType(String oppType) {
+        
+    	TypedQuery<Opportunity> query = em.createQuery(
+                "FROM  Opportunity o WHERE o. opportunityType=:oppType",  Opportunity.class);
+    	query.setParameter("oppType", oppType);  
     	return query.getResultList();
     	
 	 }

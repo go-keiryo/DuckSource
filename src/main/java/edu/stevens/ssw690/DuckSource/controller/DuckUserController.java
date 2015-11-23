@@ -114,6 +114,29 @@ public class DuckUserController extends MultiActionController {
     	
     }
 	
+	@RequestMapping(value="/", method = RequestMethod.GET)
+	 public String getIndex(HttpServletRequest request, Model model) {
+		model.addAttribute("opportunties", opportunitySvc.getAllOpportunities());
+       return "../index";
+   }
+
+	@RequestMapping(value="/indexupdate")
+	 public String iIndexUpdarw(HttpServletRequest request, Model model) {
+		String selectType = request.getParameter("select");
+		if (selectType.isEmpty() || selectType.equalsIgnoreCase("All Types")) {
+			model.addAttribute("opportunties", opportunitySvc.getAllOpportunities());
+		} else {
+			model.addAttribute("opportunties", opportunitySvc.getByType(selectType));
+		}
+		
+      return "../index";
+   }
+	
+	@RequestMapping(value="/main", method = RequestMethod.GET)
+	 public String getMain(HttpServletRequest request, Model model) {
+      return "main";
+  }
+	
 	@RequestMapping(value="/main", method = RequestMethod.POST)
 	public String login(HttpServletRequest request, Model model) {
       

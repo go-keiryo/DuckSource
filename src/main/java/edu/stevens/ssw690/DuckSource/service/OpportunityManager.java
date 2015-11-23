@@ -10,5 +10,6 @@ public interface OpportunityManager {
     public List<Opportunity> getAllOpportunities();
     public Opportunity getOpportunity(String title);
     public List<Opportunity> getByCreator(Integer creator);
+    public List<Opportunity> getByType(String oppType);
 
 }
