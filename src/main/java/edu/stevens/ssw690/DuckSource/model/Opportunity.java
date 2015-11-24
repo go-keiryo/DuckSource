@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Formula;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import edu.stevens.ssw690.DuckSource.utilities.DuckUtilities;
@@ -19,7 +20,11 @@ import edu.stevens.ssw690.DuckSource.utilities.DuckUtilities;
 public class Opportunity implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
-	 
+	
+	// Constructors:
+    public  Opportunity() {
+    }
+	
 	// Persistent Fields:
     @Id 
     @Column(name="opportunity_id")
@@ -41,6 +46,10 @@ public class Opportunity implements Serializable {
     private String description ;
     @Column(name="creator_id")
     private Integer creatorId;
+    @Formula("(select count(*) from opportunity_registered r where r.opportunity_id = opportunity_id)")
+    private Integer registeredCount;
+    @Formula("(select count(*) from opportunity_submitted s where s.opportunity_id = opportunity_id)")
+    private Integer submittedCount;
     
 	public Integer getId() {
 		return id;
@@ -90,10 +99,12 @@ public class Opportunity implements Serializable {
 	public void setCreatorId(Integer creatorid) {
 		this.creatorId = creatorid;
 	}
-	
-	// Constructors:
-    public  Opportunity() {
-    }
+	public Integer getRegisteredCount() {
+		return registeredCount;
+	}
+	public Integer getSubmittedCount() {
+		return submittedCount;
+	}
     
 	public Opportunity(String oppType, String oppTitle, BigDecimal bills, Date registerDate, Date submitDate, String desc, Integer creator) {
 	       this.opportunityType = oppType;
