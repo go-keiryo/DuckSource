@@ -112,7 +112,7 @@ public class DuckUserController extends MultiActionController {
         userSvc.persist(user);
         Integer creator = user.getId();
 		model.addAttribute("user", user.getFirstName() + " " + user.getLastName());
-		model.addAttribute("opportunties", opportunitySvc.getByCreator(creator));
+		model.addAttribute("opportunities", opportunitySvc.getByCreator(creator));
 		model.addAttribute("userId", creator);
 		
 		return "main";
@@ -121,14 +121,14 @@ public class DuckUserController extends MultiActionController {
 	
 	@RequestMapping(value="/index", method = RequestMethod.GET)
 	public String returntIndex(HttpServletRequest request, Model model) {
-		model.addAttribute("opportunties", opportunitySvc.getAllOpportunities());
+		model.addAttribute("opportunities", opportunitySvc.getAllOpportunities());
        return "../index";
    }
 
 	
 	@RequestMapping(value="/", method = RequestMethod.GET)
 	 public String getIndex(HttpServletRequest request, Model model) {
-		model.addAttribute("opportunties", opportunitySvc.getAllOpportunities());
+		model.addAttribute("opportunities", opportunitySvc.getAllOpportunities());
        return "../index";
    }
 
@@ -136,9 +136,9 @@ public class DuckUserController extends MultiActionController {
 	 public String iIndexUpdarw(HttpServletRequest request, Model model) {
 		String selectType = request.getParameter("select");
 		if (selectType.isEmpty() || selectType.equalsIgnoreCase("All Types")) {
-			model.addAttribute("opportunties", opportunitySvc.getAllOpportunities());
+			model.addAttribute("opportunities", opportunitySvc.getAllOpportunities());
 		} else {
-			model.addAttribute("opportunties", opportunitySvc.getByType(selectType));
+			model.addAttribute("opportunities", opportunitySvc.getByType(selectType));
 		}
 		
       return "../index";
@@ -153,7 +153,7 @@ public class DuckUserController extends MultiActionController {
 			Integer userId = Integer.parseInt(creatorId);
 			DuckUser user =userSvc.findById(userId);
 			model.addAttribute("user", user.getFirstName() + " " + user.getLastName());
-    		model.addAttribute("opportunties", opportunitySvc.getByCreator(userId));
+    		model.addAttribute("opportunities", opportunitySvc.getByCreator(userId));
     		model.addAttribute("userId", userId);
     		return "main";
 		}
@@ -174,7 +174,7 @@ public class DuckUserController extends MultiActionController {
         	} else {
         		Integer creator = user.getId();
         		model.addAttribute("user", user.getFirstName() + " " + user.getLastName());
-        		model.addAttribute("opportunties", opportunitySvc.getByCreator(creator));
+        		model.addAttribute("opportunities", opportunitySvc.getByCreator(creator));
         		model.addAttribute("userId", creator);
         		return "main";
         	}

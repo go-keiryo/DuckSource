@@ -148,7 +148,12 @@
 							<th style="border-width: 1px; text-align: center; width: 12%; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Registered</span></th>
 							<th style="border-width: 1px; text-align: center; width: 12%; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Submitted</span></th>
 						</tr>
-						<c:forEach var="o" items="${opportunties}">
+						<c:choose>
+						    <c:when test="${empty opportunities}">
+						    	<tr><td colspan="5" style="border-width: 1px; text-align: center;"><span style="font-weight: bold; ">No Opportunities Available</span></td></tr>
+						    </c:when>    
+						    <c:otherwise>
+						<c:forEach var="o" items="${opportunities}">
 							<tr>
 								<td style="border-width: 1px; text-align: center;"><span style="font-weight: bold; ">${o.opportunityType}</span></td>
 								<td style="border-width: 1px; text-align: center;"><span style="font-weight: bold; ">${o.opportunityTitle} </span></td>
@@ -160,6 +165,8 @@
 								<td style="border-width: 1px; text-align: center;">${o.submittedCount}</td>
 							</tr>
 						</c:forEach>
+						</c:otherwise>
+						</c:choose>
 						</tbody>
 						</table>
 						<p style="text-align: center; "><span style="border-collapse: collapse; -webkit-border-horizontal-spacing: 2px; -webkit-border-vertical-spacing: 2px; "><br></span></p><p><span style="font-weight: bold; color: #169CE3; "><br></span></p><p><span style="font-weight: bold; color: #169CE3; "><br></span></p><p><br></p><p><br></p>
