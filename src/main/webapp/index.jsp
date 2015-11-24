@@ -17,7 +17,7 @@
     <script src="<c:url value="/resources/js/jquery.js" />"></script>
     <script src="<c:url value="/resources/js/script.js" />"></script>
     <script src="<c:url value="/resources/js/script.responsive.js" />"></script>
-
+    <script src="<c:url value="/resources/js/index.js" />"></script>
 
 <style>.art-content .art-postcontent-0 .layout-item-0 { color: #DBE0E1; background: #454545;background: rgba(69, 69, 69, 0.95);  border-collapse: separate; border-radius: 15px;  }
 .art-content .art-postcontent-0 .layout-item-1 { color: #DBE0E1; padding-top: 10px;padding-right: 10px;padding-bottom: 10px;padding-left: 10px; border-top-left-radius: 15px;border-bottom-left-radius: 15px;  }
@@ -39,7 +39,7 @@
 
 <div id="art-main">
 <nav class="art-nav">
-    <ul class="art-hmenu"><li><a href="index.jsp">Main Page</a></li><li><a href="signup.html">Sign Up</a></li></ul> 
+    <ul class="art-hmenu"><li><a href="">Main Page</a></li><li><a href="signup.html">Sign Up</a></li></ul> 
     </nav>
 
 
@@ -144,7 +144,7 @@
                                                             </select>
                                                         </td>
                                                         <td style="border: none;">                                                                                                                                                                                                                                                                
-                                                            <span style="font-size: 16px; font-weight: bold; "><a id="oppupdate" href="indexupdate" class="art-button" onclick="addURL(this)">Update</a></span>
+                                                            <span style="font-size: 16px; font-weight: bold; "><a id="oppupdate" href="indexupdate" class="art-button" onclick="addOpportunityTypeToURL(this,'oppselect')">Update</a></span>
                                                         </td>
                                                     </tr>
                                                  </tbody>
@@ -234,30 +234,4 @@
 
     </div>
     </div>
-<script>
-	function validateLogIn(){
-		var valid = true;
-		if ($("#username").val() == ""){
- 			$("#username_req").addClass("displayerror");
-  			valid = false;
-		} else {
-			$("#username_req").removeClass("displayerror")
-		}
-		if ($("#password").val()== ""){
-			$("#password_req").addClass("displayerror");
-  			valid = false;
-		}else {
-			$("#password_req").removeClass("displayerror")
-		}
-		return valid;
-	}
-	function addURL(element)
-	{
-	    $(element).attr('href', function() {
-	        return this.href + '?select=' + $("#oppselect").val();
-	    });
-	}
-</script>
-
-
 </body></html>  

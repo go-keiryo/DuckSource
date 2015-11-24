@@ -150,7 +150,7 @@
 						</tr>
 						<c:forEach var="o" items="${opportunties}">
 							<tr>
-								<td style="border-width: 1px; text-align: center;"><span style="font-weight: bold; ">${o.opportunityTiype}</span></td>
+								<td style="border-width: 1px; text-align: center;"><span style="font-weight: bold; ">${o.opportunityType}</span></td>
 								<td style="border-width: 1px; text-align: center;"><span style="font-weight: bold; ">${o.opportunityTitle} </span></td>
 								<td style="border-width: 1px; text-align: center;"><span style="font-weight: bold; ">
 									<fmt:setLocale value="en_US"/>

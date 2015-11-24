@@ -35,7 +35,7 @@
 <body>
 <div id="art-main">
 <nav class="art-nav">
-    <ul class="art-hmenu"><li><a href="index.html">Main Page</a></li><li><a href="sign-up.html">Sign Up</a></li></ul> 
+    <ul class="art-hmenu"><li><a href="index">Main Page</a></li><li><a href="sign-up.html">Sign Up</a></li></ul> 
     </nav>
 
 <header class="art-header">

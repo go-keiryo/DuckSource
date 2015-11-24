@@ -1,6 +1,5 @@
 <%@page contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="edu.stevens.ssw690.DuckSource.*"%>
 
@@ -18,11 +17,13 @@
     <!--[if lte IE 7]><link rel="stylesheet" href="<c:url value="/resources/css/style.ie7.css" />" media="screen" /><![endif]-->
     <link rel="stylesheet" href="<c:url value="/resources/css/style.responsive.css" />" media="all">
 
-
     <script src="<c:url value="/resources/js/jquery.js" />"></script>
     <script src="<c:url value="/resources/js/script.js" />"></script>
     <script src="<c:url value="/resources/js/script.responsive.js" />"></script>
-
+    <script src="<c:url value="/resources/js/jquery-1.11.3.min.js" />"></script>
+    <script src="<c:url value="/resources/js/jquery.maskedinput.min.js" />"></script>
+    <script src="<c:url value="/resources/js/jquery.price_format.2.0.min.js" />"></script>
+    <script src="<c:url value="/resources/js/createopp.js" />"></script>
 
 <style>.art-content .art-postcontent-0 .layout-item-0 { color: #232929; background: #ECEEEF url('<c:url value='/resources/images/6cd8d.png' />') scroll;  border-collapse: separate; border-radius: 15px;  }
 .art-content .art-postcontent-0 .layout-item-1 { color: #212627; background: #C0C8C9 url('<c:url value='/resources/images/66838.png' />') scroll; padding-top: 10px;padding-right: 10px;padding-bottom: 10px;padding-left: 10px; border-top-left-radius: 15px;border-bottom-left-radius: 15px;  }
@@ -32,14 +33,7 @@
 .ie6 .art-post .art-layout-cell {border:none !important; padding:0 !important; }
 
 </style>
- 		<spring:url value="/resources/js/jquery-1.11.3.min.js" var="jqueryJs" />
-       <spring:url value="/resources/js/jquery.maskedinput.min.js" var="maskedinputJs" />
-        <spring:url value="/resources/js/jquery.price_format.2.0.min.js" var="priceJs" />
-		<spring:url value="/resources/js/ducksource.js" var="duckJs" />
-    	<script src="${jqueryJs}"></script>
-    	<script src="${maskedinputJs}"></script>
-    	<script src="${priceJs}"></script>
-    	<script src="${duckJs}"></script>
+
 </head>
 <body>
 <div id="art-main">
@@ -63,7 +57,7 @@
                     
 </header>
 <nav class="art-nav">
-    <ul class="art-hmenu"><li><a href="home-page.html" class="">Home Page</a></li><li><a href="find-an-opportunity.html" class="">Find an Opportunity</a></li><li><a href="create-an-opportunity.html" class="active">Create an Opportunity</a></li><li><a href="account-settings.html">Account Settings</a></li><li><a href="sign-out.html">Sign Out</a></li></ul> 
+    <ul class="art-hmenu"><li><a href="main.html?creatorId=${userId}" class="">Home Page</a></li><li><a href="find-an-opportunity.html" class="">Find an Opportunity</a></li><li><a href="create-an-opportunity.html" class="active">Create an Opportunity</a></li><li><a href="account-settings.html">Account Settings</a></li><li><a href="sign-out.html">Sign Out</a></li></ul> 
     </nav>
 <div class="art-sheet clearfix">
             <div class="art-layout-wrapper">

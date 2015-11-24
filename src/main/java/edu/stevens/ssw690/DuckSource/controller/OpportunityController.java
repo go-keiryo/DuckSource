@@ -45,6 +45,7 @@ public class OpportunityController extends MultiActionController {
     {
          Opportunity opportunityForm = new Opportunity();
          opportunityForm.setCreatorId(creatorId);
+         model.addAttribute("userId",creatorId);
          model.addAttribute("opportunityForm", opportunityForm);
          
          return "createopp";
