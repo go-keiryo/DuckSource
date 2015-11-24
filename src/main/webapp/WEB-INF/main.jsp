@@ -52,7 +52,7 @@
                     
 </header>
 <nav class="art-nav">
-    <ul class="art-hmenu"><li><a href="index" class="active">Home Page</a></li><li><a href="find-an-opportunity.html">Find an Opportunity</a></li><li><a href="createopp.html?creatorId=${userId}">Create an Opportunity</a>></li><li><a href="account-settings.html">Account Settings</a></li><li><a href="sign-out.html">Sign Out</a></li></ul> 
+    <ul class="art-hmenu"><li><a href=main.html?creatorId=${userId} class="active">Home Page</a></li><li><a href="find-an-opportunity.html">Find an Opportunity</a></li><li><a href="createopp.html?creatorId=${userId}">Create an Opportunity</a>></li><li><a href="account-settings.html">Account Settings</a></li><li><a href="index">Sign Out</a></li></ul> 
     </nav>
 <div class="art-sheet clearfix">
             <div class="art-layout-wrapper">
