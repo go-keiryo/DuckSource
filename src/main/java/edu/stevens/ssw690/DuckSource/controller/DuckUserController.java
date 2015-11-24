@@ -81,7 +81,13 @@ public class DuckUserController extends MultiActionController {
 		if(user.getUserName().isEmpty()){
             result.rejectValue("userName", "error.username");
             error = true;
+        } else {
+        	if (userSvc.getUsernameExists(user.getUserName())) {
+        		result.rejectValue("userName", "error.usernameinuse");
+        		error = true;
+        	}
         }
+		
 		if(user.getPassword().isEmpty()){
             result.rejectValue("password", "error.password");
             error = true;
@@ -96,11 +102,10 @@ public class DuckUserController extends MultiActionController {
 			result.rejectValue("confirmPassword", "error.password2");
             error = true;
 		}
-		
+	
 		if(error) {
     		return "signup";
         }
-		
 		
         user.setRegistrationDate(Date.from(LocalDateTime.now().toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
        

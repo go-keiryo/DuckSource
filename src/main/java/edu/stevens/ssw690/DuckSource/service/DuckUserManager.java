@@ -9,5 +9,6 @@ public interface DuckUserManager {
 	public List<DuckUser> getAll();
     public DuckUser findById(Integer id);
     public void persist(DuckUser user);
-    DuckUser getDuckUser(String username, String password);
+    public DuckUser getDuckUser(String username, String password);
+    public boolean getUsernameExists(String username);
 }
