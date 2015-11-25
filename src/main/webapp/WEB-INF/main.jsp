@@ -52,7 +52,7 @@
                     
 </header>
 <nav class="art-nav">
-    <ul class="art-hmenu"><li><a href=main.html?creatorId=${userId} class="active">Home Page</a></li><li><a href="find-an-opportunity.html">Find an Opportunity</a></li><li><a href="createopp.html?creatorId=${userId}">Create an Opportunity</a>></li><li><a href="account-settings.html">Account Settings</a></li><li><a href="index">Sign Out</a></li></ul> 
+    <ul class="art-hmenu"><li><a href="main?creatorId=${userId}" class="active">Home Page</a></li><li><a href="findopp?creatorId=${userId}">Find an Opportunity</a></li><li><a href="createopp?creatorId=${userId}">Create an Opportunity</a>></li><li><a href="account-settings.html">Account Settings</a></li><li><a href="index">Sign Out</a></li></ul> 
     </nav>
 <div class="art-sheet clearfix">
             <div class="art-layout-wrapper">
@@ -85,24 +85,37 @@
                         </style>
                         
                         
-                        <h1><span style="font-weight: bold; color: #169CE3; "><span style="font-size: 28px; color: #000000; ">Current Accepted Opportunities:</span><br></span></h1><br><table class="art-article"><tbody><tr><td colspan="2" style="width: 100%; text-align: left; border-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px; "><span style="font-size: 18px; font-weight: bold; ">Filter by opportunity type : </td></tr>
-						<tr style="border: none;"><td style="border: none; padding-right:10px;"><select name="OpportunityType" style="width: 300px; ">
-                                                                                                                                                                                                                                                                                                          <option value="All types" selected="">All types
-                                                                                                                                                                                                                                                                                                          </option><option value="Design">Design
-                                                                                                                                                                                                                                                                                                          </option><option value="Development">Development
-                                                                                                                                                                                                                                                                                                          </option><option value="Data Science">Data Science
-                                                                                                                                                                                                                                                                                                          </option><option value="Engineering">Engineering
-                                                                                                                                                                                                                                                                                                        </option></select>
-                                                                                                                                                                                                                                                                                                                </span></td>
-                                                                                                                                                                                                                                                                                                                        <td style="border: none;"><span style="font-size: 16px; font-weight: bold; "><a href="">Update</a></span></td></tr></tbody></table><br><table class="art-article" style="margin-bottom: 3px; margin-top: 3px; width: 75%; margin-right: auto; margin-left: auto; "><tbody><tr>
-                        	<td style="border-width: 1px; text-align: center; width: 12%; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Type</span></td>
-                        	<td style="border-width: 1px; text-align: center; width: 18%; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Title&nbsp;</span></td>
-                        	<td style="border-width: 1px; text-align: center; width: 10%; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Duck Bills</span></td>
-                        	<td style="border-width: 1px; text-align: center; width: 10%; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Submitted 
-                			On</span></td>
-                        	<td style="border-width: 1px; text-align: center; width: 12%; " class="auto-style1">
-                			<span class="auto-style2">Status</span><br></td></tr><tr>
-                		<td style="border-width: 1px; text-align: center; " colspan="5"><span style="font-weight: bold; ">NO open opportunities to display </span><br></td></tr></tbody></table><p style="text-align: center; "><span style="border-collapse: collapse; -webkit-border-horizontal-spacing: 2px; -webkit-border-vertical-spacing: 2px; "><br></span></p><p><span style="font-weight: bold; color: #169CE3; "><br></span></p><p><span style="font-weight: bold; color: #169CE3; "><br></span></p><p><br></p><p><br></p>
+                        <h1><span style="font-weight: bold; color: #169CE3; "><span style="font-size: 28px; color: #000000; ">Current Accepted Opportunities:</span><br></span></h1><br>><br>
+                        <table class="art-article" style="margin-bottom: 3px; margin-top: 3px; width: 75%; margin-right: auto; margin-left: auto;"><tbody>
+						<tr>
+							<th style="border-width: 1px; text-align: center; width: 12%; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Type</span></th>
+							<th style="border-width: 1px; text-align: center; width: 12%; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Title</span></th>
+							<th style="border-width: 1px; text-align: center; width: 12%; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">DuckBill$</span></th>
+							<th style="border-width: 1px; text-align: center; width: 12%; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Registered</span></th>
+							<th style="border-width: 1px; text-align: center; width: 12%; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Submitted</span></th>
+						</tr>
+						<c:choose>
+						    <c:when test="${empty registered_opportunities}">
+						    	<tr><td colspan="5" style="border-width: 1px; text-align: center;"><span style="font-weight: bold; ">No Opportunities Available</span></td></tr>
+						    </c:when>    
+						    <c:otherwise>
+						<c:forEach var="o" items="${registered_opportunities}">
+							<tr>
+								<td style="border-width: 1px; text-align: center;"><span style="font-weight: bold; ">${o.opportunityType}</span></td>
+								<td style="border-width: 1px; text-align: center;"><span style="font-weight: bold; ">${o.opportunityTitle} </span></td>
+								<td style="border-width: 1px; text-align: center;"><span style="font-weight: bold; ">
+									<fmt:setLocale value="en_US"/>
+									<fmt:formatNumber value="${o.duckbills}" type="currency"/> </span>
+								</td>
+								<td style="border-width: 1px; text-align: center;">${o.registeredCount}</td>
+								<td style="border-width: 1px; text-align: center;">${o.submittedCount}</td>
+							</tr>
+						</c:forEach>
+						</c:otherwise>
+						</c:choose>
+						</tbody>
+						</table>
+                        <p style="text-align: center; "><span style="border-collapse: collapse; -webkit-border-horizontal-spacing: 2px; -webkit-border-vertical-spacing: 2px; "><br></span></p><p><span style="font-weight: bold; color: #169CE3; "><br></span></p><p><span style="font-weight: bold; color: #169CE3; "><br></span></p><p><br></p><p><br></p>
     </div><div class="art-layout-cell layout-item-4" style="width: 24%" >
     	<table>
     		<tr style="border: none;">

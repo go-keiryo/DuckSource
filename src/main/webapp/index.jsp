@@ -2,8 +2,9 @@
 <%@page import="edu.stevens.ssw690.DuckSource.model.*"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
-<html dir="ltr" lang="en-US"><hed>
+<html dir="ltr" lang="en-US"><head>
     <meta charset="utf-8">
     <title>Index</title>
     <meta name="viewport" content="initial-scale = 1.0, maximum-scale = 1.0, user-scalable = no, width = device-width">
@@ -17,7 +18,31 @@
     <script src="<c:url value="/resources/js/jquery.js" />"></script>
     <script src="<c:url value="/resources/js/script.js" />"></script>
     <script src="<c:url value="/resources/js/script.responsive.js" />"></script>
+    <script src="<c:url value="/resources/js/jquery-1.11.3.min.js" />"></script>
     <script src="<c:url value="/resources/js/index.js" />"></script>
+    
+    <script>
+		$(document).ready(function(){
+			var option = GetURLParameter('select');
+			if (!option) {
+				option = "All types";
+			}
+			$("#oppselect").val(option);
+		});
+		function GetURLParameter(sParam) {
+			var sreturnParam = "";
+			var sPageURL = window.location.search.substring(1);
+		    var sURLVariables = sPageURL.split('&');
+		    for (var i = 0; i < sURLVariables.length; i++)  {
+		        var sParameterName = sURLVariables[i].split('=');
+		        if (sParameterName[0] == sParam) {
+		        	sreturnParam = sParameterName[1];
+		        	return sreturnParam;
+		        }
+		    }
+		    return sreturnParam;
+		}
+	</script>
 
 <style>.art-content .art-postcontent-0 .layout-item-0 { color: #DBE0E1; background: #454545;background: rgba(69, 69, 69, 0.95);  border-collapse: separate; border-radius: 15px;  }
 .art-content .art-postcontent-0 .layout-item-1 { color: #DBE0E1; padding-top: 10px;padding-right: 10px;padding-bottom: 10px;padding-left: 10px; border-top-left-radius: 15px;border-bottom-left-radius: 15px;  }
@@ -138,7 +163,7 @@
                                                 		<tr>
                                                 		<td style="border: none; padding-left:10px; padding-right:10px;">
                                                 			<select id="oppselect" name="OpportunityType" style="width: 300px; ">
-                                                            	<option value="All types" selected="">All types</option>
+                                                            	<option value="All types">All types</option>
                                                             	<option value="Design">Design</option>
                                                             	<option value="Development">Development</option>
                                                             	<option value="Data Science">Data Science</option>

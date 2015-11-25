@@ -1,8 +1,14 @@
 package edu.stevens.ssw690.DuckSource.controller;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,12 +24,12 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import edu.stevens.ssw690.DuckSource.model.DuckUser;
 import edu.stevens.ssw690.DuckSource.model.Opportunity;
+import edu.stevens.ssw690.DuckSource.model.OpportunityRegistered;
 import edu.stevens.ssw690.DuckSource.service.DuckUserManager;
 import edu.stevens.ssw690.DuckSource.service.OpportunityManager;
 import edu.stevens.ssw690.DuckSource.utilities.DuckUtilities;
 
 @Controller
-@RequestMapping("/createopp")
 @SessionAttributes("opportunity")
 public class OpportunityController extends MultiActionController {
 
@@ -40,7 +46,7 @@ public class OpportunityController extends MultiActionController {
        return opportunities;
     }
 	 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value="/createopp", method = RequestMethod.GET)
     public String setupForm(@RequestParam("creatorId") Integer creatorId, Model model)
     {
          Opportunity opportunityForm = new Opportunity();
@@ -50,8 +56,58 @@ public class OpportunityController extends MultiActionController {
          
          return "createopp";
     }
+    
+    @RequestMapping(value="/findupdate", method = RequestMethod.GET)
+	 public String getFindUpdate(HttpServletRequest request, Model model) {
+    	Integer userId = Integer.parseInt( request.getParameter("userId"));
+		String selectType = request.getParameter("select");
+		if (selectType.isEmpty() || selectType.equalsIgnoreCase("All Types")) {
+			 model.addAttribute("userId",userId);
+			model.addAttribute("opportunities", opportunitySvc.getByOtherThanCreator(userId));
+		} else {
+			model.addAttribute("userId",userId);
+			model.addAttribute("opportunities", opportunitySvc.getByOtherThanCreatorByType(userId, selectType));
+		}
+		
+     return "findopp";
+  }
+    
+    @RequestMapping(value="/findopp", method = RequestMethod.GET)
+    public String setupFindForm(@RequestParam("creatorId") Integer creatorId, Model model) 
+    {
+		model.addAttribute("opportunities", opportunitySvc.getByOtherThanCreator(creatorId));
+		model.addAttribute("userId", creatorId);
+		return "findopp";
+	}
+    
+    @RequestMapping(value="/register")
+    public  String registerForOpp(HttpServletRequest request, SessionStatus status, Model model)
+    {
+    	Integer userId = Integer.parseInt(request.getParameter("userId"));
+    	Integer oppId = Integer.parseInt(request.getParameter("oppId"));
+    	
+    	OpportunityRegistered opportunityRegistered = new OpportunityRegistered();
+    	opportunityRegistered.setOpportunity_id(oppId);
+    	opportunityRegistered.setUser_id(userId);
+    	opportunityRegistered.setRegisteredDate(Date.from(LocalDateTime.now().toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+    	
+        Set<OpportunityRegistered> opportunityRegistereds = new HashSet<OpportunityRegistered>();
+        opportunityRegistereds.add(opportunityRegistered);
+        
+        Opportunity opportunity =  opportunitySvc.findById(userId);
+        opportunity.setOpportunitiesRegistered(opportunityRegistereds);
+        opportunitySvc.saveOrUpdate(opportunity);
+		
+    	 DuckUser user = userSvc.findById(userId);
+         Integer creator = user.getId();
+         model.addAttribute("user", user.getFirstName() + " " + user.getLastName());
+         model.addAttribute("opportunties", opportunitySvc.getByCreator(creator));
+         model.addAttribute("userId", creator);
+ 		return "main";
+    }
+    
      
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value="/createopp", method = RequestMethod.POST)
     public  String submitForm(@ModelAttribute("opportunityForm") Opportunity opportunity,
                            BindingResult result, SessionStatus status, Model model)
     {

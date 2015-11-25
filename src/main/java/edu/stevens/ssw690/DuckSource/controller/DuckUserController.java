@@ -15,14 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import edu.stevens.ssw690.DuckSource.model.DuckUser;
-import edu.stevens.ssw690.DuckSource.model.Opportunity;
 import edu.stevens.ssw690.DuckSource.service.DuckUserManager;
 import edu.stevens.ssw690.DuckSource.service.OpportunityManager;
-import edu.stevens.ssw690.DuckSource.utilities.DuckUtilities;
 import edu.stevens.ssw690.DuckSource.utilities.EmailValidator;
 
 
@@ -133,7 +130,7 @@ public class DuckUserController extends MultiActionController {
    }
 
 	@RequestMapping(value="/indexupdate")
-	 public String iIndexUpdarw(HttpServletRequest request, Model model) {
+	 public String getIndexUpdate(HttpServletRequest request, Model model) {
 		String selectType = request.getParameter("select");
 		if (selectType.isEmpty() || selectType.equalsIgnoreCase("All Types")) {
 			model.addAttribute("opportunities", opportunitySvc.getAllOpportunities());
@@ -154,6 +151,7 @@ public class DuckUserController extends MultiActionController {
 			DuckUser user =userSvc.findById(userId);
 			model.addAttribute("user", user.getFirstName() + " " + user.getLastName());
     		model.addAttribute("opportunities", opportunitySvc.getByCreator(userId));
+    		model.addAttribute("opportunities_registered", opportunitySvc.getByRegistered(userId));
     		model.addAttribute("userId", userId);
     		return "main";
 		}

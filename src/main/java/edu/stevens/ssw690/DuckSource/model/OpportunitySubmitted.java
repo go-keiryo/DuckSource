@@ -31,9 +31,9 @@ private static final long serialVersionUID = 1L;
     Integer opportunity_id;
     @Column(name="user_id")
     Integer user_id;
-    @Column(name="submitted_date")
+    @Column(name="submission_date")
     @DateTimeFormat(pattern = "MM/dd/yyyy")
-    private Date submittedDate;
+    private Date submissionDate;
     @Column(name="file_path")
     private String filePath;
     @Column(name="accepted_date")
@@ -59,11 +59,11 @@ private static final long serialVersionUID = 1L;
 	public void setUser_id(Integer user_id) {
 		this.user_id = user_id;
 	}
-	public Date getSubmittedDate() {
-		return submittedDate;
+	public Date getSubmissionDate() {
+		return submissionDate;
 	}
-	public void setSubmittedDate(Date submittedDate) {
-		this.submittedDate = submittedDate;
+	public void setSubmissionDate(Date submittedDate) {
+		this.submissionDate = submittedDate;
 	}
 	public String getFilePath() {
 		return filePath;

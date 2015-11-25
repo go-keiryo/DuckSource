@@ -34,5 +34,25 @@ public class OpportunityManagerImpl implements OpportunityManager {
 	public List<Opportunity> getByType(String oppType) {
 		return  dao.getByType(oppType);
 	}
+
+	public List<Opportunity> getByOtherThanCreator(Integer creator) {
+		return dao.getByOtherThanCreator(creator);
+	}
+	public List<Opportunity> getByOtherThanCreatorByType(Integer creator, String oppType) {
+		return dao.getByOtherThanCreatorByType(creator, oppType);
+	}
+
+	public Opportunity findById(Integer id) {
+		return dao.findById(id);
+	}
+
+	public void saveOrUpdate(Opportunity opportunity) {
+		dao.saveOrUpdate(opportunity);
+		
+	}
+
+	public List<Opportunity> getByRegistered(Integer userId) {
+		return dao.getByRegistered(userId);
+	}
  
 }
