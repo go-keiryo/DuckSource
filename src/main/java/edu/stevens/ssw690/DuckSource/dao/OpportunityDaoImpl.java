@@ -64,7 +64,7 @@ public class OpportunityDaoImpl implements OpportunityDao {
     
     public List<Opportunity> getByRegistered(Integer userId) {
     	TypedQuery<Opportunity> query = em.createQuery(
-                "FROM  Opportunity o WHERE o.userId=:userId",  Opportunity.class);
+                "from Opportunity as o left join opportunitiesRegistered as r  with r.userId = userId", Opportunity.class);
     	query.setParameter("userId", userId);  
     	return query.getResultList();
     	

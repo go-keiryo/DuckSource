@@ -27,6 +27,7 @@ import edu.stevens.ssw690.DuckSource.model.Opportunity;
 import edu.stevens.ssw690.DuckSource.model.OpportunityRegistered;
 import edu.stevens.ssw690.DuckSource.service.DuckUserManager;
 import edu.stevens.ssw690.DuckSource.service.OpportunityManager;
+import edu.stevens.ssw690.DuckSource.service.OpportunityRegisteredManager;
 import edu.stevens.ssw690.DuckSource.utilities.DuckUtilities;
 
 @Controller
@@ -35,6 +36,9 @@ public class OpportunityController extends MultiActionController {
 
 	@Autowired
 	OpportunityManager opportunitySvc;
+	
+	@Autowired
+	OpportunityRegisteredManager opportunityRegisteredSvc; 
 	
 	@Autowired
 	DuckUserManager userSvc;
@@ -90,18 +94,14 @@ public class OpportunityController extends MultiActionController {
     	opportunityRegistered.setOpportunity_id(oppId);
     	opportunityRegistered.setUser_id(userId);
     	opportunityRegistered.setRegisteredDate(Date.from(LocalDateTime.now().toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
-    	
-        Set<OpportunityRegistered> opportunityRegistereds = new HashSet<OpportunityRegistered>();
-        opportunityRegistereds.add(opportunityRegistered);
+    	opportunityRegisteredSvc.persist(opportunityRegistered);
         
-        Opportunity opportunity =  opportunitySvc.findById(userId);
-        opportunity.setOpportunitiesRegistered(opportunityRegistereds);
-        opportunitySvc.saveOrUpdate(opportunity);
 		
     	 DuckUser user = userSvc.findById(userId);
          Integer creator = user.getId();
          model.addAttribute("user", user.getFirstName() + " " + user.getLastName());
          model.addAttribute("opportunties", opportunitySvc.getByCreator(creator));
+         model.addAttribute("opportunities_registered", opportunitySvc.getByRegistered(userId));
          model.addAttribute("userId", creator);
  		return "main";
     }
@@ -164,10 +164,11 @@ public class OpportunityController extends MultiActionController {
         status.setComplete();
         
         DuckUser user = userSvc.findById(creatorId);
-        Integer creator = user.getId();
+        Integer userId = user.getId();
         model.addAttribute("user", user.getFirstName() + " " + user.getLastName());
-        model.addAttribute("opportunties", opportunitySvc.getByCreator(creator));
-        model.addAttribute("userId", creator);
+        model.addAttribute("opportunties", opportunitySvc.getByCreator(userId));
+        model.addAttribute("opportunities_registered", opportunitySvc.getByRegistered(userId));
+        model.addAttribute("userId", userId);
 		return "main";
        
     }

@@ -107,10 +107,11 @@ public class DuckUserController extends MultiActionController {
         user.setRegistrationDate(Date.from(LocalDateTime.now().toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
        
         userSvc.persist(user);
-        Integer creator = user.getId();
+        Integer userId = user.getId();
 		model.addAttribute("user", user.getFirstName() + " " + user.getLastName());
-		model.addAttribute("opportunities", opportunitySvc.getByCreator(creator));
-		model.addAttribute("userId", creator);
+		model.addAttribute("opportunities", opportunitySvc.getByCreator(userId));
+		model.addAttribute("opportunities_registered", opportunitySvc.getByRegistered(userId));
+		model.addAttribute("userId", userId);
 		
 		return "main";
     	
@@ -170,10 +171,11 @@ public class DuckUserController extends MultiActionController {
         		model.addAttribute("message", "Invalid Username or Password");
         		return "../index";
         	} else {
-        		Integer creator = user.getId();
+        		Integer userId = user.getId();
         		model.addAttribute("user", user.getFirstName() + " " + user.getLastName());
-        		model.addAttribute("opportunities", opportunitySvc.getByCreator(creator));
-        		model.addAttribute("userId", creator);
+        		model.addAttribute("opportunities", opportunitySvc.getByCreator(userId));
+        		model.addAttribute("opportunities_registered", opportunitySvc.getByRegistered(userId));
+        		model.addAttribute("userId", userId);
         		return "main";
         	}
         } else {
