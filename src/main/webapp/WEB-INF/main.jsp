@@ -85,7 +85,7 @@
                         </style>
                         
                         
-                        <h1><span style="font-weight: bold; color: #169CE3; "><span style="font-size: 28px; color: #000000; ">Current Accepted Opportunities:</span><br></span></h1><br>><br>
+                        <h1><span style="font-weight: bold; color: #169CE3; "><span style="font-size: 28px; color: #000000; ">Current Accepted Opportunities:</span><br></span></h1><br><br>
                         <table class="art-article" style="margin-bottom: 3px; margin-top: 3px; width: 75%; margin-right: auto; margin-left: auto;"><tbody>
 						<tr>
 							<th style="border-width: 1px; text-align: center; width: 12%; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Type</span></th>
@@ -95,11 +95,11 @@
 							<th style="border-width: 1px; text-align: center; width: 12%; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Submitted</span></th>
 						</tr>
 						<c:choose>
-						    <c:when test="${empty registered_opportunities}">
+						    <c:when test="${empty opportunities_registered}">
 						    	<tr><td colspan="5" style="border-width: 1px; text-align: center;"><span style="font-weight: bold; ">No Opportunities Available</span></td></tr>
 						    </c:when>    
 						    <c:otherwise>
-						<c:forEach var="o" items="${registered_opportunities}">
+						<c:forEach var="o" items="${opportunities_registered}">
 							<tr>
 								<td style="border-width: 1px; text-align: center;"><span style="font-weight: bold; ">${o.opportunityType}</span></td>
 								<td style="border-width: 1px; text-align: center;"><span style="font-weight: bold; ">${o.opportunityTitle} </span></td>
@@ -107,8 +107,18 @@
 									<fmt:setLocale value="en_US"/>
 									<fmt:formatNumber value="${o.duckbills}" type="currency"/> </span>
 								</td>
-								<td style="border-width: 1px; text-align: center;">${o.registeredCount}</td>
-								<td style="border-width: 1px; text-align: center;">${o.submittedCount}</td>
+								<td style="border-width: 1px; text-align: center;">
+									<c:set var="regDate">
+      									<fmt:formatDate pattern="MM/dd/yyyy" value="${o.registerDate}" />
+   									</c:set>
+   									<span style="font-weight: bold; ">${regDate}</span>
+								</td>
+								<td style="border-width: 1px; text-align: center;">
+									<c:set var="subDate">
+      									<fmt:formatDate pattern="MM/dd/yyyy" value="${o.submitDate}" />
+   									</c:set>
+   									<span style="font-weight: bold; ">${subDate}</span>
+								</td>
 							</tr>
 						</c:forEach>
 						</c:otherwise>

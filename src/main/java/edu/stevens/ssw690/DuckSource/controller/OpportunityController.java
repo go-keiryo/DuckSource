@@ -91,18 +91,17 @@ public class OpportunityController extends MultiActionController {
     	Integer oppId = Integer.parseInt(request.getParameter("oppId"));
     	
     	OpportunityRegistered opportunityRegistered = new OpportunityRegistered();
-    	opportunityRegistered.setOpportunity_id(oppId);
-    	opportunityRegistered.setUser_id(userId);
+    	Opportunity opportunity = opportunitySvc.findById(oppId);
+    	DuckUser user =  userSvc.findById(userId);
     	opportunityRegistered.setRegisteredDate(Date.from(LocalDateTime.now().toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+    	opportunityRegistered.setOpportunity(opportunity);
+    	opportunityRegistered.setUser(user);
     	opportunityRegisteredSvc.persist(opportunityRegistered);
-        
 		
-    	 DuckUser user = userSvc.findById(userId);
-         Integer creator = user.getId();
-         model.addAttribute("user", user.getFirstName() + " " + user.getLastName());
-         model.addAttribute("opportunties", opportunitySvc.getByCreator(creator));
-         model.addAttribute("opportunities_registered", opportunitySvc.getByRegistered(userId));
-         model.addAttribute("userId", creator);
+        model.addAttribute("user", user.getFirstName() + " " + user.getLastName());
+        model.addAttribute("opportunties", opportunitySvc.getByCreator(userId));
+        model.addAttribute("opportunities_registered", opportunitySvc.getByRegistered(userId));
+        model.addAttribute("userId", userId);
  		return "main";
     }
     
@@ -166,7 +165,7 @@ public class OpportunityController extends MultiActionController {
         DuckUser user = userSvc.findById(creatorId);
         Integer userId = user.getId();
         model.addAttribute("user", user.getFirstName() + " " + user.getLastName());
-        model.addAttribute("opportunties", opportunitySvc.getByCreator(userId));
+        model.addAttribute("opportunities", opportunitySvc.getByCreator(userId));
         model.addAttribute("opportunities_registered", opportunitySvc.getByRegistered(userId));
         model.addAttribute("userId", userId);
 		return "main";

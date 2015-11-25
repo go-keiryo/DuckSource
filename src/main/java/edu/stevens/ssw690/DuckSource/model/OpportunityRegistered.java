@@ -5,8 +5,11 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -26,10 +29,12 @@ public class OpportunityRegistered implements Serializable {
     @Column(name="opportunity_registered_id")
     @GeneratedValue
     Integer id;
-    @Column(name="opportunity_id")
-    Integer opportunity_id;
-    @Column(name="user_id")
-    Integer user_id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "opportunity_id", nullable = false)
+    private Opportunity opportunity;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private DuckUser user;
     @Column(name="registered_date")
     @DateTimeFormat(pattern = "MM/dd/yyyy")
     private Date registeredDate;
@@ -40,17 +45,17 @@ public class OpportunityRegistered implements Serializable {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public Integer getOpportunity_id() {
-		return opportunity_id;
+	public Opportunity getOpportunity() {
+		return opportunity;
 	}
-	public void setOpportunity_id(Integer opportunity_id) {
-		this.opportunity_id = opportunity_id;
+	public void setOpportunity(Opportunity opportunity) {
+		this.opportunity = opportunity;
 	}
-	public Integer getUser_id() {
-		return user_id;
+	public DuckUser getUser() {
+		return user;
 	}
-	public void setUser_id(Integer user_id) {
-		this.user_id = user_id;
+	public void setUser(DuckUser user) {
+		this.user = user;
 	}
 	public Date getRegisteredDate() {
 		return registeredDate;
@@ -58,6 +63,6 @@ public class OpportunityRegistered implements Serializable {
 	public void setRegisteredDate(Date registeredDate) {
 		this.registeredDate = registeredDate;
 	}
-    
+
     
 }

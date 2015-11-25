@@ -5,16 +5,16 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.Formula;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -55,11 +55,9 @@ public class Opportunity implements Serializable {
     private Integer registeredCount;
     @Formula("(select count(*) from opportunity_submitted s where s.opportunity_id = opportunity_id)")
     private Integer submittedCount;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name= "opportunity_id")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "opportunity")
     private Set<OpportunityRegistered> opportunitiesRegistered;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name= "opportunity_id")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "opportunity")
     private Set<OpportunitySubmitted> opportunitiesSubmitted;
     
 	public Integer getId() {
@@ -122,12 +120,14 @@ public class Opportunity implements Serializable {
 	public void setOpportunitiesRegistered(Set<OpportunityRegistered> opportunitiesRegistered) {
 		this.opportunitiesRegistered = opportunitiesRegistered;
 	}
-	public Set<OpportunityRegistered> getOpportunities() {
-		return opportunitiesRegistered;
-	}
-	public void setOpportunitiesSubmitted(Set<OpportunitySubmitted> opportunitiesSubmitted) {
+	
+	public void setOpportunitySubmitted(Set<OpportunitySubmitted> opportunitiesSubmitted) {
 		this.opportunitiesSubmitted = opportunitiesSubmitted;
 	}
+	public Set<OpportunitySubmitted> getOpportunitiesSubmitted() {
+		return opportunitiesSubmitted;
+	}
+	
 	public Opportunity(String oppType, String oppTitle, BigDecimal bills, Date registerDate, Date submitDate, String desc, Integer creator) {
 	       this.opportunityType = oppType;
 	       this.opportunityTitle = oppTitle;

@@ -22,4 +22,8 @@ public class OpportunityRegisteredDaoImpl implements OpportunityRegisteredDao{
     public void persist(OpportunityRegistered opportunityRegistered) {
         em.persist(opportunityRegistered);
     }
+    
+    public void merge(OpportunityRegistered opportunityRegistered) {
+        em.merge(opportunityRegistered);
+    }
 }

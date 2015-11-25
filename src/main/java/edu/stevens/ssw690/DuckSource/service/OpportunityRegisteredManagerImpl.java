@@ -16,4 +16,9 @@ public class OpportunityRegisteredManagerImpl implements OpportunityRegisteredMa
 		dao.persist(opportunityRegistered);;
 		
 	}
+
+	public void merge(OpportunityRegistered opportunityRegistered) {
+		dao.merge(opportunityRegistered);
+		
+	}
 }

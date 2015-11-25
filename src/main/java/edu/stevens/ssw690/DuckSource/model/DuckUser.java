@@ -2,11 +2,14 @@ package edu.stevens.ssw690.DuckSource.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -35,9 +38,13 @@ public class DuckUser  implements Serializable {
 	    private String password;
 	    @Transient
 	    private String confirmPassword;
-	    @Column(name="registration_date")
+		@Column(name="registration_date")
 	    @DateTimeFormat(pattern = "MM/dd/yyyy")
 	    private Date registrationDate;
+	    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	    private Set<OpportunityRegistered> opportunitiesRegistered;
+	    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	    private Set<OpportunitySubmitted> opportunitiesSubmitted;
 	    
 	    public Integer getId() {
 			return id;
@@ -103,6 +110,22 @@ public class DuckUser  implements Serializable {
 
 		public void setRegistrationDate(Date registrationDate) {
 			this.registrationDate = registrationDate;
+		}
+		
+		 public Set<OpportunityRegistered> getOpportunitiesRegistered() {
+				return opportunitiesRegistered;
+		}
+
+		public void setOpportunitiesRegistered(Set<OpportunityRegistered> opportunitiesRegistered) {
+				this.opportunitiesRegistered = opportunitiesRegistered;
+		}
+
+		public Set<OpportunitySubmitted> getOpportunitiesSubmitted() {
+				return opportunitiesSubmitted;
+		}
+
+		public void setOpportunitiesSubmitted(Set<OpportunitySubmitted> opportunitiesSubmitted) {
+				this.opportunitiesSubmitted = opportunitiesSubmitted;
 		}
 
 		// Constructors:
