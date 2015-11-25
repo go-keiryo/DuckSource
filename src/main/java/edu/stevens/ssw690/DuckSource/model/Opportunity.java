@@ -58,6 +58,9 @@ public class Opportunity implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name= "opportunity_id")
     private Set<OpportunityRegistered> opportunitiesRegistered;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name= "opportunity_id")
+    private Set<OpportunitySubmitted> opportunitiesSubmitted;
     
 	public Integer getId() {
 		return id;
@@ -119,7 +122,12 @@ public class Opportunity implements Serializable {
 	public void setOpportunitiesRegistered(Set<OpportunityRegistered> opportunitiesRegistered) {
 		this.opportunitiesRegistered = opportunitiesRegistered;
 	}
-    
+	public Set<OpportunityRegistered> getOpportunities() {
+		return opportunitiesRegistered;
+	}
+	public void setOpportunitiesSubmitted(Set<OpportunitySubmitted> opportunitiesSubmitted) {
+		this.opportunitiesSubmitted = opportunitiesSubmitted;
+	}
 	public Opportunity(String oppType, String oppTitle, BigDecimal bills, Date registerDate, Date submitDate, String desc, Integer creator) {
 	       this.opportunityType = oppType;
 	       this.opportunityTitle = oppTitle;
