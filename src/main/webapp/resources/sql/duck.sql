@@ -40,7 +40,11 @@ CREATE TABLE DuckDb.`opportunity_registered` (
   `opportunity_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `registered_date` DATE NOT NULL,
-  PRIMARY KEY (`opportunity_registered_id`)
+  PRIMARY KEY (`opportunity_registered_id`),
+  INDEX(`user_id`),
+  INDEX(`opportunity_id`),
+  FOREIGN KEY (`user_id`) REFERENCES DuckDb.`duck_user`(`user_id`),
+  FOREIGN KEY (`opportunity_id`) REFERENCES DuckDb.`opportunity`(`opportunity_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 CREATE TABLE DuckDb.`opportunity_submitted` (
@@ -52,7 +56,11 @@ CREATE TABLE DuckDb.`opportunity_submitted` (
   `accepted_date` DATE,
   `status` varchar(45),
   `comment` TEXT,
-  PRIMARY KEY (`opportunity_submitted_id`)
+  PRIMARY KEY (`opportunity_submitted_id`),
+  INDEX(`user_id`),
+  INDEX(`opportunity_id`),
+  FOREIGN KEY (`user_id`) REFERENCES DuckDb.`duck_user`(`user_id`),
+  FOREIGN KEY (`opportunity_id`) REFERENCES DuckDb.`opportunity`(`opportunity_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 CREATE TABLE DuckDb.`opportunity_review` (
@@ -60,7 +68,11 @@ CREATE TABLE DuckDb.`opportunity_review` (
   `opportunity_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `opportunity_review_issue_id` int(11),
-  PRIMARY KEY (`opportunity_review_id`)
+  PRIMARY KEY (`opportunity_review_id`),
+  INDEX(`user_id`),
+  INDEX(`opportunity_id`),
+  FOREIGN KEY (`user_id`) REFERENCES DuckDb.`duck_user`(`user_id`),
+  FOREIGN KEY (`opportunity_id`) REFERENCES DuckDb.`opportunity`(`opportunity_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 CREATE TABLE DuckDb.`opportunity_review_issue` (
@@ -70,7 +82,9 @@ CREATE TABLE DuckDb.`opportunity_review_issue` (
   `issue_id` int(11),
   `comment` TEXT,
   `resolution_date` DATE,
-  PRIMARY KEY (`opportunity_review_issue_id`)
+  PRIMARY KEY (`opportunity_review_issue_id`),
+  INDEX(`opportunity_review_id`),
+  FOREIGN KEY (`opportunity_review_id`) REFERENCES DuckDb.`opportunity_review`(`opportunity_review_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 CREATE TABLE DuckDb.`review_issue` (
