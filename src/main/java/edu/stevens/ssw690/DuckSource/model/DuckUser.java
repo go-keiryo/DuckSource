@@ -1,8 +1,6 @@
 package edu.stevens.ssw690.DuckSource.model;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Date;
 
 import javax.persistence.Column;
