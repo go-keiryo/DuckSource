@@ -4,9 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -59,6 +57,32 @@ public class OpportunityController extends MultiActionController {
          model.addAttribute("opportunityForm", opportunityForm);
          
          return "createopp";
+    }
+    
+    @RequestMapping(value="/indexoppdetail", method = RequestMethod.GET)
+    public String showDetailIndex(HttpServletRequest request, Model model)
+    {
+    	Integer oppId = Integer.parseInt(request.getParameter("oppId"));
+         Opportunity opportunity = opportunitySvc.findById(oppId);
+         model.addAttribute("opportunity", opportunity);
+         
+         return "indexoppdetail";
+    }
+    
+    @RequestMapping(value="/oppdetail", method = RequestMethod.GET)
+    public String showDetail(HttpServletRequest request, Model model)
+    {
+    	Integer oppId = Integer.parseInt(request.getParameter("oppId"));
+    	String userId = request.getParameter("userId");
+    	if (userId != null && (!userId.isEmpty())) {
+    		 model.addAttribute("userId",userId);
+    	} else {
+    		 model.addAttribute("userId","");
+    	}
+         Opportunity opportunity = opportunitySvc.findById(oppId);
+         model.addAttribute("opportunity", opportunity);
+         
+         return "oppdetail";
     }
     
     @RequestMapping(value="/findupdate", method = RequestMethod.GET)
