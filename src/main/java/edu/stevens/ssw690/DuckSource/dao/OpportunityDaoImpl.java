@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import edu.stevens.ssw690.DuckSource.model.DuckUser;
 import edu.stevens.ssw690.DuckSource.model.Opportunity;
 
 @Repository
@@ -24,7 +23,7 @@ public class OpportunityDaoImpl implements OpportunityDao {
         em.persist(opportunity);
     }
     
-    public void saveOrUpdate(Opportunity opportunity) {
+    public void merge(Opportunity opportunity) {
     	em.merge(opportunity);
     }
     
@@ -32,7 +31,18 @@ public class OpportunityDaoImpl implements OpportunityDao {
     	return em.find(Opportunity.class, id);
 	}
     
- 
+    public Opportunity getById(Integer id) {
+    	Opportunity opp = null;;
+    	TypedQuery<Opportunity> query = em.createQuery(
+                "FROM  Opportunity o WHERE o.id=:id",  Opportunity.class);
+    	query.setParameter("id", id);  
+    	List<Opportunity> list =  query.getResultList();
+    	int size = list.size();
+    	if (size > 0)
+    		opp = list.get(0);
+    	return opp;
+	}
+    
     // Retrieves all the Opportunities:
     public List<Opportunity> getAllOpportunities() {
         TypedQuery<Opportunity> query = em.createQuery(
@@ -42,7 +52,7 @@ public class OpportunityDaoImpl implements OpportunityDao {
     
     // Retrieves the Opportunity:
     public Opportunity getOpportunity(String title) {
-    	 Opportunity opp = null;;
+    	Opportunity opp = null;;
     	TypedQuery<Opportunity> query = em.createQuery(
     		"SELECT o FROM  Opportunity o WHERE o.title IS NULL OR LOWER(u.opportunity_title) = LOWER(:title)",  Opportunity.class);
     	query.setParameter("title", title);

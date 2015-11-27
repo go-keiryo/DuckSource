@@ -49,8 +49,14 @@
 .art-content .art-postcontent-0 .layout-item-3 { color: #212627; background: #E1E5E5 url(<c:url value='/resources/images/32359.png' />') scroll; padding-top: 10px;padding-right: 10px;padding-bottom: 10px;padding-left: 10px; border-radius: 15px;  }
 .ie7 .art-post .art-layout-cell {border:none !important; padding:0 !important; }
 .ie6 .art-post .art-layout-cell {border:none !important; padding:0 !important; }
+</style>
+<style>
+    .auto-style1 {
+    	background-color: #B7E4FF;
+    }
+</style>
 
-</style></head>
+</head>
 <body>
 <div id="art-main">
 <header class="art-header">
@@ -73,7 +79,7 @@
                     
 </header>
 <nav class="art-nav">
-    <ul class="art-hmenu"><li><a href="main?creatorId=${userId}" class="">Home Page</a></li><li><a href="findopp?creatorId=${userId}"" class="active">Find an Opportunity</a></li><li><a href="createopp?creatorId=${userId}"">Create an Opportunity</a></li><li><a href="account-settings.html">Account Settings</a></li><li><a href="index">Sign Out</a></li></ul> 
+    <ul class="art-hmenu"><li><a href="main?userId=${userId}">Home Page</a></li><li><a href="findopp?userId=${userId}" class="active">Find an Opportunity</a></li><li><a href="createopp?userId=${userId}">Create an Opportunity</a></li><li><a href="account?userId=${userId}">Account Settings</a></li><li><a href="index">Sign Out</a></li></ul> 
     </nav>
 <div class="art-sheet clearfix">
             <div class="art-layout-wrapper">
@@ -87,11 +93,6 @@
     <div class="art-layout-cell layout-item-1" style="width: 12%" >
         <p><br /></p>
     </div><div class="art-layout-cell layout-item-2" style="width: 76%" >
-        <style type="text/css">
-                .auto-style1 {
-                	background-color: #B7E4FF;
-                }
-                </style>
                 
                 
                 <h1><span style="font-weight: bold; color: #169CE3; "><span style="font-size: 28px; color: #000000; ">Current Open Opportunities:</span><br></span></h1><br>
@@ -135,7 +136,7 @@
 							<c:forEach var="o" items="${opportunities}">
 							<tr>
 								<td style="border-width: 1px; text-align: center;"><span style="font-weight: bold; ">${o.opportunityType}</span></td>
-								<td style="border-width: 1px; text-align: center;"><span style="font-weight: bold; "><a href="oppdetail.html?oppId=${o.id}">${o.opportunityTitle}</a></span></td>
+								<td style="border-width: 1px; text-align: center;"><span style="font-weight: bold; "><a href="oppdetail.html?oppId=${o.id}&userId=${userId}">${o.opportunityTitle}</a></span></td>
 								<td style="border-width: 1px; text-align: center;"><span style="font-weight: bold; ">
 									<fmt:setLocale value="en_US"/>
 									<fmt:formatNumber value="${o.duckbills}" type="currency"/> </span>
@@ -173,7 +174,7 @@
                     </div>
                 </div>
             </div><footer class="art-footer">
-<p><a href="/new-page" style="font-size: 13px;"><span style="color: rgb(22, 156, 227);">About</span></a><a href="#"></a></p>
+<p><a href="about?userId=${userId}" style="font-size: 13px;"><span style="color: rgb(22, 156, 227);">About</span></a><a href="#"></a></p>
 <p>Copyright © 2015. All Rights Reserved.</p>
 </footer>
 

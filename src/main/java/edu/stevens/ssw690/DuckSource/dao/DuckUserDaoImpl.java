@@ -24,10 +24,27 @@ public class DuckUserDaoImpl implements DuckUserDao{
         em.persist(user);
     }
     
+    public void merge(DuckUser user) {
+    	em.merge(user);
+    	em.flush();
+    }
+    
 	public List<DuckUser> getAll() {
 	    List<DuckUser> result = em.createQuery("from DuckUser", DuckUser.class).getResultList();
 	    return result;
 	 }
+	
+	public DuckUser getById(Integer id) {
+		DuckUser user = null;
+    	Query query = em.createQuery("from DuckUser u WHERE u.id = :id)");
+    	query.setParameter("id", id);
+    	@SuppressWarnings("unchecked")
+		List<DuckUser> list = (List<DuckUser>) query.getResultList();
+    	int size = list.size();
+    	if (size > 0)
+    		user = list.get(0);
+    	return user;
+	}
 	
 	public DuckUser findById(Integer id) {
     	return em.find(DuckUser.class, id);

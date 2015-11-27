@@ -36,5 +36,15 @@ public class DuckUserManagerImpl implements DuckUserManager{
 	public boolean getUsernameExists(String username) {
 		return dao.getUsernameExists(username);
 	}
+
+	
+	public void merge(DuckUser user) {
+		dao.merge(user);
+		
+	}
+
+	public DuckUser getById(Integer id) {
+		return dao.getById(id);
+	}
    
 }

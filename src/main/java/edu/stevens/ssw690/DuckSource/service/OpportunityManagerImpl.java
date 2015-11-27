@@ -46,13 +46,18 @@ public class OpportunityManagerImpl implements OpportunityManager {
 		return dao.findById(id);
 	}
 
-	public void saveOrUpdate(Opportunity opportunity) {
-		dao.saveOrUpdate(opportunity);
+	public void merge(Opportunity opportunity) {
+		dao.merge(opportunity);
 		
 	}
 
 	public List<Opportunity> getByRegistered(Integer userId) {
 		return dao.getByRegistered(userId);
+	}
+
+	
+	public Opportunity getById(Integer id) {
+		return dao.getById(id);
 	}
  
 }

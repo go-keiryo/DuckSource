@@ -122,7 +122,7 @@
         <tr style="border: none;">
         	<td style="border: none; text-align:left" ><input type="submit" value="Sign In"/>
         	</td>
-        	<td class="auto-style" style="border-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px; padding-top: 4px; padding-right: 4px; padding-bottom: 4px; padding-left: 4px; text-align: center; "><label><a href="forgot-password.html" >Forgot your password?</a></label>
+        	<td class="auto-style" style="border-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px; padding-top: 4px; padding-right: 4px; padding-bottom: 4px; padding-left: 4px; text-align: center; "><label><a href="resetpassword" >Forgot your password?</a></label>
         	</td>
          </tr>
          <tr style="border: none;">
@@ -247,12 +247,25 @@
                         <td style="text-align: center; width: 50%; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; " class="auto-style2"><span style="font-size: 16px; font-weight: bold; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Points</span>
                         </td>
                    </tr>
-                   <tr>
+                   <c:choose>
+						<c:when test="${empty users}">  
+                   			<tr>
                    		<td style="text-align: center; width: 100%; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; " colspan="2"><span style="font-weight: bold;">No users to display</span>
                    		</td>
                    	</tr>
+                   	</c:when>
+                   	<c:otherwise>
+							<c:forEach var="u" items="${users}"> 
+								<tr> 
+									<td style="border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; "><span style="font-weight: bold;">${u.userName}</span></td>
+									<td style="border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; "><span style="font-weight: bold;">${u.id}</span></td>
+								</tr>
+               </c:forEach>
+			</c:otherwise>
+			</c:choose>
                </tbody>
            </table>
+           
         </td>
        </tr>                                                                                                                                                                                        </p>
     </table>
@@ -266,8 +279,8 @@
                     </div>
                 </div>
             </div><footer class="art-footer">
-<p><a href="/new-page" style="font-size: 13px;"><span style="color: rgb(22, 156, 227);">About</span></a><a href="#"></a></p>
-<p>Copyright Â© 2015. All Rights Reserved.</p>
+<p><a href="indexabout" style="font-size: 13px;"><span style="color: rgb(22, 156, 227);">About</span></a><a href="#"></a></p>
+<p>Copyright © 2015. All Rights Reserved.</p>
 </footer>
 
     </div>

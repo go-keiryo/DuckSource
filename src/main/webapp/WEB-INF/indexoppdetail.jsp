@@ -36,7 +36,7 @@
 <body>
 <div id="art-main">
 <nav class="art-nav">
-    <ul class="art-hmenu"><li><a href="index">Main Page</a></li><li><a href="sign-up.html">Sign Up</a></li></ul> 
+    <ul class="art-hmenu"><li><a href="index">Main Page</a></li><li><a href="signup.html">Sign Up</a></li></ul> 
     </nav>
 
 <header class="art-header">
@@ -79,7 +79,7 @@
          	</tr>
          	<tr style="border: none;">
          		<td style="border: none; font-weight: bold; "><spring:message code="lbl.opportunitytitle" text="Title" /></td>
-                <td style="border: none;"><label>${opportunity.opportunityTitle}</label>
+                <td style="border: none;"><label>${opportunity.opportunityTitle}</label></td>
          	</tr>
          	<tr style="border: none;">
          		<td style="border: none;font-weight: bold;"><spring:message code="lbl.duckbills" text="Duck Bill$" /></td>
@@ -126,7 +126,7 @@
                     </div>
                 </div>
             </div><footer class="art-footer">
-<p><a href="/new-page" style="font-size: 13px;"><span style="color: rgb(22, 156, 227);">About</span></a><a href="#"></a></p>
+<p><a href="indexabout" style="font-size: 13px;"><span style="color: rgb(22, 156, 227);">About</span></a><a href="#"></a></p>
 <p>Copyright © 2015. All Rights Reserved.</p>
 </footer>
 

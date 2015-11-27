@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html dir="ltr" lang="en-US"><head>
     <meta charset="utf-8">
-    <title>${user}'s Homepage</title>
+    <title>${user.firstName} ${user.lastName}'s Homepage</title>
     <meta name="viewport" content="initial-scale = 1.0, maximum-scale = 1.0, user-scalable = no, width = device-width">
 
     <!--[if lt IE 9]><script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -29,7 +29,18 @@
 .ie7 .art-post .art-layout-cell {border:none !important; padding:0 !important; }
 .ie6 .art-post .art-layout-cell {border:none !important; padding:0 !important; }
 
-</style></head>
+</style>
+<style type="text/css">
+   .auto-style1 {
+      background-color: #B7E4FF;
+    }
+    .auto-style2 {
+       font-weight: bold;
+       font-size: 16px;
+       color: #101313;
+    }
+</style>
+</head>
 <body>
 <div id="art-main">
 <header class="art-header">
@@ -52,7 +63,7 @@
                     
 </header>
 <nav class="art-nav">
-    <ul class="art-hmenu"><li><a href="main?creatorId=${userId}" class="active">Home Page</a></li><li><a href="findopp?creatorId=${userId}">Find an Opportunity</a></li><li><a href="createopp?creatorId=${userId}">Create an Opportunity</a>></li><li><a href="account-settings.html">Account Settings</a></li><li><a href="index">Sign Out</a></li></ul> 
+    <ul class="art-hmenu"><li><a href="main?userId=${userId}" class="active">Home Page</a></li><li><a href="findopp?userId=${userId}">Find an Opportunity</a></li><li><a href="createopp?userId=${userId}">Create an Opportunity</a>></li><li><a href="account?userId=${userId}">Account Settings</a></li><li><a href="index">Sign Out</a></li></ul> 
     </nav>
 <div class="art-sheet clearfix">
             <div class="art-layout-wrapper">
@@ -72,27 +83,14 @@
 </div>
 <div class="art-content-layout layout-item-2">
     <div class="art-content-layout-row">
-    <div class="art-layout-cell layout-item-3" style="width: 76%" >
-        <style type="text/css">
-                        .auto-style1 {
-                        	background-color: #B7E4FF;
-                        }
-                        .auto-style2 {
-                	font-weight: bold;
-                	font-size: 16px;
-                	color: #101313;
-                }
-                        </style>
-                        
-                        
+    <div class="art-layout-cell layout-item-3" style="width: 76%" >                         
                         <h1><span style="font-weight: bold; color: #169CE3; "><span style="font-size: 28px; color: #000000; ">Current Accepted Opportunities:</span><br></span></h1><br><br>
                         <table class="art-article" style="margin-bottom: 3px; margin-top: 3px; width: 75%; margin-right: auto; margin-left: auto;"><tbody>
 						<tr>
 							<th style="border-width: 1px; text-align: center; width: 12%; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Type</span></th>
 							<th style="border-width: 1px; text-align: center; width: 12%; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Title</span></th>
 							<th style="border-width: 1px; text-align: center; width: 12%; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">DuckBill$</span></th>
-							<th style="border-width: 1px; text-align: center; width: 12%; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Registered</span></th>
-							<th style="border-width: 1px; text-align: center; width: 12%; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Submitted</span></th>
+							<th style="border-width: 1px; text-align: center; width: 12%; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Submit By</span></th>
 						</tr>
 						<c:choose>
 						    <c:when test="${empty opportunities_registered}">
@@ -106,12 +104,6 @@
 								<td style="border-width: 1px; text-align: center;"><span style="font-weight: bold; ">
 									<fmt:setLocale value="en_US"/>
 									<fmt:formatNumber value="${o.duckbills}" type="currency"/> </span>
-								</td>
-								<td style="border-width: 1px; text-align: center;">
-									<c:set var="regDate">
-      									<fmt:formatDate pattern="MM/dd/yyyy" value="${o.registerDate}" />
-   									</c:set>
-   									<span style="font-weight: bold; ">${regDate}</span>
 								</td>
 								<td style="border-width: 1px; text-align: center;">
 									<c:set var="subDate">
@@ -129,12 +121,12 @@
     </div><div class="art-layout-cell layout-item-4" style="width: 24%" >
     	<table>
     		<tr style="border: none;">
-    			<td style="border: none;" colspan="2">
+    			<td style="border: none;" colspan="3">
     				<img width="45" height="80" alt="" src="<c:url value="/resources/images/medal.png" />"style="float: left; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; border-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px;">
     			</td>
     		</tr>
     		<tr style="border: none;">
-    			<td style="border: none;" colspan="2"><span style="font-size: 26px; font-variant: small-caps; font-weight: bold; line-height: 31px; color: #F4F5F6;">Reputation</span>
+    			<td style="border: none;" colspan="3"><span style="font-size: 26px; font-variant: small-caps; font-weight: bold; line-height: 31px; color: #F4F5F6;">Reputation</span>
     			</td>
     		</tr>
     		<tr>
@@ -144,6 +136,9 @@
     			<td style="border: none;">
     				<span style="font-weight: bold; font-family: 'Arial Black'; font-size: 16px;">Points :</span>
     			</td>
+    			<td style="border: none;">
+    				<span style="font-family: 'Arial Black'; font-size: 16px;">${user.id}</span>
+    			</td>
     		</tr>
     	</table>
     </div>
@@ -151,18 +146,7 @@
 </div>
 <div class="art-content-layout layout-item-2">
     <div class="art-content-layout-row">
-    <div class="art-layout-cell layout-item-3" style="width: 76%" >
-        <style type="text/css">
-                        .auto-style1 {
-                        	background-color: #B7E4FF;
-                        }
-                        .auto-style2 {
-                	font-weight: bold;
-                	font-size: 16px;
-                	color: #101313;
-                }
-                        </style>
-                       
+    <div class="art-layout-cell layout-item-3" style="width: 76%" >            
                         <h1><span style="font-weight: bold; color: #169CE3; "><span style="font-size: 28px; color: #000000; ">Current Offered Opportunities:</span><br></span></h1><br><table class="art-article" style="margin-bottom: 3px; margin-top: 3px; width: 75%; margin-right: auto; margin-left: auto;"><tbody>
 						<tr>
 							<th style="border-width: 1px; text-align: center; width: 12%; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Type</span></th>
@@ -207,7 +191,7 @@
                     </div>
                 </div>
             </div><footer class="art-footer">
-<p><a href="/new-page" style="font-size: 13px;"><span style="color: rgb(22, 156, 227);">About</span></a><a href="#"></a></p>
+<p><a href="about?userId=${userId}" style="font-size: 13px;"><span style="color: rgb(22, 156, 227);">About</span></a><a href="#"></a></p>
 <p>Copyright © 2015. All Rights Reserved.</p>
 </footer>
 

@@ -58,7 +58,7 @@
                     
 </header>
 <nav class="art-nav">
-    <ul class="art-hmenu"><li><a href="main?creatorId=${userId}" class="">Home Page</a></li><li><a href="findopp?creatorId=${userId}" class="">Find an Opportunity</a></li><li><a href="createopp?creatorId=${userId}" class="active">Create an Opportunity</a></li><li><a href="account-settings.html">Account Settings</a></li><li><a href="index"">Sign Out</a></li></ul> 
+    <ul class="art-hmenu"><li><a href="main?userId=${userId}" class="">Home Page</a></li><li><a href="findopp?userId=${userId}" class="">Find an Opportunity</a></li><li><a href="createopp?userId=${userId}" class="active">Create an Opportunity</a></li><li><a href="account?userId=${userId}">Account Settings</a></li><li><a href="index">Sign Out</a></li></ul> 
     </nav>
 <div class="art-sheet clearfix">
             <div class="art-layout-wrapper">
@@ -132,7 +132,7 @@
    </table>
 </form:form>
 <footer class="art-footer">
-<p><a href="/new-page" style="font-size: 13px;"><span style="color: rgb(22, 156, 227);">About</span></a><a href="#"></a></p>
+<p><a href="about?userId=${userId}" style="font-size: 13px;"><span style="color: rgb(22, 156, 227);">About</span></a><a href="#"></a></p>
 <p>Copyright © 2015. All Rights Reserved.</p>
 </footer>
 

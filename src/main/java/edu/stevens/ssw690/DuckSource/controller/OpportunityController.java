@@ -48,16 +48,6 @@ public class OpportunityController extends MultiActionController {
        return opportunities;
     }
 	 
-    @RequestMapping(value="/createopp", method = RequestMethod.GET)
-    public String setupForm(@RequestParam("creatorId") Integer creatorId, Model model)
-    {
-         Opportunity opportunityForm = new Opportunity();
-         opportunityForm.setCreatorId(creatorId);
-         model.addAttribute("userId",creatorId);
-         model.addAttribute("opportunityForm", opportunityForm);
-         
-         return "createopp";
-    }
     
     @RequestMapping(value="/indexoppdetail", method = RequestMethod.GET)
     public String showDetailIndex(HttpServletRequest request, Model model)
@@ -101,12 +91,76 @@ public class OpportunityController extends MultiActionController {
   }
     
     @RequestMapping(value="/findopp", method = RequestMethod.GET)
-    public String setupFindForm(@RequestParam("creatorId") Integer creatorId, Model model) 
+    public String setupFindForm(@RequestParam("userId") Integer userId, Model model) 
     {
-		model.addAttribute("opportunities", opportunitySvc.getByOtherThanCreator(creatorId));
-		model.addAttribute("userId", creatorId);
+		model.addAttribute("opportunities", opportunitySvc.getByOtherThanCreator(userId));
+		model.addAttribute("userId", userId);
 		return "findopp";
 	}
+    
+    @RequestMapping(value="/account", method = RequestMethod.GET)
+    public String getAccount(@RequestParam("userId") Integer userId, Model model) 
+    {
+		model.addAttribute("userId", userId);
+		return "account";
+	}
+    
+    @RequestMapping(value="/password", method = RequestMethod.GET)
+    public String getPassword(@RequestParam("userId") Integer userId, Model model) 
+    {
+		model.addAttribute("userId", userId);
+		DuckUser userForm = new DuckUser();
+		userForm.setPassword("");
+   	 	model.addAttribute("userForm", userForm);
+		return "password";
+	}
+    
+    @RequestMapping(value="/password", method = RequestMethod.POST)
+    public  String submitPasswordForm(HttpServletRequest request, @ModelAttribute("userForm") DuckUser user,
+                           BindingResult result, SessionStatus status, Model model)
+    {
+    	Integer userId = Integer.parseInt(request.getParameter("userId"));
+        boolean error = false;
+        
+        DuckUser currentUser = userSvc.findById(userId);
+		if(user.getPassword().isEmpty()){
+            result.rejectValue("password", "error.password");
+            error = true;
+        } else {
+        	if (!user.getPassword().equalsIgnoreCase(currentUser.getPassword())) {
+        		result.rejectValue("password", "error.password3");
+        		error = true;
+        	}
+        }
+        
+		if(user.getNewPassword().isEmpty()){
+            result.rejectValue("newPassword", "error.newpassword");
+            error = true;
+        }
+		
+		if(user.getConfirmPassword().isEmpty()){
+            result.rejectValue("confirmPassword", "error.confirmpassword");
+            error = true;
+		}
+		
+		if ((!user.getNewPassword().isEmpty()) && (!user.getConfirmPassword().isEmpty()) && (!user.getNewPassword().equalsIgnoreCase(user.getConfirmPassword()))) {
+			result.rejectValue("confirmPassword", "error.password2");
+            error = true;
+		}
+	
+		if(error) {
+    		return "password";
+        }
+		
+		currentUser.setPassword(user.getNewPassword());
+		userSvc.merge(currentUser);
+		
+        status.setComplete();
+        
+        model.addAttribute("userId", userId);
+		return "account";
+       
+    }
     
     @RequestMapping(value="/register")
     public  String registerForOpp(HttpServletRequest request, SessionStatus status, Model model)
@@ -122,19 +176,30 @@ public class OpportunityController extends MultiActionController {
     	opportunityRegistered.setUser(user);
     	opportunityRegisteredSvc.persist(opportunityRegistered);
 		
-        model.addAttribute("user", user.getFirstName() + " " + user.getLastName());
-        model.addAttribute("opportunties", opportunitySvc.getByCreator(userId));
+        model.addAttribute("user", user);
+        model.addAttribute("opportunities", opportunitySvc.getByCreator(userId));
         model.addAttribute("opportunities_registered", opportunitySvc.getByRegistered(userId));
         model.addAttribute("userId", userId);
  		return "main";
     }
     
-     
+    @RequestMapping(value="/createopp", method = RequestMethod.GET)
+    public String setupForm(HttpServletRequest request, Model model)
+    {
+    	 Integer userId = Integer.parseInt(request.getParameter("userId"));
+    	 Opportunity opportunityForm = new Opportunity();
+    	 model.addAttribute("opportunityForm", opportunityForm);
+         opportunityForm.setCreatorId(userId);
+         model.addAttribute("userId",userId);
+         
+         return "createopp";
+    }
+    
     @RequestMapping(value="/createopp", method = RequestMethod.POST)
-    public  String submitForm(@ModelAttribute("opportunityForm") Opportunity opportunity,
+    public  String submitForm(HttpServletRequest request, @ModelAttribute("opportunityForm") Opportunity opportunity,
                            BindingResult result, SessionStatus status, Model model)
     {
-    	//Validation code start
+    	Integer userId = Integer.parseInt(request.getParameter("userId"));
         boolean error = false;
         
         if(opportunity.getOpportunityType().isEmpty()){
@@ -171,7 +236,6 @@ public class OpportunityController extends MultiActionController {
     		return "createopp";
         }
         
-        Integer creatorId = opportunity.getCreatorId();
     	String opportunitytype = opportunity.getOpportunityType();
 		String opportunitytitle = opportunity.getOpportunityTitle();
         BigDecimal duckbills = opportunity.getDuckbills();
@@ -180,15 +244,14 @@ public class OpportunityController extends MultiActionController {
         String description = opportunity.getDescription();
 		
         if (DuckUtilities.isStringPopulated(opportunitytype) && (DuckUtilities.isStringPopulated(opportunitytitle) && (duckbills != null) && (registerdate != null) && (submitdate != null) && (DuckUtilities.isStringPopulated(description)))) {
-        	opportunitySvc.persist(new Opportunity(opportunitytype, opportunitytitle, duckbills, registerdate, submitdate, description, creatorId));
+        	opportunitySvc.persist(new Opportunity(opportunitytype, opportunitytitle, duckbills, registerdate, submitdate, description, userId));
         
         }
        
         status.setComplete();
         
-        DuckUser user = userSvc.findById(creatorId);
-        Integer userId = user.getId();
-        model.addAttribute("user", user.getFirstName() + " " + user.getLastName());
+        DuckUser user = userSvc.findById(userId);
+        model.addAttribute("user", user);
         model.addAttribute("opportunities", opportunitySvc.getByCreator(userId));
         model.addAttribute("opportunities_registered", opportunitySvc.getByRegistered(userId));
         model.addAttribute("userId", userId);

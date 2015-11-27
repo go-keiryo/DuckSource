@@ -108,7 +108,7 @@ public class DuckUserController extends MultiActionController {
        
         userSvc.persist(user);
         Integer userId = user.getId();
-		model.addAttribute("user", user.getFirstName() + " " + user.getLastName());
+		model.addAttribute("user", user);
 		model.addAttribute("opportunities", opportunitySvc.getByCreator(userId));
 		model.addAttribute("opportunities_registered", opportunitySvc.getByRegistered(userId));
 		model.addAttribute("userId", userId);
@@ -120,6 +120,7 @@ public class DuckUserController extends MultiActionController {
 	@RequestMapping(value="/index", method = RequestMethod.GET)
 	public String returntIndex(HttpServletRequest request, Model model) {
 		model.addAttribute("opportunities", opportunitySvc.getAllOpportunities());
+		model.addAttribute("users", userSvc.getAll());
        return "../index";
    }
 
@@ -127,6 +128,7 @@ public class DuckUserController extends MultiActionController {
 	@RequestMapping(value="/", method = RequestMethod.GET)
 	 public String getIndex(HttpServletRequest request, Model model) {
 		model.addAttribute("opportunities", opportunitySvc.getAllOpportunities());
+		model.addAttribute("users", userSvc.getAll());
        return "../index";
    }
 
@@ -142,15 +144,32 @@ public class DuckUserController extends MultiActionController {
       return "../index";
    }
 	
+	@RequestMapping(value="/indexabout", method = RequestMethod.GET)
+	public String getIndexAbout(HttpServletRequest request, Model model) {
+		return "indexabout";
+    }
+	
+	@RequestMapping(value="/resetpassword", method = RequestMethod.GET)
+	public String getReset(HttpServletRequest request, Model model) {
+		return "resetpassword";
+	}
+	
+	@RequestMapping(value="/about", method = RequestMethod.GET)
+	public String getAbout(HttpServletRequest request, Model model) {
+		String userId = request.getParameter("userId");
+		model.addAttribute("userId", userId);
+		return "about";
+    }
+	
 	@RequestMapping(value="/main", method = RequestMethod.GET)
 	 public String getMain(HttpServletRequest request, Model model) {
-		String creatorId = request.getParameter("creatorId");
-		if (creatorId.isEmpty()) {
+		String userid = request.getParameter("userId");
+		if (userid.isEmpty()) {
 			return "main";
 		} else {
-			Integer userId = Integer.parseInt(creatorId);
+			Integer userId = Integer.parseInt(userid);
 			DuckUser user =userSvc.findById(userId);
-			model.addAttribute("user", user.getFirstName() + " " + user.getLastName());
+			model.addAttribute("user", user);
     		model.addAttribute("opportunities", opportunitySvc.getByCreator(userId));
     		model.addAttribute("opportunities_registered", opportunitySvc.getByRegistered(userId));
     		model.addAttribute("userId", userId);
@@ -172,7 +191,7 @@ public class DuckUserController extends MultiActionController {
         		return "../index";
         	} else {
         		Integer userId = user.getId();
-        		model.addAttribute("user", user.getFirstName() + " " + user.getLastName());
+        		model.addAttribute("user", user);
         		model.addAttribute("opportunities", opportunitySvc.getByCreator(userId));
         		model.addAttribute("opportunities_registered", opportunitySvc.getByRegistered(userId));
         		model.addAttribute("userId", userId);
