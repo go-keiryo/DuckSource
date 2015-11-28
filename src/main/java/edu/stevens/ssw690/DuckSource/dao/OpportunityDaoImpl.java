@@ -25,6 +25,7 @@ public class OpportunityDaoImpl implements OpportunityDao {
     
     public void merge(Opportunity opportunity) {
     	em.merge(opportunity);
+    	em.flush();
     }
     
     public Opportunity findById(Integer id) {
@@ -77,6 +78,28 @@ public class OpportunityDaoImpl implements OpportunityDao {
     			"SELECT o FROM Opportunity o left outer join o.opportunitiesRegistered r where r.user.id = :userId)", Opportunity.class);
     	query.setParameter("userId", userId);  
     	return query.getResultList();
+    	
+	 }
+    
+    public List<Opportunity> getBySubmitted(Integer userId) {
+    	TypedQuery<Opportunity> query = em.createQuery(
+    			"SELECT o FROM Opportunity o left outer join o.opportunitiesSubmitted r where r.user.id = :userId)", Opportunity.class);
+    	query.setParameter("userId", userId);  
+    	return query.getResultList();
+    	
+	 }
+    
+    public Opportunity getBySubmittedOpportunity(Integer userId, Integer opportunityId) {
+    	Opportunity opportunity = null;
+    	TypedQuery<Opportunity> query = em.createQuery(
+    			"SELECT o FROM Opportunity o left outer join o.opportunitiesSubmitted r where r.user.id = :userId and o.id = :opportunityId)", Opportunity.class);
+    	query.setParameter("userId", userId); 
+    	query.setParameter("opportunityId", opportunityId);
+    	List<Opportunity> list = (List<Opportunity>) query.getResultList();
+    	if (list.size() > 0)
+    		opportunity = list.get(0);
+    	return opportunity;
+    	
     	
 	 }
     

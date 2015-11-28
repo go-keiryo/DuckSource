@@ -59,5 +59,14 @@ public class OpportunityManagerImpl implements OpportunityManager {
 	public Opportunity getById(Integer id) {
 		return dao.getById(id);
 	}
+
+	public List<Opportunity> getBySubmitted(Integer userId) {
+		return dao.getBySubmitted(userId);
+	}
+
+	@Override
+	public Opportunity getBySubmittedOpportunity(Integer userId, Integer opportunityId) {
+		return dao.getBySubmittedOpportunity(userId, opportunityId);
+	}
  
 }

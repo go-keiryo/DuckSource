@@ -14,6 +14,8 @@ public interface OpportunityDao {
     public Opportunity getOpportunity(String title);
     public List<Opportunity> getByCreator(Integer creator);
     public List<Opportunity> getByRegistered(Integer userId);
+    public List<Opportunity> getBySubmitted(Integer userId);
+    public Opportunity getBySubmittedOpportunity(Integer userId, Integer opportunityId);
     public List<Opportunity> getByType(String oppType);
     public List<Opportunity> getByOtherThanCreator(Integer creator); 
     public List<Opportunity> getByOtherThanCreatorByType(Integer creator, String oppType);

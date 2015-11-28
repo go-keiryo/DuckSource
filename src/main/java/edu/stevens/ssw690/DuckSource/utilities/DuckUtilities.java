@@ -40,7 +40,7 @@ public class DuckUtilities {
 			return dt;
 		}
 		
-		DateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
+		DateFormat format = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
         
         try {
         	dt = format.parse(string);

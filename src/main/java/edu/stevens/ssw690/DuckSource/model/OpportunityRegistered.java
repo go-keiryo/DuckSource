@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Formula;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -38,6 +39,8 @@ public class OpportunityRegistered implements Serializable {
     @Column(name="registered_date")
     @DateTimeFormat(pattern = "MM/dd/yyyy")
     private Date registeredDate;
+    @Formula("(select opportunity_Id from opportunity o where o.opportunity_id = opportunity_id)")
+    private Integer opportunityId;
 
 	public Integer getId() {
 		return id;
@@ -50,6 +53,9 @@ public class OpportunityRegistered implements Serializable {
 	}
 	public void setOpportunity(Opportunity opportunity) {
 		this.opportunity = opportunity;
+	}
+	public Integer getOpportunityId() {
+		return opportunityId;
 	}
 	public DuckUser getUser() {
 		return user;

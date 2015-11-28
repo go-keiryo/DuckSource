@@ -40,8 +40,7 @@ public class DuckUserDaoImpl implements DuckUserDao{
     	query.setParameter("id", id);
     	@SuppressWarnings("unchecked")
 		List<DuckUser> list = (List<DuckUser>) query.getResultList();
-    	int size = list.size();
-    	if (size > 0)
+    	if (list.size() > 0)
     		user = list.get(0);
     	return user;
 	}
@@ -57,8 +56,7 @@ public class DuckUserDaoImpl implements DuckUserDao{
     	query.setParameter("password", password);
     	@SuppressWarnings("unchecked")
 		List<DuckUser> list = (List<DuckUser>) query.getResultList();
-    	int size = list.size();
-    	if (size > 0)
+    	if (list.size() > 0)
     		user = list.get(0);
     	return user;
     }
@@ -69,8 +67,7 @@ public class DuckUserDaoImpl implements DuckUserDao{
     	query.setParameter("username", username);
     	@SuppressWarnings("unchecked")
 		List<DuckUser> list = (List<DuckUser>) query.getResultList();
-    	int size = list.size();
-    	if (size > 0) {
+    	if (list.size() > 0) {
     		exists = true;
     	}
     	return exists;

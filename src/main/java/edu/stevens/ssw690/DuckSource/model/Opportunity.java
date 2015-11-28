@@ -12,11 +12,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Future;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.Formula;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.NumberFormat;
+import org.springframework.format.annotation.NumberFormat.Style;
 
 import edu.stevens.ssw690.DuckSource.utilities.DuckUtilities;
 
@@ -39,13 +40,16 @@ public class Opportunity implements Serializable {
     private String opportunityType;
     @Column(name="opportunity_title")
     private String opportunityTitle;
+    @NumberFormat(style = Style.CURRENCY)
     @Column(name="duck_bills")
     private BigDecimal duckbills;
     @Column(name="register_date")
     @DateTimeFormat(pattern = "MM/dd/yyyy")
+    @Future
     private Date registerDate;
     @Column(name="submit_date")
     @DateTimeFormat(pattern = "MM/dd/yyyy")
+    @Future
     private Date submitDate;
     @Column(name="description", columnDefinition = "TEXT", length = 65535)
     private String description ;

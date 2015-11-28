@@ -119,7 +119,7 @@
                     </div>
                 </div>
             </div><footer class="art-footer">
-<p><a href="/new-page" style="font-size: 13px;"><span style="color: rgb(22, 156, 227);">About</span></a><a href="#"></a></p>
+<p><a href="indexabout" style="font-size: 13px;"><span style="color: rgb(22, 156, 227);">About</span></a><a href="#"></a></p>
 <p>Copyright © 2015. All Rights Reserved.</p>
 </footer>
 

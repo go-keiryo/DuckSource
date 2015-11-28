@@ -21,7 +21,15 @@
    <value>.jsp</value>  
   </property>  
  </bean> 
-  
+
+  <bean id="multipartResolver"
+        class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+ 
+         <!-- setting maximum upload size -->
+        <property name="maxUploadSize" value="20000000" />
+ 
+  </bean>
+    
  <!-- MySQL Datasource with Commons DBCP connection pooling -->
   <bean class="org.apache.commons.dbcp.BasicDataSource" id="dataSource">
     <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
@@ -46,6 +54,8 @@
   
   <mvc:resources mapping="/resources/**" location="/resources/" /> 
   <mvc:annotation-driven />
+  
+  
  
   <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
         <property name="basename" value="messages" />

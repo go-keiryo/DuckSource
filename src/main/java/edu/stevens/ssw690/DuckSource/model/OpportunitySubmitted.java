@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Formula;
 import org.springframework.format.annotation.DateTimeFormat;
 
 
@@ -48,6 +49,8 @@ private static final long serialVersionUID = 1L;
     private String status;
     @Column(name="comment", columnDefinition = "TEXT", length = 65535)
     private String comment;
+    @Formula("(select opportunity_Id from opportunity o where o.opportunity_id = opportunity_id)")
+    private Integer opportunityId;
     
     
     public Integer getId() {
@@ -62,6 +65,11 @@ private static final long serialVersionUID = 1L;
 	public void setOpportunity(Opportunity opportunity) {
 		this.opportunity = opportunity;
 	}
+	
+	public Integer getOpportunityId() {
+		return opportunityId;
+	}
+	
 	public DuckUser getUser() {
 		return user;
 	}

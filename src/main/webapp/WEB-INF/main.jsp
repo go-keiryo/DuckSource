@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html dir="ltr" lang="en-US"><head>
     <meta charset="utf-8">
-    <title>${user.firstName} ${user.lastName}'s Homepage</title>
+    <title>${user.firstName} ${user.lastName}'s Home Page</title>
     <meta name="viewport" content="initial-scale = 1.0, maximum-scale = 1.0, user-scalable = no, width = device-width">
 
     <!--[if lt IE 9]><script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -87,20 +87,21 @@
                         <h1><span style="font-weight: bold; color: #169CE3; "><span style="font-size: 28px; color: #000000; ">Current Accepted Opportunities:</span><br></span></h1><br><br>
                         <table class="art-article" style="margin-bottom: 3px; margin-top: 3px; width: 75%; margin-right: auto; margin-left: auto;"><tbody>
 						<tr>
-							<th style="border-width: 1px; text-align: center; width: 12%; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Type</span></th>
-							<th style="border-width: 1px; text-align: center; width: 12%; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Title</span></th>
-							<th style="border-width: 1px; text-align: center; width: 12%; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">DuckBill$</span></th>
-							<th style="border-width: 1px; text-align: center; width: 12%; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Submit By</span></th>
+							<th style="border-width: 1px; text-align: center " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Type</span></th>
+							<th style="border-width: 1px; text-align: center;" class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Title</span></th>
+							<th style="border-width: 1px; text-align: center;" class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">DuckBill$</span></th>
+							<th style="border-width: 1px; text-align: center;" class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Submit By</span></th>
+							<th style="border-width: 1px; text-align: center;" class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Action</span></th>
 						</tr>
 						<c:choose>
 						    <c:when test="${empty opportunities_registered}">
 						    	<tr><td colspan="5" style="border-width: 1px; text-align: center;"><span style="font-weight: bold; ">No Opportunities Available</span></td></tr>
 						    </c:when>    
 						    <c:otherwise>
-						<c:forEach var="o" items="${opportunities_registered}">
+							<c:forEach var="o" items="${opportunities_registered}">
 							<tr>
 								<td style="border-width: 1px; text-align: center;"><span style="font-weight: bold; ">${o.opportunityType}</span></td>
-								<td style="border-width: 1px; text-align: center;"><span style="font-weight: bold; "><a href="oppdetail.html?oppId=${o.id}&userId=${userId}">${o.opportunityTitle}</a> </span></td>
+								<td style="border-width: 1px; text-align: center;"><a href="oppdetail.html?oppId=${o.id}&userId=${userId}">${o.opportunityTitle}</a> </span></td>
 								<td style="border-width: 1px; text-align: center;"><span style="font-weight: bold; ">
 									<fmt:setLocale value="en_US"/>
 									<fmt:formatNumber value="${o.duckbills}" type="currency"/> </span>
@@ -110,6 +111,24 @@
       									<fmt:formatDate pattern="MM/dd/yyyy" value="${o.submitDate}" />
    									</c:set>
    									<span style="font-weight: bold; ">${subDate}</span>
+								</td>
+								<td style="border-width: 1px; text-align: center;">
+									<c:set var="submitted" value="false" />
+									<c:set var="submitId" value="" />
+									<c:forEach var="s" items="${opportunities_submitted}">
+										<c:if test="${s.opportunityId eq o.id}">
+    										<c:set var="submitted" value="true" />
+    										<c:set var="submitId" value="${s.id}" />
+  										</c:if>
+									</c:forEach>								
+									<c:choose>
+						    			<c:when test="${submitted eq true}">
+						    				<a href="resubmit?userId=${userId}&oppId=${o.id}&subId=${submitId}&message=&messageClass=">Resubmit</a>
+						    			</c:when>    
+						    			<c:otherwise>
+						    				<a href="submit?userId=${userId}&oppId=${o.id}">Submit</a> <a href="deregister?userId=${userId}&oppId=${o.id}">Deregister</a>
+										</c:otherwise>
+									</c:choose>
 								</td>
 							</tr>
 						</c:forEach>
@@ -149,15 +168,16 @@
     <div class="art-layout-cell layout-item-3" style="width: 76%" >            
                         <h1><span style="font-weight: bold; color: #169CE3; "><span style="font-size: 28px; color: #000000; ">Current Offered Opportunities:</span><br></span></h1><br><table class="art-article" style="margin-bottom: 3px; margin-top: 3px; width: 75%; margin-right: auto; margin-left: auto;"><tbody>
 						<tr>
-							<th style="border-width: 1px; text-align: center; width: 12%; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Type</span></th>
-							<th style="border-width: 1px; text-align: center; width: 12%; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Title</span></th>
-							<th style="border-width: 1px; text-align: center; width: 12%; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">DuckBill$</span></th>
-							<th style="border-width: 1px; text-align: center; width: 12%; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Registered</span></th>
-							<th style="border-width: 1px; text-align: center; width: 12%; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Submitted</span></th>
+							<th style="border-width: 1px; text-align: center; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Type</span></th>
+							<th style="border-width: 1px; text-align: center; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Title</span></th>
+							<th style="border-width: 1px; text-align: center; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">DuckBill$</span></th>
+							<th style="border-width: 1px; text-align: center; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Registered</span></th>
+							<th style="border-width: 1px; text-align: center; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Submitted</span></th>
+							<th style="border-width: 1px; text-align: center; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Action</span></th>
 						</tr>
 						<c:choose>
 						    <c:when test="${empty opportunities}">
-						    	<tr><td colspan="5" style="border-width: 1px; text-align: center;"><span style="font-weight: bold; ">No Opportunities Available</span></td></tr>
+						    	<tr><td colspan="6" style="border-width: 1px; text-align: center;"><span style="font-weight: bold; ">No Opportunities Available</span></td></tr>
 						    </c:when>    
 						    <c:otherwise>
 						<c:forEach var="o" items="${opportunities}">
@@ -170,6 +190,7 @@
 								</td>
 								<td style="border-width: 1px; text-align: center;">${o.registeredCount}</td>
 								<td style="border-width: 1px; text-align: center;">${o.submittedCount}</td>
+								<td style="border-width: 1px; text-align: center;"><a href="editopp?userId=${userId}&oppId=${o.id}">Edit</a> </td>
 							</tr>
 						</c:forEach>
 						</c:otherwise>

@@ -267,7 +267,7 @@
            </table>
            
         </td>
-       </tr>                                                                                                                                                                                        </p>
+       </tr>                                                                                                                                                                                     
     </table>
     </div>
     </div>

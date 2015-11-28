@@ -20,12 +20,13 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 import edu.stevens.ssw690.DuckSource.model.DuckUser;
 import edu.stevens.ssw690.DuckSource.service.DuckUserManager;
 import edu.stevens.ssw690.DuckSource.service.OpportunityManager;
+import edu.stevens.ssw690.DuckSource.service.OpportunitySubmittedManager;
 import edu.stevens.ssw690.DuckSource.utilities.EmailValidator;
 
 
 @Controller
-@SessionAttributes("user")
-public class DuckUserController extends MultiActionController {
+@SessionAttributes("index")
+public class IndexController extends MultiActionController {
 	
 	@Autowired
 	DuckUserManager userSvc;
@@ -33,13 +34,16 @@ public class DuckUserController extends MultiActionController {
 	@Autowired
 	OpportunityManager opportunitySvc;
 	
+	@Autowired
+	OpportunitySubmittedManager opportunitySubmittedSvc;
+	
 	private static EmailValidator emailValidator;
  
 	@ModelAttribute("allDuckUsers")
 	public List<DuckUser> populateDuckUsers()
     {
-       List<DuckUser> duckosers = userSvc.getAll();
-       return duckosers;
+       List<DuckUser> duckusers = userSvc.getAll();
+       return duckusers;
     }
 	
 	@RequestMapping(value="/signup", method = RequestMethod.GET)
@@ -52,6 +56,10 @@ public class DuckUserController extends MultiActionController {
 	@RequestMapping(value="/signup", method = RequestMethod.POST)
 	public String postSignup(@ModelAttribute("userForm") DuckUser user,
             BindingResult result, SessionStatus status, Model model) {
+		
+		if(result.hasErrors()) {
+            return "signup";
+        }
 		
 		boolean error = false;
 		
@@ -111,9 +119,10 @@ public class DuckUserController extends MultiActionController {
 		model.addAttribute("user", user);
 		model.addAttribute("opportunities", opportunitySvc.getByCreator(userId));
 		model.addAttribute("opportunities_registered", opportunitySvc.getByRegistered(userId));
+		model.addAttribute("opportunities_submitted", opportunitySubmittedSvc.getBySubmitted(userId));
 		model.addAttribute("userId", userId);
 		
-		return "main";
+		return "redirect:main";
     	
     }
 	
@@ -140,6 +149,7 @@ public class DuckUserController extends MultiActionController {
 		} else {
 			model.addAttribute("opportunities", opportunitySvc.getByType(selectType));
 		}
+		model.addAttribute("users", userSvc.getAll());
 		
       return "../index";
    }
@@ -165,13 +175,14 @@ public class DuckUserController extends MultiActionController {
 	 public String getMain(HttpServletRequest request, Model model) {
 		String userid = request.getParameter("userId");
 		if (userid.isEmpty()) {
-			return "main";
+			return "redirect:../index";
 		} else {
 			Integer userId = Integer.parseInt(userid);
 			DuckUser user =userSvc.findById(userId);
 			model.addAttribute("user", user);
     		model.addAttribute("opportunities", opportunitySvc.getByCreator(userId));
     		model.addAttribute("opportunities_registered", opportunitySvc.getByRegistered(userId));
+    		model.addAttribute("opportunities_submitted", opportunitySubmittedSvc.getBySubmitted(userId));
     		model.addAttribute("userId", userId);
     		return "main";
 		}
@@ -182,11 +193,21 @@ public class DuckUserController extends MultiActionController {
       
         String username = request.getParameter("username");
         String password = request.getParameter("password");
- 
-        // Redirect to error
+        
+        String selectType = "All types";
+        if (request.getParameter("select") != null){
+        	selectType = request.getParameter("select");
+        }
+        	 		
         if (username != null && password !=null) {
         	DuckUser user =userSvc.getDuckUser(username, password);
         	if (user == null) {
+        		if (selectType.isEmpty() || selectType.equalsIgnoreCase("All Types")) {
+        			model.addAttribute("opportunities", opportunitySvc.getAllOpportunities());
+        		} else {
+        			model.addAttribute("opportunities", opportunitySvc.getByType(selectType));
+        		}
+        		model.addAttribute("users", userSvc.getAll());
         		model.addAttribute("message", "Invalid Username or Password");
         		return "../index";
         	} else {
@@ -194,10 +215,17 @@ public class DuckUserController extends MultiActionController {
         		model.addAttribute("user", user);
         		model.addAttribute("opportunities", opportunitySvc.getByCreator(userId));
         		model.addAttribute("opportunities_registered", opportunitySvc.getByRegistered(userId));
+        		model.addAttribute("opportunities_submitted", opportunitySubmittedSvc.getBySubmitted(userId));
         		model.addAttribute("userId", userId);
         		return "main";
         	}
         } else {
+    		if (selectType.isEmpty() || selectType.equalsIgnoreCase("All types")) {
+    			model.addAttribute("opportunities", opportunitySvc.getAllOpportunities());
+    		} else {
+    			model.addAttribute("opportunities", opportunitySvc.getByType(selectType));
+    		}
+    		model.addAttribute("users", userSvc.getAll());
         	return "../index";
         }
     }
