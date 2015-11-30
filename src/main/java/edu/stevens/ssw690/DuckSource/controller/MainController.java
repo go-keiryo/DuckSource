@@ -29,11 +29,16 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 import edu.stevens.ssw690.DuckSource.model.DuckUser;
 import edu.stevens.ssw690.DuckSource.model.Opportunity;
 import edu.stevens.ssw690.DuckSource.model.OpportunityRegistered;
+import edu.stevens.ssw690.DuckSource.model.OpportunityReviewIssue;
 import edu.stevens.ssw690.DuckSource.model.OpportunitySubmitted;
+import edu.stevens.ssw690.DuckSource.model.OpportunitytReviewIssueExtended;
+import edu.stevens.ssw690.DuckSource.model.ReviewIssue;
 import edu.stevens.ssw690.DuckSource.service.DuckUserManager;
 import edu.stevens.ssw690.DuckSource.service.OpportunityManager;
 import edu.stevens.ssw690.DuckSource.service.OpportunityRegisteredManager;
+import edu.stevens.ssw690.DuckSource.service.OpportunityReviewIssueManager;
 import edu.stevens.ssw690.DuckSource.service.OpportunitySubmittedManager;
+import edu.stevens.ssw690.DuckSource.service.ReviewIssueManager;
 import edu.stevens.ssw690.DuckSource.utilities.DuckUtilities;
 
 @Controller
@@ -47,11 +52,17 @@ public class MainController extends MultiActionController {
 	OpportunityRegisteredManager opportunityRegisteredSvc; 
 	
 	@Autowired
+	OpportunityReviewIssueManager opportunityReviewIssueSvc; 
+	
+	@Autowired
 	OpportunitySubmittedManager opportunitySubmittedSvc; 
 	
 	@Autowired
 	DuckUserManager userSvc;
-
+	
+	@Autowired
+	ReviewIssueManager issueSvc;
+	 
 	@ModelAttribute("allOpportunities")
 	public List<Opportunity> populateOpportunities()
     {
@@ -91,7 +102,7 @@ public class MainController extends MultiActionController {
     	Integer userId = Integer.parseInt( request.getParameter("userId"));
 		String selectType = request.getParameter("select");
 		if (selectType.isEmpty() || selectType.equalsIgnoreCase("All Types")) {
-			 model.addAttribute("userId",userId);
+			model.addAttribute("userId",userId);
 			model.addAttribute("opportunities", opportunitySvc.getByOtherThanCreator(userId));
 		} else {
 			model.addAttribute("userId",userId);
@@ -178,6 +189,7 @@ public class MainController extends MultiActionController {
         
         OpportunitySubmitted opportunitySubmitted = new OpportunitySubmitted();
         opportunitySubmitted.setSubmissionDate(Date.from(LocalDateTime.now().toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        opportunitySubmitted.setStatus("Pending");
         opportunitySubmitted.setFilePath(filePath);
         opportunitySubmitted.setComment(comments);
         opportunitySubmitted.setOpportunity(opportunity);
@@ -270,6 +282,7 @@ public class MainController extends MultiActionController {
         
         opportunitySubmitted.setFilePath(filePath);
         opportunitySubmitted.setComment(comments);
+        opportunitySubmitted.setSubmissionDate(Date.from(LocalDateTime.now().toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
     	opportunitySubmittedSvc.merge(opportunitySubmitted);
         
         model.addAttribute("opportunity", opportunity);
@@ -282,10 +295,14 @@ public class MainController extends MultiActionController {
         
 	}
     
+   
+    
     @RequestMapping(value="/account", method = RequestMethod.GET)
     public String getAccount(@RequestParam("userId") Integer userId, Model model) 
     {
 		model.addAttribute("userId", userId);
+		DuckUser user = userSvc.findById(userId);
+		model.addAttribute("user", user);
 		return "account";
 	}
     
@@ -483,7 +500,6 @@ public class MainController extends MultiActionController {
     	 
     	 Opportunity opportunityForm = opportunitySvc.findById(oppId);
     	 model.addAttribute("opportunityForm", opportunityForm);
-         opportunityForm.setCreatorId(userId);
          model.addAttribute("userId",userId);
          
          return "editopp";
@@ -560,6 +576,257 @@ public class MainController extends MultiActionController {
         
 		return "redirect:main";
        
+    }
+    
+    @RequestMapping(value="/reviewopp", method = RequestMethod.GET)
+    public String getReviewOpp(HttpServletRequest request, Model model)
+    {
+    	 Integer userId = Integer.parseInt(request.getParameter("userId"));
+    	 Integer oppId = Integer.parseInt(request.getParameter("oppId"));
+    	 
+    	 Opportunity opportunity = opportunitySvc.findById(oppId);
+    	 model.addAttribute("opportunity", opportunity);
+    	 model.addAttribute("submissions", opportunitySubmittedSvc.getByOpportunity(oppId));
+    	 model.addAttribute("reviewIssues", opportunityReviewIssueSvc.getByOpportunitySubmitted(oppId));
+         model.addAttribute("userId",userId);
+         model.addAttribute("oppId",oppId);
+         
+         return "reviewopp";
+    }
+    
+    @RequestMapping(value="/editreview", method = RequestMethod.GET)
+    public String getEditReviewOpp(HttpServletRequest request, Model model)
+    {
+    	 Integer userId = Integer.parseInt(request.getParameter("userId"));
+    	 Integer oppId = Integer.parseInt(request.getParameter("oppId"));
+    	 Integer subId = Integer.parseInt(request.getParameter("subId"));
+    	 String currStatus = request.getParameter("currStatus");
+    	 
+    	 Opportunity opportunity = opportunitySvc.findById(oppId);
+    	 model.addAttribute("opportunity", opportunity);
+    	 model.addAttribute("submissions", opportunitySubmittedSvc.getByOpportunity(oppId));
+    	 model.addAttribute("subId",subId);
+    	 model.addAttribute("oppId",oppId);
+    	 model.addAttribute("userId",userId);
+         model.addAttribute("targetId",subId);
+         model.addAttribute("currStatus",currStatus);
+         
+         return "editreview";
+    }
+    
+    @RequestMapping(value="/savereview", method = RequestMethod.POST)
+    public String getSaveReviewOpp(@RequestParam("reviewStatus") String reviewStatus, 
+   		 @RequestParam("userId") Integer userId, @RequestParam("oppId") Integer oppId, 
+   		 @RequestParam("subId") Integer subId,HttpServletResponse response, 
+		 SessionStatus status, Model model)
+    {
+    	 
+    	 OpportunitySubmitted opportunitySubmitted = opportunitySubmittedSvc.findById(subId);
+    	 opportunitySubmitted.setStatus(reviewStatus);
+    	 opportunitySubmittedSvc.merge(opportunitySubmitted);
+    	 
+    	 Opportunity opportunity = opportunitySvc.findById(oppId);
+    	 model.addAttribute("opportunity", opportunity);
+    	 model.addAttribute("submissions", opportunitySubmittedSvc.getByOpportunity(oppId));
+    	 model.addAttribute("subId",subId);
+    	 model.addAttribute("oppId",oppId);
+    	 model.addAttribute("userId",userId);
+         
+         return "reviewopp";
+    }
+    
+    @RequestMapping(value="/addissue", method = RequestMethod.GET)
+    public String getReviewIssue(HttpServletRequest request, Model model)
+    {
+    	 Integer userId = Integer.parseInt(request.getParameter("userId"));
+    	 Integer oppId = Integer.parseInt(request.getParameter("oppId"));
+    	 Integer subId = Integer.parseInt(request.getParameter("subId"));
+    	 Integer location = Integer.parseInt(request.getParameter("loc"));
+    	 
+    	 OpportunityReviewIssue reviewIssueForm = new OpportunityReviewIssue();
+    	 model.addAttribute("reviewIssueForm", reviewIssueForm);
+    	 
+    	 ReviewIssue issueForm = new ReviewIssue();
+    	 model.addAttribute("issueForm", issueForm);
+    	 
+    	 Opportunity opportunity = opportunitySvc.findById(oppId);
+    	 OpportunitySubmitted opportunitySubmitted = opportunitySubmittedSvc.findById(subId);
+    	 
+    	 model.addAttribute("opportunity", opportunity);
+    	 model.addAttribute("opportunitySubmitted", opportunitySubmitted);
+    	 model.addAttribute("issueList", issueSvc.getAll());
+    	 model.addAttribute("oppId",oppId);
+    	 model.addAttribute("subId",subId);
+    	 model.addAttribute("userId",userId);
+    	 model.addAttribute("loc",location);
+         
+         return "addissue";
+    }
+    
+    @RequestMapping(value="/addissue", method = RequestMethod.POST)
+    public String saveReviewIssue(@RequestParam("userId") Integer userId, 
+    	 @RequestParam("oppId") Integer oppId, @RequestParam("subId") Integer subId,
+    	 @RequestParam("formname") String formname,@RequestParam("loc") Integer loc,
+   		 @ModelAttribute("reviewIssueForm") OpportunityReviewIssue opportunityReviewIssue,
+   		 @ModelAttribute("reviewIssue") ReviewIssue reviewIssue,
+   		 HttpServletResponse response, SessionStatus status, Model model)
+    { 
+    	
+    	OpportunityReviewIssue reviewIssueForm = new OpportunityReviewIssue();
+	   	model.addAttribute("reviewIssueForm", reviewIssueForm);
+	   	 
+	   	ReviewIssue issueForm = new ReviewIssue();
+	   	model.addAttribute("issueForm", issueForm);
+	   	 
+	   	Opportunity opportunity = opportunitySvc.findById(oppId);
+	   	OpportunitySubmitted opportunitySubmitted = opportunitySubmittedSvc.findById(subId);
+	   	 
+	   	model.addAttribute("opportunity", opportunity);
+	   	model.addAttribute("opportunitySubmitted", opportunitySubmitted);
+	   	model.addAttribute("oppId",oppId);
+	   	model.addAttribute("subId",subId);
+	   	model.addAttribute("userId",userId);
+    	 
+    	if (formname.equalsIgnoreCase("issue")){
+    		issueSvc.persist(reviewIssue);
+    		model.addAttribute("issueList", issueSvc.getAll());
+    		return "addissue";
+    	} 
+        	
+    	opportunityReviewIssue.setCreationDate(Date.from(LocalDateTime.now().toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        opportunityReviewIssue.setOpportunitySubmitted(opportunitySubmitted);
+        opportunityReviewIssueSvc.persist(opportunityReviewIssue);
+    	
+   	 	model.addAttribute("submissions", opportunitySubmittedSvc.getByOpportunity(oppId));
+   	    model.addAttribute("reviewIssues", opportunityReviewIssueSvc.getByOpportunitySubmitted(subId));
+       
+   	   if (loc > 0) {
+   		return "redirect:reviewoppissues";
+   	   }
+   	   
+       return "redirect:reviewopp";
+    }
+    
+    @RequestMapping(value="/reviewoppissues", method = RequestMethod.GET)
+    public String getReviewIssues(HttpServletRequest request, Model model)
+    {
+    	 Integer userId = Integer.parseInt(request.getParameter("userId"));
+    	 Integer oppId = Integer.parseInt(request.getParameter("oppId"));
+    	 Integer subId = Integer.parseInt(request.getParameter("subId"));
+    	 
+    	 Opportunity opportunity = opportunitySvc.findById(oppId);
+    	 model.addAttribute("opportunity", opportunity);
+    	 model.addAttribute("submission", opportunitySubmittedSvc.findById(subId));
+    	 model.addAttribute("reviewIssues", opportunityReviewIssueSvc.getByOpportunitySubmittedExtended(subId));
+    	 model.addAttribute("subId",subId);
+    	 model.addAttribute("oppId",oppId);
+    	 model.addAttribute("userId",userId);
+         
+         return "reviewoppissues";
+    }
+    
+    @RequestMapping(value="/editissue", method = RequestMethod.GET)
+    public String getEditReviewIssue(HttpServletRequest request, Model model)
+    {
+    	 Integer userId = Integer.parseInt(request.getParameter("userId"));
+    	 Integer oppId = Integer.parseInt(request.getParameter("oppId"));
+    	 Integer subId = Integer.parseInt(request.getParameter("subId"));
+    	 Integer reviewId = Integer.parseInt(request.getParameter("reviewId"));
+    	 
+    	 OpportunityReviewIssue reviewIssueForm = opportunityReviewIssueSvc.findById(reviewId);
+    	 model.addAttribute("reviewIssueForm", reviewIssueForm);
+    	 
+    	 ReviewIssue issueForm = new ReviewIssue();
+    	 model.addAttribute("issueForm", issueForm);
+    	 
+    	 Opportunity opportunity = opportunitySvc.findById(oppId);
+    	 OpportunitySubmitted opportunitySubmitted = opportunitySubmittedSvc.findById(subId);
+    	 
+    	 model.addAttribute("opportunity", opportunity);
+    	 model.addAttribute("opportunitySubmitted", opportunitySubmitted);
+    	 model.addAttribute("issueList", issueSvc.getAll());
+    	 model.addAttribute("oppId",oppId);
+    	 model.addAttribute("subId",subId);
+    	 model.addAttribute("userId",userId);
+         
+         return "editissue";
+    }
+    
+    @RequestMapping(value="/editissue", method = RequestMethod.POST)
+    public String saveEditReviewIssue(@RequestParam("userId") Integer userId, 
+    	 @RequestParam("oppId") Integer oppId, @RequestParam("subId") Integer subId,
+    	 @RequestParam("formname") String formname, @RequestParam("reviewId")  Integer reviewId,
+   		 @ModelAttribute("reviewIssueForm") OpportunityReviewIssue opportunityReviewIssue,
+   		 @ModelAttribute("reviewIssue") ReviewIssue reviewIssue,
+   		 HttpServletResponse response, SessionStatus status, Model model)
+    { 
+    	
+	   	ReviewIssue issueForm = new ReviewIssue();
+	   	model.addAttribute("issueForm", issueForm);
+	   	 
+	   	Opportunity opportunity = opportunitySvc.findById(oppId);
+	   	OpportunitySubmitted opportunitySubmitted = opportunitySubmittedSvc.findById(subId);
+	   	 
+	   	model.addAttribute("opportunity", opportunity);
+	   	model.addAttribute("opportunitySubmitted", opportunitySubmitted);
+	   	model.addAttribute("oppId",oppId);
+	   	model.addAttribute("subId",subId);
+	   	model.addAttribute("userId",userId);
+    	 
+    	if (formname.equalsIgnoreCase("issue")){
+    		issueSvc.persist(reviewIssue);
+    		model.addAttribute("issueList", issueSvc.getAll());
+    		return "editissue";
+    	} 
+        	
+    	OpportunityReviewIssue curropportunityReviewIssue = opportunityReviewIssueSvc.findById(reviewId);
+    	curropportunityReviewIssue.setComment(opportunityReviewIssue.getComment());
+    	curropportunityReviewIssue.setIssueId(opportunityReviewIssue.getIssueId());
+    	curropportunityReviewIssue.setResolutionDate(opportunityReviewIssue.getResolutionDate());
+    	opportunityReviewIssueSvc.merge(curropportunityReviewIssue);
+        
+    
+    	 model.addAttribute("submission", opportunitySubmittedSvc.findById(subId));
+    	 model.addAttribute("reviewIssues", opportunityReviewIssueSvc.getByOpportunitySubmitted(subId));
+         
+         return "redirect:reviewoppissues";
+
+    }
+    
+    @RequestMapping(value="/deleteissue")
+    public String deregisterForOpp(@RequestParam("userId") Integer userId, 
+       	 @RequestParam("oppId") Integer oppId, @RequestParam("subId") Integer subId,
+       	 @RequestParam("reviewId")  Integer reviewId,
+      	 @ModelAttribute("reviewIssueForm") OpportunityReviewIssue opportunityReviewIssue,
+      	 @ModelAttribute("reviewIssue") ReviewIssue reviewIssue,
+      	 HttpServletResponse response, SessionStatus status, Model model)
+    {
+    	
+    	OpportunityReviewIssue curropportunityReviewIssue = opportunityReviewIssueSvc.findById(reviewId);
+    	opportunityReviewIssueSvc.remove(curropportunityReviewIssue);
+    	
+    	Opportunity opportunity = opportunitySvc.findById(oppId);
+    	
+    	 List<OpportunityReviewIssue> list = opportunityReviewIssueSvc.getByOpportunitySubmitted(subId);
+    	 if (list.size() > 0) {
+    		 model.addAttribute("opportunity", opportunity);
+    		 model.addAttribute("submission", opportunitySubmittedSvc.findById(subId));
+        	 model.addAttribute("reviewIssues", opportunityReviewIssueSvc.getByOpportunitySubmitted(subId));
+        	 model.addAttribute("subId",subId);
+        	 model.addAttribute("oppId",oppId);
+        	 model.addAttribute("userId",userId);
+             
+             return "reviewoppissues";
+    	 } else {
+        	 model.addAttribute("opportunity", opportunity);
+        	 model.addAttribute("submissions", opportunitySubmittedSvc.getByOpportunity(oppId));
+        	 model.addAttribute("subId",subId);
+        	 model.addAttribute("oppId",oppId);
+        	 model.addAttribute("userId",userId);
+             
+             return "redirect:reviewopp";
+    	 }
+    	 
     }
     
 }

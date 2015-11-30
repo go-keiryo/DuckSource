@@ -3,6 +3,7 @@ package edu.stevens.ssw690.DuckSource.dao;
 import java.util.List;
 
 import edu.stevens.ssw690.DuckSource.model.OpportunityRegistered;
+import edu.stevens.ssw690.DuckSource.model.OpportunityReviewIssue;
 
 public interface OpportunityRegisteredDao {
 	

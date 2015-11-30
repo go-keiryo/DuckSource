@@ -37,4 +37,8 @@ public class OpportunitySubmittedManagerImpl implements OpportunitySubmittedMana
 		return dao.findById(id);
 	}
 
+	public List<OpportunitySubmitted> getByOpportunity(Integer opportunityId) {
+		return dao.getByOpportunity(opportunityId);
+	}
+
 }

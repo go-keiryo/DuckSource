@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html dir="ltr" lang="en-US"><head>
     <meta charset="utf-8">
-    <title>Create an Opportunity</title>
+    <title>Edit Review Issue</title>
     <style>
     	.error{color:#ff0000;font-weight:bold;}
     </style>
@@ -58,7 +58,7 @@
                     
 </header>
 <nav class="art-nav">
-    <ul class="art-hmenu"><li><a href="main?userId=${userId}" class="">Home Page</a></li><li><a href="findopp?userId=${userId}" class="">Find an Opportunity</a></li><li><a href="createopp?userId=${userId}" class="active">Create an Opportunity</a></li><li><a href="account?userId=${userId}">Account Settings</a></li><li><a href="index">Sign Out</a></li></ul> 
+    <ul class="art-hmenu"><li><a href="main?userId=${userId}" class="">Home Page</a></li><li><a href="findopp?userId=${userId}" class="">Find an Opportunity</a></li><li><a href="createopp?userId=${userId}" class="">Create an Opportunity</a></li><li><a href="account?userId=${userId}">Account Settings</a></li><li><a href="index">Sign Out</a></li></ul> 
     </nav>
 <div class="art-sheet clearfix">
             <div class="art-layout-wrapper">
@@ -69,12 +69,67 @@
                                                 
                 <div class="art-postcontent art-postcontent-0 clearfix"><div class="art-content-layout layout-item-0">
     <div class="art-content-layout-row">
-    <div class="art-layout-cell layout-item-1" style="width: 13%" >
+    <div class="art-layout-cell layout-item-1" style="width: 8%" >
         <p><br></p>
-    </div><div class="art-layout-cell layout-item-2" style="width: 74%" >                                                                              	
-    </div><div class="art-layout-cell layout-item-3" style="width: 13%" >
-        <p><br></p>
+    </div><div class="art-layout-cell layout-item-2" style="width: 64%" >
+    	<form:form method="post" commandName="reviewIssueForm">
+    	<input type="hidden" name="formname" value="reviewIssue">
+        <table class="art-article" style="width: 100%; margin-top: 44px; margin-bottom: 44px; margin-left: 5px; margin-right: 5px; border-style:hidden; border-collapse:collapse; border-width: 0px;"><tbody>
+		<tr><th colspan="3" align="center" style="border: none;"><span style="font-weight: bold; font-size: 22px;">${opportunity.opportunityTitle} by ${opportunitySubmitted.user.userName}</span></th></tr>
+		<tr style="border: none; border-width: 0px;">
+        		<td style="border: none; font-weight: bold;"><spring:message code="lbl.reviewIssue" text="Issue" /></td>
+        		<td style="border: none;">
+	        		 <ul>  
+			            <form:select path="issueId">  
+							<c:forEach items="${issueList}" var="option">
+						        <option value="${option.id}" ${reviewIssueForm.issueId == option.id ? 'selected' : ''}>${option.issueTitle}</option>
+						    </c:forEach>
+			            </form:select>  
+	        		</ul>  
+                </td>
+                <td style="border: none;"><form:errors path="issueId" cssClass="error" /></td>
+         	</tr>
+         	<tr style="border: none;">
+         		<td style="border: none;font-weight: bold;"><spring:message code="lbl.resolutiondate" text="Resolution Date" /></td>
+                <td style="border: none;"><form:input class="datemask" path="resolutionDate" /></td>
+                <td style="border: none;"><form:errors path="resolutionDate" cssClass="error" /></td>
+         	</tr>
+         	<tr style="border: none;">
+         		<td style="border: none;font-weight: bold;"><spring:message code="lbl.comments" text="Comments" /></td>
+         		<td style="border: none;"><form:textarea path="comment" rows="6" cols="50" /></td>
+         		<td style="border: none;"><form:errors path="comment" cssClass="error" /></td>
+         	</tr>
+         	<tr style="border: none;">
+         		<td style="border: none; text-align: center; padding-top: 10px" colspan="3"> <input type="submit" value="Edit Review Issue" /></td>
+         	</tr>         
+          </tbody>
+   	</table>
+	</form:form>                                                                              	
     </div>
+    <div class="art-content-layout-row">
+     <div>
+     	<div class="art-layout-cell layout-item-4" style="width: 28%" >
+       <form:form method="post" commandName="issueForm">
+       <input type="hidden" name="formname" value="issue">
+        <table class="art-article" style="width: 95%; margin-top: 44px; margin-bottom: 44px; margin-left: 5px; margin-right: 15px; border-style:hidden; border-collapse:collapse; border-width: 0px;"><tbody>
+		<tr><th colspan="3" align="center" style="border: none;"><span style="font-weight: bold; font-size: 16px;">Add Issue to List</span></th></tr>
+		<tr style="border: none; border-width: 0px;">
+        		<td style="border: none; font-weight: bold;"><spring:message code="lbl.issueTitle" text="Issue Title" /></td>
+        		<td style="border: none;"><form:input type="text" path="issueTitle" /></td>
+                <td style="border: none;"><form:errors path="issueTitle" cssClass="error" /></td>
+         	</tr>
+         	<tr style="border: none;">
+         		<td style="border: none;font-weight: bold;"><spring:message code="lbl.issuedescription" text="Description" /></td>
+         		<td style="border: none;"><form:textarea path="description" rows="10" cols="30" /></td>
+         		<td style="border: none;"><form:errors path="description" cssClass="error" /></td>
+         	</tr>
+         	<tr style="border: none;">
+         		<td style="border: none; text-align: center; padding-top: 10px" colspan="3"> <input type="submit" value="Add Item" /></td>
+         	</tr>         
+          </tbody>
+   </table>
+</form:form> 
+     </div>  
     </div>
 </div>
 </div>
@@ -83,54 +138,8 @@
                     </div>
                 </div>
             </div>
-<form:form method="post" commandName="opportunityForm">
-        <table class="art-article" style="width: 90%; margin-top: 44px; margin-bottom: 44px; margin-left: 44px; margin-right: 44px; border-style:hidden; border-collapse:collapse; border-width: 0px;"><tbody>
-		<tr><th colspan="3" align="center" style="border: none;"><span style="font-weight: bold; font-size: 22px;">Create an Opportunity</span></th></tr>
-		<tr style="border: none; border-width: 0px;">
-        		<td style="border: none; font-weight: bold;"><spring:message code="lbl.opportunitytype" text="Type" /></td>
-        		<td style="border: none;">
-	        		 <ul>  
-			            <form:select path="opportunityType">  
-			                <form:option value="Design">Design</form:option>  
-			                <form:option value="Development">Development</form:option>  
-			                <form:option value="Data Science">Data Science</form:option>  
-			                <form:option value="Engineering">Engineering</form:option>  
-			            </form:select>  
-	        		</ul>  
-                </td>
-                <td style="border: none;"><form:errors path="opportunityType" cssClass="error" /></td>
-         	</tr>
-         	<tr style="border: none;">
-         		<td style="border: none; font-weight: bold; "><spring:message code="lbl.opportunitytitle" text="Title" /></td>
-                <td style="border: none;"><form:input path="opportunityTitle" /></td>
-                <td style="border: none;"><form:errors path="opportunityTitle" cssClass="error" /></td>
-         	</tr>
-         	<tr style="border: none;">
-         		<td style="border: none;font-weight: bold;"><spring:message code="lbl.duckbills" text="Duck Bill$" /></td>
-                <td style="border: none;"><form:input class="moneymask" path="duckbills" /></td>
-                <td style="border: none;"><form:errors path="duckbills" cssClass="error" /></td>
-         	</tr>
-         	<tr style="border: none;">
-         		<td style="border: none;font-weight: bold;"><spring:message code="lbl.registerdate" text="Register By" /></td>
-                <td style="border: none;"><form:input class="datemask" path="registerDate" /></td>
-                <td style="border: none;"><form:errors path="registerDate" cssClass="error" /></td>
-         	</tr>
-         	<tr style="border: none;">
-         		<td style="border: none;font-weight: bold;"><spring:message code="lbl.submitDate" text="Submit By" /></td>
-                <td style="border: none;"><form:input class="datemask" path="submitDate" /></td>
-                <td style="border: none;"><form:errors path="submitDate" cssClass="error" /></td>
-         	</tr>
-         	<tr style="border: none;">
-         		<td style="border: none;font-weight: bold;"><spring:message code="lbl.description" text="Description" /></td>
-         		<td style="border: none;"><form:textarea path="description" rows="4" cols="50" /></td>
-         		<td style="border: none;"><form:errors path="description" cssClass="error" /></td>
-         	</tr>
-         	<tr style="border: none;">
-         		<td style="border: none; text-align: center; padding-top: 10px" colspan="3"> <input type="submit" value="Create" /></td>
-         	</tr>         
-          </tbody>
-   </table>
-</form:form>
+</div>
+    </div>
 <footer class="art-footer">
 <p><a href="about?userId=${userId}" style="font-size: 13px;"><span style="color: rgb(22, 156, 227);">About</span></a><a href="#"></a></p>
 <p>Copyright © 2015. All Rights Reserved.</p>

@@ -121,12 +121,12 @@
                                                 <br>
                                                 <table class="art-article" style="margin-bottom: 3px; margin-top: 3px; width: 75%; margin-right: auto; margin-left: auto; "><tbody>
                                                 <tr>
-							<th style="border-width: 1px; text-align: center; width: 12%; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Type</span></th>
-							<th style="border-width: 1px; text-align: center; width: 12%; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Title</span></th>
-							<th style="border-width: 1px; text-align: center; width: 12%; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">DuckBill$</span></th>
-							<th style="border-width: 1px; text-align: center; width: 12%; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Register By</span></th>
-							<th style="border-width: 1px; text-align: center; width: 12%; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Submit By</span></th>
-							<th style="border-width: 1px; text-align: center; width: 12%; " class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; "></span></th>
+							<th style="border-width: 1px; text-align: center;" class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Type</span></th>
+							<th style="border-width: 1px; text-align: center;" class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Title</span></th>
+							<th style="border-width: 1px; text-align: center;" class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">DuckBill$</span></th>
+							<th style="border-width: 1px; text-align: center;" class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Register By</span></th>
+							<th style="border-width: 1px; text-align: center;" class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; ">Submit By</span></th>
+							<th style="border-width: 1px; text-align: center;" class="auto-style1"><span style="font-weight: bold; font-size: 16px; text-shadow: rgba(23, 23, 23, 0.496094) 0px 1px 0px; color: #101313; "></span>Action</th>
 						</tr>
 						<c:choose>
 						    <c:when test="${empty opportunities}">
@@ -135,19 +135,19 @@
 						    <c:otherwise>
 							<c:forEach var="o" items="${opportunities}">
 							<tr>
-								<td style="border-width: 1px; text-align: center;"><span style="font-weight: bold; ">${o.opportunityType}</span></td>
-								<td style="border-width: 1px; text-align: center;"><span style="font-weight: bold; "><a href="oppdetail.html?oppId=${o.id}&userId=${userId}">${o.opportunityTitle}</a></span></td>
-								<td style="border-width: 1px; text-align: center;"><span style="font-weight: bold; ">
+								<td style="border-width: 1px; text-align: left;"><span style="font-weight: bold; ">${o.opportunityType}</span></td>
+								<td style="border-width: 1px; text-align: left;"><span style="font-weight: bold; "><a href="oppdetail.html?oppId=${o.id}&userId=${userId}">${o.opportunityTitle}</a></span></td>
+								<td style="border-width: 1px; text-align: right;"><span style="font-weight: bold; ">
 									<fmt:setLocale value="en_US"/>
 									<fmt:formatNumber value="${o.duckbills}" type="currency"/> </span>
 								</td>
-								<td style="border-width: 1px; text-align: center;">
+								<td style="border-width: 1px; text-align: left;">
 									<c:set var="regDate">
       									<fmt:formatDate pattern="MM/dd/yyyy" value="${o.registerDate}" />
    									</c:set>
    									<span style="font-weight: bold; ">${regDate}</span>
 								</td>
-								<td style="border-width: 1px; text-align: center;">
+								<td style="border-width: 1px; text-align: left;">
 									<c:set var="subDate">
       									<fmt:formatDate pattern="MM/dd/yyyy" value="${o.submitDate}" />
    									</c:set>

@@ -2,6 +2,7 @@ package edu.stevens.ssw690.DuckSource.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,7 +11,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Formula;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -49,9 +52,16 @@ private static final long serialVersionUID = 1L;
     private String status;
     @Column(name="comment", columnDefinition = "TEXT", length = 65535)
     private String comment;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "opportunitySubmitted")
+    private Set<OpportunityReviewIssue> opportunitityReviewIssues;
     @Formula("(select opportunity_Id from opportunity o where o.opportunity_id = opportunity_id)")
     private Integer opportunityId;
-    
+    @Formula("(select user_id from duck_user u where u.user_id = user_id)")
+    private Integer userId;
+    @Transient
+    private String userName;
+    @Transient
+    private String fullName;
     
     public Integer getId() {
 		return id;
@@ -68,6 +78,10 @@ private static final long serialVersionUID = 1L;
 	
 	public Integer getOpportunityId() {
 		return opportunityId;
+	}
+	
+	public Integer getUserId() {
+		return userId;
 	}
 	
 	public DuckUser getUser() {
@@ -105,6 +119,14 @@ private static final long serialVersionUID = 1L;
 	}
 	public void setComment(String comment) {
 		this.comment = comment;
+	}
+	
+	public String getFullName() {
+		return  user.getFirstName() + " " + user.getLastName();
+	}
+	
+	public String getUserName() {
+		return user.getUserName();
 	}
 
 }

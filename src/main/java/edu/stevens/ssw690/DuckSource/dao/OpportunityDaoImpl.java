@@ -83,7 +83,7 @@ public class OpportunityDaoImpl implements OpportunityDao {
     
     public List<Opportunity> getBySubmitted(Integer userId) {
     	TypedQuery<Opportunity> query = em.createQuery(
-    			"SELECT o FROM Opportunity o left outer join o.opportunitiesSubmitted r where r.user.id = :userId)", Opportunity.class);
+    			"SELECT o FROM Opportunity o left outer join o.opportunitiesSubmitted s where s.user.id = :userId)", Opportunity.class);
     	query.setParameter("userId", userId);  
     	return query.getResultList();
     	
@@ -92,7 +92,7 @@ public class OpportunityDaoImpl implements OpportunityDao {
     public Opportunity getBySubmittedOpportunity(Integer userId, Integer opportunityId) {
     	Opportunity opportunity = null;
     	TypedQuery<Opportunity> query = em.createQuery(
-    			"SELECT o FROM Opportunity o left outer join o.opportunitiesSubmitted r where r.user.id = :userId and o.id = :opportunityId)", Opportunity.class);
+    			"SELECT o FROM Opportunity o left outer join o.opportunitiesSubmitted s where s.user.id = :userId and o.id = :opportunityId)", Opportunity.class);
     	query.setParameter("userId", userId); 
     	query.setParameter("opportunityId", opportunityId);
     	List<Opportunity> list = (List<Opportunity>) query.getResultList();
@@ -103,11 +103,12 @@ public class OpportunityDaoImpl implements OpportunityDao {
     	
 	 }
     
-    public List<Opportunity> getByOtherThanCreator(Integer creator) {
+    public List<Opportunity> getByOtherThanCreator(Integer userId) {
         
     	TypedQuery<Opportunity> query = em.createQuery(
-                "FROM  Opportunity o WHERE o.creatorId <> :creator",  Opportunity.class);
-    	query.setParameter("creator", creator);  
+                "SELECT o FROM Opportunity o WHERE o.creatorId <> :userId and o.id NOT IN " +
+    				"(select g.opportunity.id from OpportunityRegistered g where user.id = :userId)", Opportunity.class);
+    	query.setParameter("userId", userId);  
     	return query.getResultList();
     	
 	 }
@@ -115,17 +116,18 @@ public class OpportunityDaoImpl implements OpportunityDao {
     public List<Opportunity> getByType(String oppType) {
         
     	TypedQuery<Opportunity> query = em.createQuery(
-                "FROM  Opportunity o WHERE o. opportunityType=:oppType",  Opportunity.class);
+                "FROM  Opportunity o WHERE o.opportunityType=:oppType",  Opportunity.class);
     	query.setParameter("oppType", oppType);  
     	return query.getResultList();
     	
 	 }
     
-public List<Opportunity> getByOtherThanCreatorByType(Integer creator, String oppType) {
+public List<Opportunity> getByOtherThanCreatorByType(Integer userId, String oppType) {
         
     	TypedQuery<Opportunity> query = em.createQuery(
-                "FROM  Opportunity o WHERE o.creatorId <> :creator and o.opportunityType=:oppType",  Opportunity.class);
-    	query.setParameter("creator", creator);
+    			 "SELECT o FROM Opportunity o WHERE o.creatorId <> :userId and o.opportunityType=:oppType and o.id NOT IN " +
+    	    				"(select g.opportunity.id from OpportunityRegistered g where user.id = :userId)", Opportunity.class);
+    	query.setParameter("userId", userId);
     	query.setParameter("oppType", oppType);  
     	return query.getResultList();
     	

@@ -63,28 +63,16 @@ CREATE TABLE DuckDb.`opportunity_submitted` (
   FOREIGN KEY (`opportunity_id`) REFERENCES DuckDb.`opportunity`(`opportunity_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
-CREATE TABLE DuckDb.`opportunity_review` (
-  `opportunity_review_id` int(11) NOT NULL AUTO_INCREMENT,
-  `opportunity_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `opportunity_review_issue_id` int(11),
-  PRIMARY KEY (`opportunity_review_id`),
-  INDEX(`user_id`),
-  INDEX(`opportunity_id`),
-  FOREIGN KEY (`user_id`) REFERENCES DuckDb.`duck_user`(`user_id`),
-  FOREIGN KEY (`opportunity_id`) REFERENCES DuckDb.`opportunity`(`opportunity_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-
 CREATE TABLE DuckDb.`opportunity_review_issue` (
   `opportunity_review_issue_id` int(11) NOT NULL AUTO_INCREMENT,
-  `opportunity_review_id` int(11) NOT NULL,
+  `opportunity_submitted_id` int(11) NOT NULL,
   `creation_date` DATE NOT NULL,
   `issue_id` int(11),
   `comment` TEXT,
   `resolution_date` DATE,
   PRIMARY KEY (`opportunity_review_issue_id`),
-  INDEX(`opportunity_review_id`),
-  FOREIGN KEY (`opportunity_review_id`) REFERENCES DuckDb.`opportunity_review`(`opportunity_review_id`)
+  INDEX(`opportunity_submitted_id`),
+  FOREIGN KEY (`opportunity_submitted_id`) REFERENCES DuckDb.`opportunity_submitted`(`opportunity_submitted_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 CREATE TABLE DuckDb.`review_issue` (

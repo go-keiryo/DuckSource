@@ -41,6 +41,8 @@ public class OpportunityRegistered implements Serializable {
     private Date registeredDate;
     @Formula("(select opportunity_Id from opportunity o where o.opportunity_id = opportunity_id)")
     private Integer opportunityId;
+    @Formula("(select user_Id from duck_user u where user_id = user_id)")
+    private Integer userId;
 
 	public Integer getId() {
 		return id;
@@ -56,6 +58,9 @@ public class OpportunityRegistered implements Serializable {
 	}
 	public Integer getOpportunityId() {
 		return opportunityId;
+	}
+	public Integer getUserId() {
+		return userId;
 	}
 	public DuckUser getUser() {
 		return user;

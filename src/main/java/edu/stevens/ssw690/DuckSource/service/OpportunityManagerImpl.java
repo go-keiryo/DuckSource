@@ -35,11 +35,11 @@ public class OpportunityManagerImpl implements OpportunityManager {
 		return  dao.getByType(oppType);
 	}
 
-	public List<Opportunity> getByOtherThanCreator(Integer creator) {
-		return dao.getByOtherThanCreator(creator);
+	public List<Opportunity> getByOtherThanCreator(Integer userId) {
+		return dao.getByOtherThanCreator(userId);
 	}
-	public List<Opportunity> getByOtherThanCreatorByType(Integer creator, String oppType) {
-		return dao.getByOtherThanCreatorByType(creator, oppType);
+	public List<Opportunity> getByOtherThanCreatorByType(Integer userId, String oppType) {
+		return dao.getByOtherThanCreatorByType(userId, oppType);
 	}
 
 	public Opportunity findById(Integer id) {

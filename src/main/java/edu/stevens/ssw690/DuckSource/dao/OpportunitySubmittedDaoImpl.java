@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Component;
@@ -17,7 +18,7 @@ import edu.stevens.ssw690.DuckSource.model.OpportunitySubmitted;
 @Component
 public class OpportunitySubmittedDaoImpl implements OpportunitySubmittedDao {
 
-	@PersistenceContext 
+	@PersistenceContext(type = PersistenceContextType.EXTENDED)
     private EntityManager em;
  
     public void persist(OpportunitySubmitted opportunitySubmitted) {
@@ -33,9 +34,17 @@ public class OpportunitySubmittedDaoImpl implements OpportunitySubmittedDao {
     	return em.find(OpportunitySubmitted.class, id);
 	}
     
+    public List<OpportunitySubmitted> getByOpportunity(Integer opportunityId) {
+    	TypedQuery<OpportunitySubmitted> query = em.createQuery(
+    			"FROM OpportunitySubmitted s where s.opportunityId = :opportunityId)", OpportunitySubmitted.class);
+    	query.setParameter("opportunityId", opportunityId);  
+    	return query.getResultList();
+    	
+	 }
+    
     public List<OpportunitySubmitted> getBySubmitted(Integer userId) {
     	TypedQuery<OpportunitySubmitted> query = em.createQuery(
-    			"FROM OpportunitySubmitted s where s.user.id = :userId)", OpportunitySubmitted.class);
+    			"Select s FROM OpportunitySubmitted s where s.userId = :userId)", OpportunitySubmitted.class);
     	query.setParameter("userId", userId);  
     	return query.getResultList();
     	

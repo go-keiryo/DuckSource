@@ -10,6 +10,6 @@ public interface OpportunitySubmittedManager {
 	public void merge(OpportunitySubmitted opportunitySubmitted); 
 	public OpportunitySubmitted findById(Integer id);
 	public List<OpportunitySubmitted> getBySubmitted(Integer userId);
-	public OpportunitySubmitted getBySubmittedOpportunity(Integer userId, Integer opportunityId);
+	public List<OpportunitySubmitted> getByOpportunity(Integer opportunityId);
 
 }

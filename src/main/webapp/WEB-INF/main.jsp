@@ -100,13 +100,13 @@
 						    <c:otherwise>
 							<c:forEach var="o" items="${opportunities_registered}">
 							<tr>
-								<td style="border-width: 1px; text-align: center;"><span style="font-weight: bold; ">${o.opportunityType}</span></td>
-								<td style="border-width: 1px; text-align: center;"><a href="oppdetail.html?oppId=${o.id}&userId=${userId}">${o.opportunityTitle}</a> </span></td>
-								<td style="border-width: 1px; text-align: center;"><span style="font-weight: bold; ">
+								<td style="border-width: 1px; text-align: left;"><span style="font-weight: bold; ">${o.opportunityType}</span></td>
+								<td style="border-width: 1px; text-align: left;"><a href="oppdetail.html?oppId=${o.id}&userId=${userId}">${o.opportunityTitle}</a> </span></td>
+								<td style="border-width: 1px; text-align: right;"><span style="font-weight: bold; ">
 									<fmt:setLocale value="en_US"/>
 									<fmt:formatNumber value="${o.duckbills}" type="currency"/> </span>
 								</td>
-								<td style="border-width: 1px; text-align: center;">
+								<td style="border-width: 1px; text-align: left;">
 									<c:set var="subDate">
       									<fmt:formatDate pattern="MM/dd/yyyy" value="${o.submitDate}" />
    									</c:set>
@@ -182,15 +182,22 @@
 						    <c:otherwise>
 						<c:forEach var="o" items="${opportunities}">
 							<tr>
-								<td style="border-width: 1px; text-align: center;"><span style="font-weight: bold; ">${o.opportunityType}</span></td>
-								<td style="border-width: 1px; text-align: center;"><span style="font-weight: bold; "><a href="oppdetail.html?oppId=${o.id}&userId=${userId}">${o.opportunityTitle}</a></span></td>
-								<td style="border-width: 1px; text-align: center;"><span style="font-weight: bold; ">
+								<td style="border-width: 1px; text-align: left;"><span style="font-weight: bold; ">${o.opportunityType}</span></td>
+								<td style="border-width: 1px; text-align: left;"><span style="font-weight: bold; "><a href="oppdetail.html?oppId=${o.id}&userId=${userId}">${o.opportunityTitle}</a></span></td>
+								<td style="border-width: 1px; text-align: right;"><span style="font-weight: bold; ">
 									<fmt:setLocale value="en_US"/>
 									<fmt:formatNumber value="${o.duckbills}" type="currency"/> </span>
 								</td>
 								<td style="border-width: 1px; text-align: center;">${o.registeredCount}</td>
 								<td style="border-width: 1px; text-align: center;">${o.submittedCount}</td>
-								<td style="border-width: 1px; text-align: center;"><a href="editopp?userId=${userId}&oppId=${o.id}">Edit</a> </td>
+								<c:choose>
+									<c:when test="${o.submittedCount == 0}">
+						    			<td style="border-width: 1px; text-align: center;"><a href="editopp?userId=${userId}&oppId=${o.id}">Edit</a> </td>
+						    		</c:when>    
+						    		<c:otherwise>
+						    				<td style="border-width: 1px; text-align: center;"><a href="editopp?userId=${userId}&oppId=${o.id}">Edit</a> <a href="reviewopp?userId=${userId}&oppId=${o.id}&message=&messageClass=">Review</a></td>
+									</c:otherwise>
+								</c:choose>
 							</tr>
 						</c:forEach>
 						</c:otherwise>
