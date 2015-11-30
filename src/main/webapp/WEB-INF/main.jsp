@@ -116,7 +116,7 @@
 									<c:set var="submitted" value="false" />
 									<c:set var="submitId" value="" />
 									<c:forEach var="s" items="${opportunities_submitted}">
-										<c:if test="${s.opportunityId eq o.id}">
+										<c:if test="${s.opportunity.id == o.id}">
     										<c:set var="submitted" value="true" />
     										<c:set var="submitId" value="${s.id}" />
   										</c:if>

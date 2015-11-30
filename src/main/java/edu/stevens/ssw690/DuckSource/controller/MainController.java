@@ -698,7 +698,7 @@ public class MainController extends MultiActionController {
         opportunityReviewIssueSvc.persist(opportunityReviewIssue);
     	
    	 	model.addAttribute("submissions", opportunitySubmittedSvc.getByOpportunity(oppId));
-   	    model.addAttribute("reviewIssues", opportunityReviewIssueSvc.getByOpportunitySubmitted(subId));
+   	    model.addAttribute("reviewIssues", opportunityReviewIssueSvc.getByOpportunitySubmittedExtended(subId));
        
    	   if (loc > 0) {
    		return "redirect:reviewoppissues";
@@ -787,7 +787,7 @@ public class MainController extends MultiActionController {
         
     
     	 model.addAttribute("submission", opportunitySubmittedSvc.findById(subId));
-    	 model.addAttribute("reviewIssues", opportunityReviewIssueSvc.getByOpportunitySubmitted(subId));
+    	 model.addAttribute("reviewIssues", opportunityReviewIssueSvc.getByOpportunitySubmittedExtended(subId));
          
          return "redirect:reviewoppissues";
 
@@ -811,7 +811,7 @@ public class MainController extends MultiActionController {
     	 if (list.size() > 0) {
     		 model.addAttribute("opportunity", opportunity);
     		 model.addAttribute("submission", opportunitySubmittedSvc.findById(subId));
-        	 model.addAttribute("reviewIssues", opportunityReviewIssueSvc.getByOpportunitySubmitted(subId));
+        	 model.addAttribute("reviewIssues", opportunityReviewIssueSvc.getByOpportunitySubmittedExtended(subId));
         	 model.addAttribute("subId",subId);
         	 model.addAttribute("oppId",oppId);
         	 model.addAttribute("userId",userId);
