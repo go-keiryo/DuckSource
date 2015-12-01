@@ -13,5 +13,6 @@ public interface OpportunityReviewIssueManager {
 	public OpportunityReviewIssue findById(Integer id);
 	public List<OpportunityReviewIssue> getByOpportunitySubmitted(Integer opportunitySubmittedId);
 	public List<OpportunitytReviewIssueExtended> getByOpportunitySubmittedExtended(Integer opportunitySubmittedId);
+	public List<OpportunityReviewIssue> getByOpportunity(Integer opportunityId);
 
 }

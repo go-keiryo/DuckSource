@@ -44,6 +44,13 @@ public class OpportunityReviewIssueDaoImpl implements OpportunityReviewIssueDao 
     	return em.find(OpportunityReviewIssue.class, id);
 	}
     
+    public List<OpportunityReviewIssue> getByOpportunity(Integer opportunityId) {
+    	TypedQuery<OpportunityReviewIssue> query = em.createQuery(
+    			"FROM OpportunityReviewIssue r where r.opportunitySubmitted.opportunityId = :opportunityId)", OpportunityReviewIssue.class);
+    	query.setParameter("opportunityId", opportunityId);
+    	return query.getResultList();
+    }
+    
     public List<OpportunityReviewIssue> getByOpportunitySubmitted(Integer opportunitySubmittedId) {
     	TypedQuery<OpportunityReviewIssue> query = em.createQuery(
     			"FROM OpportunityReviewIssue r where r.opportunitySubmittedId = :opportunitySubmittedId)", OpportunityReviewIssue.class);

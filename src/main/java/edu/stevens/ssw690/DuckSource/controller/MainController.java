@@ -586,7 +586,7 @@ public class MainController extends MultiActionController {
     	 Opportunity opportunity = opportunitySvc.findById(oppId);
     	 model.addAttribute("opportunity", opportunity);
     	 model.addAttribute("submissions", opportunitySubmittedSvc.getByOpportunity(oppId));
-    	 model.addAttribute("reviewIssues", opportunityReviewIssueSvc.getByOpportunitySubmitted(oppId));
+    	 model.addAttribute("reviewIssues", opportunityReviewIssueSvc.getByOpportunity(oppId)); 
          model.addAttribute("userId",userId);
          model.addAttribute("oppId",oppId);
          
@@ -627,6 +627,7 @@ public class MainController extends MultiActionController {
     	 Opportunity opportunity = opportunitySvc.findById(oppId);
     	 model.addAttribute("opportunity", opportunity);
     	 model.addAttribute("submissions", opportunitySubmittedSvc.getByOpportunity(oppId));
+    	 model.addAttribute("reviewIssues", opportunityReviewIssueSvc.getByOpportunity(oppId));
     	 model.addAttribute("subId",subId);
     	 model.addAttribute("oppId",oppId);
     	 model.addAttribute("userId",userId);
@@ -685,6 +686,7 @@ public class MainController extends MultiActionController {
 	   	model.addAttribute("oppId",oppId);
 	   	model.addAttribute("subId",subId);
 	   	model.addAttribute("userId",userId);
+	   	model.addAttribute("loc",loc);
     	 
     	if (formname.equalsIgnoreCase("issue")){
     		issueSvc.persist(reviewIssue);
@@ -696,7 +698,7 @@ public class MainController extends MultiActionController {
         opportunityReviewIssue.setOpportunitySubmitted(opportunitySubmitted);
         opportunityReviewIssueSvc.persist(opportunityReviewIssue);
     	
-   	 	model.addAttribute("submissions", opportunitySubmittedSvc.getByOpportunity(oppId));
+   	 	model.addAttribute("submissions", opportunitySubmittedSvc.findById(subId));
    	    model.addAttribute("reviewIssues", opportunityReviewIssueSvc.getByOpportunitySubmittedExtended(subId));
        
    	   if (loc > 0) {

@@ -45,6 +45,11 @@ public class OpportunityReviewIssueManagerImpl implements OpportunityReviewIssue
 
 	public List<OpportunityReviewIssue> getByOpportunitySubmitted(Integer opportunitySubmittedId) {
 		return dao.getByOpportunitySubmitted(opportunitySubmittedId);
+	}
+
+
+	public List<OpportunityReviewIssue> getByOpportunity(Integer opportunityId) {
+		return dao.getByOpportunity(opportunityId);
 	};
 
 }

@@ -128,5 +128,17 @@ private static final long serialVersionUID = 1L;
 	public String getUserName() {
 		return user.getUserName();
 	}
+	public Set<OpportunityReviewIssue> getOpportunitityReviewIssues() {
+		return opportunitityReviewIssues;
+	}
+	public void setOpportunitityReviewIssues(Set<OpportunityReviewIssue> opportunitityReviewIssues) {
+		this.opportunitityReviewIssues = opportunitityReviewIssues;
+	}
+	public void setOpportunityId(Integer opportunityId) {
+		this.opportunityId = opportunityId;
+	}
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
 
 }

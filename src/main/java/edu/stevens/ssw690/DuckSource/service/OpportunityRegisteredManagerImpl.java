@@ -39,7 +39,4 @@ public class OpportunityRegisteredManagerImpl implements OpportunityRegisteredMa
 		return dao.findById(id);
 	}
 
-	public OpportunityRegistered getByRegisteredUserOpportunity(Integer userId, Integer opportunityId) {
-		return dao.getByRegisteredUserOpportunity(userId, opportunityId);
-	}
 }

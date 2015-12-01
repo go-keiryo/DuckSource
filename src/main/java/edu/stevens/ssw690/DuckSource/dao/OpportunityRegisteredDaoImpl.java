@@ -60,17 +60,5 @@ public class OpportunityRegisteredDaoImpl implements OpportunityRegisteredDao{
     	
 	 }
     
-    public OpportunityRegistered getByRegisteredUserOpportunity(Integer userId, Integer opportunityId) {
-    	OpportunityRegistered opportunityRegistered = null;
-    	TypedQuery<OpportunityRegistered> query = em.createQuery(
-    			"select distinct r from OpportunityRegistered r where r.user.id = :userId and r.opportunityId = :opportunityId)", OpportunityRegistered.class);
-    	query.setParameter("userId", userId); 
-    	query.setParameter("opportunityId", opportunityId);
-    	List<OpportunityRegistered> list = (List<OpportunityRegistered>) query.getResultList();
-    	if (list.size() > 0)
-    		opportunityRegistered = list.get(0);
-    	return opportunityRegistered;
-    	
-	 }
 
 }
