@@ -31,7 +31,6 @@ import edu.stevens.ssw690.DuckSource.model.Opportunity;
 import edu.stevens.ssw690.DuckSource.model.OpportunityRegistered;
 import edu.stevens.ssw690.DuckSource.model.OpportunityReviewIssue;
 import edu.stevens.ssw690.DuckSource.model.OpportunitySubmitted;
-import edu.stevens.ssw690.DuckSource.model.OpportunitytReviewIssueExtended;
 import edu.stevens.ssw690.DuckSource.model.ReviewIssue;
 import edu.stevens.ssw690.DuckSource.service.DuckUserManager;
 import edu.stevens.ssw690.DuckSource.service.OpportunityManager;
@@ -395,12 +394,12 @@ public class MainController extends MultiActionController {
     	Integer userId = Integer.parseInt(request.getParameter("userId"));
     	Integer oppId = Integer.parseInt(request.getParameter("oppId"));
     	
-    	DuckUser user =  userSvc.findById(userId);
-    	Integer opportunityRegisteredId = opportunityRegisteredSvc.getByRegisteredOpportunity(userId, oppId).getId();
-    	OpportunityRegistered opportunityRegistered = opportunityRegisteredSvc.findById(opportunityRegisteredId);
+    	OpportunityRegistered opportunityRegistered = opportunityRegisteredSvc.getByRegisteredOpportunity(userId, oppId);
+    	opportunityRegistered = opportunityRegisteredSvc.findById(opportunityRegistered.getId());
     	opportunityRegisteredSvc.remove(opportunityRegistered);
 		
-        model.addAttribute("user", user);
+    	DuckUser user =  userSvc.findById(userId);
+    	model.addAttribute("user", user);
         model.addAttribute("opportunities", opportunitySvc.getByCreator(userId));
         model.addAttribute("opportunities_registered", opportunitySvc.getByRegistered(userId));
         model.addAttribute("opportunities_submitted", opportunitySubmittedSvc.getBySubmitted(userId));
@@ -794,7 +793,7 @@ public class MainController extends MultiActionController {
     }
     
     @RequestMapping(value="/deleteissue")
-    public String deregisterForOpp(@RequestParam("userId") Integer userId, 
+    public String deleteissue(@RequestParam("userId") Integer userId, 
        	 @RequestParam("oppId") Integer oppId, @RequestParam("subId") Integer subId,
        	 @RequestParam("reviewId")  Integer reviewId,
       	 @ModelAttribute("reviewIssueForm") OpportunityReviewIssue opportunityReviewIssue,

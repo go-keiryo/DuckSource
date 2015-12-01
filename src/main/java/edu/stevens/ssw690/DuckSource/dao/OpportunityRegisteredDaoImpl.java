@@ -46,10 +46,24 @@ public class OpportunityRegisteredDaoImpl implements OpportunityRegisteredDao{
     	return query.getResultList();
     }
     
-    public OpportunityRegistered getByRegisteredOpportunity(Integer userId, Integer opportunityId) {
+    public OpportunityRegistered getByRegisteredOpportunity(Integer userId, Integer oppId) {
     	OpportunityRegistered opportunityRegistered = null;
     	TypedQuery<OpportunityRegistered> query = em.createQuery(
-    			"FROM OpportunityRegistered r where r.user.id = :userId and r.opportunityId = :opportunityId)", OpportunityRegistered.class);
+    			"FROM  OpportunityRegistered r where r.userId = :userId and r.opportunityId = :oppId)", OpportunityRegistered.class);
+    	query.setParameter("userId", userId); 
+    	query.setParameter("oppId", oppId);
+    	List<OpportunityRegistered> list = (List<OpportunityRegistered>) query.getResultList();
+    	if (list.size() > 0)
+    		return list.get(0);
+    	else
+    		return opportunityRegistered;
+    	
+	 }
+    
+    public OpportunityRegistered getByRegisteredUserOpportunity(Integer userId, Integer opportunityId) {
+    	OpportunityRegistered opportunityRegistered = null;
+    	TypedQuery<OpportunityRegistered> query = em.createQuery(
+    			"select distinct r from OpportunityRegistered r where r.user.id = :userId and r.opportunityId = :opportunityId)", OpportunityRegistered.class);
     	query.setParameter("userId", userId); 
     	query.setParameter("opportunityId", opportunityId);
     	List<OpportunityRegistered> list = (List<OpportunityRegistered>) query.getResultList();

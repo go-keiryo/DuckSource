@@ -13,5 +13,6 @@ public interface OpportunityRegisteredDao {
 	 public OpportunityRegistered findById(Integer id);
 	 public List<OpportunityRegistered> getByRegistered(Integer userId);
 	 public OpportunityRegistered getByRegisteredOpportunity(Integer userId, Integer opportunityId);
+	 public OpportunityRegistered getByRegisteredUserOpportunity(Integer userId, Integer opportunityId);
 
 }

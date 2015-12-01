@@ -39,10 +39,17 @@ public class OpportunityRegistered implements Serializable {
     @Column(name="registered_date")
     @DateTimeFormat(pattern = "MM/dd/yyyy")
     private Date registeredDate;
-    @Formula("(select opportunity_Id from opportunity o where o.opportunity_id = opportunity_id)")
+    @Formula("(select opportunity_id from Opportunity o where o.opportunity_id = opportunity_id)")
     private Integer opportunityId;
-    @Formula("(select user_Id from duck_user u where user_id = user_id)")
+    @Formula("(select user_id from duck_user d where d.user_id = user_id)")
     private Integer userId;
+    
+    public void setOpportunityId(Integer opportunityId) {
+		this.opportunityId = opportunityId;
+	}
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
 
 	public Integer getId() {
 		return id;
