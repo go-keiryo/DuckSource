@@ -77,15 +77,24 @@
         <table class="art-article" style="width: 100%; margin-top: 44px; margin-bottom: 44px; margin-left: 5px; margin-right: 5px; border-style:hidden; border-collapse:collapse; border-width: 0px;"><tbody>
 		<tr><th colspan="3" align="center" style="border: none;"><span style="font-weight: bold; font-size: 22px;">${opportunity.opportunityTitle} by ${opportunitySubmitted.user.userName}</span></th></tr>
 		<tr style="border: none; border-width: 0px;">
-        		<td style="border: none; font-weight: bold;"><spring:message code="lbl.reviewIssue" text="Issue" /></td>
-        		<td style="border: none;">
-	        		 <ul>  
-			            <form:select path="issueId">  
-							<c:forEach items="${issueList}" var="option">
-						        <option value="${option.id}" ${reviewIssueForm.issueId == option.id ? 'selected' : ''}>${option.issueTitle}</option>
-						    </c:forEach>
-			            </form:select>  
-	        		</ul>  
+        		<td style="border: none; font-weight: bold;vertical-align: middle;"><spring:message code="lbl.reviewIssue" text="Issue" /></td>
+        		<td style="border: none;left; vertical-align: middle;">
+        			<table>
+        				<tr style="border: none;">
+        					<td style="border: none;text-align: left; vertical-align: middle;">
+			        		 <ul>
+					            <form:select path="issueId">  
+									<c:forEach items="${issueList}" var="option">
+								        <option value="${option.id}">${option.issueTitle}</option>
+								    </c:forEach>
+					            </form:select>  
+			        		</ul>
+			        	</td>
+			        	<td style="border: none;text-align: left; vertical-align: middle;">
+	        				<input type="button" onclick="showAdd()" class="art-button" value="Add Item" />  
+	        			</td>
+	        		  </tr>
+	        		  </table>
                 </td>
                 <td style="border: none;"><form:errors path="issueId" cssClass="error" /></td>
          	</tr>
@@ -100,7 +109,7 @@
          		<td style="border: none;"><form:errors path="comment" cssClass="error" /></td>
          	</tr>
          	<tr style="border: none;">
-         		<td style="border: none; text-align: center; padding-top: 10px" colspan="3"> <input type="submit" value="Edit Review Issue" /></td>
+         		<td style="border: none; text-align: center; padding-top: 10px" colspan="3"> <input class="art-button" type="submit" value="Edit Review Issue" /></td>
          	</tr>         
           </tbody>
    	</table>
@@ -108,7 +117,7 @@
     </div>
     <div class="art-content-layout-row">
      <div>
-     	<div class="art-layout-cell layout-item-4" style="width: 28%" >
+     	<div class="art-layout-cell layout-item-4" style="width: 28%; display:none" id="addform" >
        <form:form method="post" commandName="issueForm">
        <input type="hidden" name="formname" value="issue">
         <table class="art-article" style="width: 95%; margin-top: 44px; margin-bottom: 44px; margin-left: 5px; margin-right: 15px; border-style:hidden; border-collapse:collapse; border-width: 0px;"><tbody>
