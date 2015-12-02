@@ -20,28 +20,6 @@
     <script src="<c:url value="/resources/js/script.responsive.js" />"></script>
     <script src="<c:url value="/resources/js/findopp.js" />"></script>
     
-    <script>
-		$(document).ready(function(){
-			var option = GetURLParameter('select');
-			if (!option) {
-				option = "All types";
-			}
-			$("#oppselect").val(option);
-		});
-		function GetURLParameter(sParam) {
-			var sreturnParam = "";
-			var sPageURL = window.location.search.substring(1);
-		    var sURLVariables = sPageURL.split('&');
-		    for (var i = 0; i < sURLVariables.length; i++)  {
-		        var sParameterName = sURLVariables[i].split('=');
-		        if (sParameterName[0] == sParam) {
-		        	sreturnParam = sParameterName[1];
-		        	return sreturnParam;
-		        }
-		    }
-		    return sreturnParam;
-		}
-	</script>
 
 <style>.art-content .art-postcontent-0 .layout-item-0 {  border-collapse: separate;  }
 .art-content .art-postcontent-0 .layout-item-1 { color: #212627; background: #E1E5E5 url(<c:url value='/resources/images/ecf41.png' />') scroll; padding-top: 10px;padding-right: 10px;padding-bottom: 10px;padding-left: 10px; border-radius: 15px;  }

@@ -24,7 +24,7 @@
     <script src="<c:url value="/resources/js/jquery-1.11.3.min.js" />"></script>
     <script src="<c:url value="/resources/js/jquery.maskedinput.min.js" />"></script>
     <script src="<c:url value="/resources/js/jquery.price_format.2.0.min.js" />"></script>
-    <script src="<c:url value="/resources/js/createopp.js" />"></script>
+    <script src="<c:url value="/resources/js/issue.js" />"></script>
 
 <style>.art-content .art-postcontent-0 .layout-item-0 { color: #232929; background: #ECEEEF url('<c:url value='/resources/images/6cd8d.png' />') scroll;  border-collapse: separate; border-radius: 15px;  }
 .art-content .art-postcontent-0 .layout-item-1 { color: #212627; background: #C0C8C9 url('<c:url value='/resources/images/66838.png' />') scroll; padding-top: 10px;padding-right: 10px;padding-bottom: 10px;padding-left: 10px; border-top-left-radius: 15px;border-bottom-left-radius: 15px;  }
@@ -58,7 +58,7 @@
                     
 </header>
 <nav class="art-nav">
-    <ul class="art-hmenu"><li><a href="main?userId=${userId}" class="">Home Page</a></li><li><a href="findopp?userId=${userId}" class="">Find an Opportunity</a></li><li><a href="createopp?userId=${userId}" class="">Create an Opportunity</a></li><li><a href="account?userId=${userId}">Account Settings</a></li><li><a href="index">Sign Out</a></li></ul> 
+    <ul class="art-hmenu"><li><a href="main?userId=${userId}" class="">Home Page</a></li><li><a href="findopp?userId=${userId}" class="">Find an Opportunity</a></li><li><a href="createopp?userId=${userId}" class="">Create an Opportunity</a></li><li><a href="reviewopp?userId=${userId}&oppId=${oppId}&subId=${subId}">Review</a></li><li><a href="reviewoppissues?userId=${userId}&oppId=${oppId}&subId=${subId}&loc=1">Review Items</a></li><li><a href="account?userId=${userId}">Account Settings</a></li><li><a href="index">Sign Out</a></li></ul> 
     </nav>
 <div class="art-sheet clearfix">
             <div class="art-layout-wrapper">
@@ -87,12 +87,9 @@
 			            </form:select>  
 	        		</ul>  
                 </td>
-                <td style="border: none;"><form:errors path="issueId" cssClass="error" /></td>
          	</tr>
-         	<tr style="border: none;">
-         		<td style="border: none;font-weight: bold;"><spring:message code="lbl.resolutiondate" text="Resolution Date" /></td>
-                <td style="border: none;"><form:input class="datemask" path="resolutionDate" /></td>
-                <td style="border: none;"><form:errors path="resolutionDate" cssClass="error" /></td>
+         	<tr style="border: none; border-width: 0px;">
+         		 <td colspan="2" style="border: none;"><form:errors path="issueId" cssClass="error" /></td>
          	</tr>
          	<tr style="border: none;">
          		<td style="border: none;font-weight: bold;"><spring:message code="lbl.comments" text="Comments" /></td>
@@ -112,16 +109,20 @@
        <form:form method="post" commandName="issueForm">
        <input type="hidden" name="formname" value="issue">
         <table class="art-article" style="width: 95%; margin-top: 44px; margin-bottom: 44px; margin-left: 5px; margin-right: 15px; border-style:hidden; border-collapse:collapse; border-width: 0px;"><tbody>
-		<tr><th colspan="3" align="center" style="border: none;"><span style="font-weight: bold; font-size: 16px;">Add Issue to List</span></th></tr>
+		<tr><th colspan="3" align="center" style="border: none;"><span style="font-weight: bold; font-size: 16px;">Add Item to Issue List</span></th></tr>
 		<tr style="border: none; border-width: 0px;">
         		<td style="border: none; font-weight: bold;"><spring:message code="lbl.issueTitle" text="Issue Title" /></td>
         		<td style="border: none;"><form:input type="text" path="issueTitle" /></td>
-                <td style="border: none;"><form:errors path="issueTitle" cssClass="error" /></td>
+         	</tr>
+         	<tr style="border: none; border-width: 0px;">
+         		 <td colspan="2" style="border: none;"><form:errors path="issueTitle" cssClass="error" /></td>
          	</tr>
          	<tr style="border: none;">
          		<td style="border: none;font-weight: bold;"><spring:message code="lbl.issuedescription" text="Description" /></td>
          		<td style="border: none;"><form:textarea path="description" rows="10" cols="30" /></td>
-         		<td style="border: none;"><form:errors path="description" cssClass="error" /></td>
+         	</tr>
+         	<tr style="border: none;">
+         		<td colspan="2" style="border: none;"><form:errors path="description" cssClass="error" /></td>
          	</tr>
          	<tr style="border: none;">
          		<td style="border: none; text-align: center; padding-top: 10px" colspan="3"> <input type="submit" value="Add Item" /></td>

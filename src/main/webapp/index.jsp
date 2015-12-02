@@ -21,28 +21,6 @@
     <script src="<c:url value="/resources/js/jquery-1.11.3.min.js" />"></script>
     <script src="<c:url value="/resources/js/index.js" />"></script>
     
-    <script>
-		$(document).ready(function(){
-			var option = GetURLParameter('select');
-			if (!option) {
-				option = "All types";
-			}
-			$("#oppselect").val(option);
-		});
-		function GetURLParameter(sParam) {
-			var sreturnParam = "";
-			var sPageURL = window.location.search.substring(1);
-		    var sURLVariables = sPageURL.split('&');
-		    for (var i = 0; i < sURLVariables.length; i++)  {
-		        var sParameterName = sURLVariables[i].split('=');
-		        if (sParameterName[0] == sParam) {
-		        	sreturnParam = sParameterName[1];
-		        	return sreturnParam;
-		        }
-		    }
-		    return sreturnParam;
-		}
-	</script>
 
 <style>.art-content .art-postcontent-0 .layout-item-0 { color: #DBE0E1; background: #454545;background: rgba(69, 69, 69, 0.95);  border-collapse: separate; border-radius: 15px;  }
 .art-content .art-postcontent-0 .layout-item-1 { color: #DBE0E1; padding-top: 10px;padding-right: 10px;padding-bottom: 10px;padding-left: 10px; border-top-left-radius: 15px;border-bottom-left-radius: 15px;  }

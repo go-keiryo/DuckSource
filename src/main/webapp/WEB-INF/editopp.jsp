@@ -24,7 +24,7 @@
     <script src="<c:url value="/resources/js/jquery-1.11.3.min.js" />"></script>
     <script src="<c:url value="/resources/js/jquery.maskedinput.min.js" />"></script>
     <script src="<c:url value="/resources/js/jquery.price_format.2.0.min.js" />"></script>
-    <script src="<c:url value="/resources/js/createopp.js" />"></script>
+    <script src="<c:url value="/resources/js/editopp.js" />"></script>
 
 <style>.art-content .art-postcontent-0 .layout-item-0 { color: #232929; background: #ECEEEF url('<c:url value='/resources/images/6cd8d.png' />') scroll;  border-collapse: separate; border-radius: 15px;  }
 .art-content .art-postcontent-0 .layout-item-1 { color: #212627; background: #C0C8C9 url('<c:url value='/resources/images/66838.png' />') scroll; padding-top: 10px;padding-right: 10px;padding-bottom: 10px;padding-left: 10px; border-top-left-radius: 15px;border-bottom-left-radius: 15px;  }
@@ -122,8 +122,8 @@
          	</tr>
          	<tr style="border: none;">
          		<td style="border: none;font-weight: bold;"><spring:message code="lbl.description" text="Description" /></td>
-         		<td style="border: none;"><form:textarea path="description" rows="4" cols="50" /></td>
-         		<td style="border: none;"><form:errors path="description" cssClass="error" /></td>
+         		<td style="border: none;"><form:textarea id="desc" path="description" rows="4" cols="50" /></td>
+         		<td style="border: none;"><form:errors  path="description" cssClass="error" /></td>
          	</tr>
          	<tr style="border: none;">
          		<td style="border: none; text-align: center; padding-top: 10px" colspan="3"> <input type="submit" value="Edit" /></td>

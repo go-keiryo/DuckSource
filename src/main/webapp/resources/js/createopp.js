@@ -1,4 +1,4 @@
-$( document ).ready(function() {
-	$('.datemask').mask("99/99/9999");
-	$('.moneymask').priceFormat({prefix:'$', thousandsSeparator:'', clearPrefix: true});
+jQuery( document ).ready(function() {
+	jQuery('.datemask').mask("99/99/9999");
+	jQuery('.moneymask').priceFormat({prefix:'$', thousandsSeparator:'', clearPrefix: true});
 });
