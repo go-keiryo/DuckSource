@@ -22,7 +22,7 @@ jQuery(document).ready(function(){
 
 function addOpportunityTypeToURL(link,list)
 {
-	jQuery(link).attr('href', function() {
-        return this.href + 'select=' + jQuery("#" + list).val();
+	$(link).attr('href', function() {
+        return this.href + 'select=' + $("#" + list).val();
     });
 }

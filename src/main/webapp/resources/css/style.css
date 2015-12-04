@@ -2,13 +2,13 @@
 
 #art-main
 {
-   background: #282E2F url('images/pageglare.png') no-repeat fixed;
-   background: url('images/pageglare.png') no-repeat, -webkit-linear-gradient(top, #0C0E0E 0, #424C4D 500px) no-repeat;
-   background: url('images/pageglare.png') no-repeat, -moz-linear-gradient(top, #0C0E0E 0, #424C4D 500px) no-repeat;
-   background: url('images/pageglare.png') no-repeat, -o-linear-gradient(top, #0C0E0E 0, #424C4D 500px) no-repeat;
-   background: url('images/pageglare.png') no-repeat, -ms-linear-gradient(top, #0C0E0E 0, #424C4D 500px) no-repeat;
-   -svg-background: url('images/pageglare.png') no-repeat, linear-gradient(top, #0C0E0E 0, #424C4D 500px) no-repeat;
-   background: url('images/pageglare.png') no-repeat, linear-gradient(to bottom, #0C0E0E 0, #424C4D 500px) no-repeat;
+   background: #282E2F url('/DuckSource/resources/images/pageglare.png') no-repeat fixed;
+   background: url('/DuckSource/resources/images/pageglare.png') no-repeat, -webkit-linear-gradient(top, #0C0E0E 0, #424C4D 500px) no-repeat;
+   background: url('/DuckSource/resources/images/pageglare.png') no-repeat, -moz-linear-gradient(top, #0C0E0E 0, #424C4D 500px) no-repeat;
+   background: url('/DuckSource/resources/images/pageglare.png') no-repeat, -o-linear-gradient(top, #0C0E0E 0, #424C4D 500px) no-repeat;
+   background: url('/DuckSource/resources/images/pageglare.png') no-repeat, -ms-linear-gradient(top, #0C0E0E 0, #424C4D 500px) no-repeat;
+   -svg-background: url('/DuckSource/resourcesimages/pageglare.png') no-repeat, linear-gradient(top, #0C0E0E 0, #424C4D 500px) no-repeat;
+   background: url('/DuckSource/resources/images/pageglare.png') no-repeat, linear-gradient(to bottom, #0C0E0E 0, #424C4D 500px) no-repeat;
    background-attachment: fixed, fixed !important;
    margin:0 auto;
    font-size: 13px;
@@ -475,7 +475,7 @@ li p, .art-postcontent li p, .art-blockcontent li p
   -ms-transform: rotate(0deg);
   transform: rotate(0deg);
     overflow: hidden;
-      background-image: url('images/object624133700.png');
+      background-image: url('/DuckSource/resources/images/object624133700.png');
   background-position: 0px 0px;
   background-repeat: no-repeat;
     z-index: 1;
@@ -571,7 +571,7 @@ line-height: 125%;
    margin:15px auto 0;
    background-repeat: no-repeat;
    height: 200px;
-   background-image: url('images/header.png');
+   background-image: url('/DuckSource/resources/images/header.png');
    background-position: center top;
    position: relative;
    min-width: 680px;
@@ -582,14 +582,14 @@ line-height: 125%;
 
 .custom-responsive .art-header
 {
-   background-image: url('images/header.png');
+   background-image: url('/DuckSource/resources/images/header.png');
    background-position: center top;
 }
 
 .default-responsive .art-header,
 .default-responsive #art-header-bg
 {
-   background-image: url('images/header.png');
+   background-image: url('/DuckSource/resources/images/header.png');
    background-position: center center;
    background-size: auto;
 }
@@ -803,7 +803,7 @@ ul.art-hmenu>li:before
    left:  -9px;
    width:9px;
    height: 22px;
-   background: url('images/menuseparator.png') center center no-repeat;
+   background: url('/DuckSource/resources/images/menuseparator.png') center center no-repeat;
 }
 ul.art-hmenu>li:first-child:before{
    display:none;
@@ -915,7 +915,7 @@ ul.art-hmenu ul
    z-index: 10;
    left: 0;
    top: 0;
-   background-image: url('images/spacer.gif');
+   background-image: url('/DuckSource/resources/images/spacer.gif');
 }
 
 .desktop ul.art-hmenu>li>ul
@@ -1289,7 +1289,7 @@ ul.art-vmenu ul ul ul ul ul a
 
 ul.art-vmenu li li a:before
 {
-   content:url('images/vmenusubitemicon.png');
+   content:url('/DuckSource/resources/images/vmenusubitemicon.png');
    margin-right:10px;
    bottom: 2px;
    position:relative;
@@ -1334,7 +1334,7 @@ ul.art-vmenu ul a.active:after
 
 ul.art-vmenu li li a:hover:before
 {
-   content:url('images/vmenuhoveredsubitemicon.png');
+   content:url('/DuckSource/resources/images/vmenuhoveredsubitemicon.png');
    margin-right:10px;
    bottom: 2px;
    position:relative;
@@ -1364,7 +1364,7 @@ ul.art-vmenu ul a.active, ul.art-vmenu ul a:hover, ul.art-vmenu ul a.active:hove
 
 ul.art-vmenu li li a.active:before
 {
-   content:url('images/vmenuactivesubitemicon.png');
+   content:url('/DuckSource/resources/images/vmenuactivesubitemicon.png');
    margin-right:10px;
    bottom: 2px;
    position:relative;
@@ -1413,7 +1413,7 @@ div.art-block img
 
 .art-blockheader .t:before
 {
-   content:url('images/blockheadericon.png');
+   content:url('/DuckSource/resources/images/blockheadericon.png');
    margin-right:6px;
    bottom: 2px;
    position:relative;
@@ -1478,7 +1478,7 @@ div.art-block img
 }
 .art-block ul>li:before
 {
-   content:url('images/blockbullets.png');
+   content:url('/DuckSource/resources/images/blockbullets.png');
    margin-right:6px;
    bottom: 2px;
    position:relative;
@@ -1708,7 +1708,7 @@ form.art-search input[type="submit"], input.art-search-button, a.art-search-butt
    left:auto;
    display:block;
    border:none;
-   background:url('images/searchicon.png') center center no-repeat;
+   background:url('/DuckSource/resources/images/searchicon.png') center center no-repeat;
    width:24px;
    height: 100%;
    padding:0;
@@ -2207,7 +2207,7 @@ pre
 
 .art-postheadericon:before
 {
-   content:url('images/postheadericon.png');
+   content:url('/DuckSource/resources/images/postheadericon.png');
    margin-right:6px;
    bottom: 3px;
    position:relative;
@@ -2317,7 +2317,7 @@ pre
 
 .art-postdateicon:before
 {
-   content:url('images/postdateicon.png');
+   content:url('/DuckSource/resources/images/postdateicon.png');
    margin-right:6px;
    position:relative;
    display:inline-block;
@@ -2334,7 +2334,7 @@ pre
 
 .art-postauthoricon:before
 {
-   content:url('images/postauthoricon.png');
+   content:url('/DuckSource/resources/images/postauthoricon.png');
    margin-right:6px;
    position:relative;
    display:inline-block;
@@ -2351,7 +2351,7 @@ pre
 
 .art-postpdficon:before
 {
-   content:url('images/postpdficon.png');
+   content:url('/DuckSource/resources/images/postpdficon.png');
    margin-right:6px;
    position:relative;
    display:inline-block;
@@ -2368,7 +2368,7 @@ pre
 
 .art-postprinticon:before
 {
-   content:url('images/postprinticon.png');
+   content:url('/DuckSource/resources/images/postprinticon.png');
    margin-right:6px;
    position:relative;
    display:inline-block;
@@ -2385,7 +2385,7 @@ pre
 
 .art-postemailicon:before
 {
-   content:url('images/postemailicon.png');
+   content:url('/DuckSource/resources/images/postemailicon.png');
    margin-right:6px;
    bottom: 1px;
    position:relative;
@@ -2402,7 +2402,7 @@ pre
 
 .art-postediticon:before
 {
-   content:url('images/postediticon.png');
+   content:url('/DuckSource/resources/images/postediticon.png');
    margin-right:6px;
    position:relative;
    display:inline-block;
@@ -2419,7 +2419,7 @@ pre
 
 .art-postcontent ul>li:before,  .art-post ul>li:before,  .art-textblock ul>li:before
 {
-   content:url('images/postbullets.png');
+   content:url('/DuckSource/resources/images/postbullets.png');
    margin-right:6px;
    bottom: 2px;
    position:relative;
@@ -2487,7 +2487,7 @@ pre
 
 blockquote
 {
-   background: #B7C1C2 url('images/postquote.png') no-repeat scroll;
+   background: #B7C1C2 url('/DuckSource/resources/images/postquote.png') no-repeat scroll;
    border:1px dotted #96A4A6;
    padding:6px 6px 6px 43px;
    margin:0 0 0 15px;
@@ -2566,13 +2566,13 @@ blockquote p,
 
 .art-footer
 {
-   background: #B7C1C2 url('images/footer.png') scroll;
-   background: -webkit-linear-gradient(top, rgba(117, 135, 138, 0.11) 0, rgba(249, 250, 250, 0.29) 100%) no-repeat, url('images/footer.png'), -webkit-linear-gradient(top, #8B9A9C 0, #E3E7E8 100%) no-repeat;
-   background: -moz-linear-gradient(top, rgba(117, 135, 138, 0.11) 0, rgba(249, 250, 250, 0.29) 100%) no-repeat, url('images/footer.png'), -moz-linear-gradient(top, #8B9A9C 0, #E3E7E8 100%) no-repeat;
-   background: -o-linear-gradient(top, rgba(117, 135, 138, 0.11) 0, rgba(249, 250, 250, 0.29) 100%) no-repeat, url('images/footer.png'), -o-linear-gradient(top, #8B9A9C 0, #E3E7E8 100%) no-repeat;
-   background: -ms-linear-gradient(top, rgba(117, 135, 138, 0.11) 0, rgba(249, 250, 250, 0.29) 100%) no-repeat, url('images/footer.png'), -ms-linear-gradient(top, #8B9A9C 0, #E3E7E8 100%) no-repeat;
-   -svg-background: linear-gradient(top, rgba(117, 135, 138, 0.11) 0, rgba(249, 250, 250, 0.29) 100%) no-repeat, url('images/footer.png'), linear-gradient(top, #8B9A9C 0, #E3E7E8 100%) no-repeat;
-   background: linear-gradient(to bottom, rgba(117, 135, 138, 0.11) 0, rgba(249, 250, 250, 0.29) 100%) no-repeat, url('images/footer.png'), linear-gradient(to bottom, #8B9A9C 0, #E3E7E8 100%) no-repeat;
+   background: #B7C1C2 url('/DuckSource/resources/images/footer.png') scroll;
+   background: -webkit-linear-gradient(top, rgba(117, 135, 138, 0.11) 0, rgba(249, 250, 250, 0.29) 100%) no-repeat, url('/DuckSource/resources/images/footer.png'), -webkit-linear-gradient(top, #8B9A9C 0, #E3E7E8 100%) no-repeat;
+   background: -moz-linear-gradient(top, rgba(117, 135, 138, 0.11) 0, rgba(249, 250, 250, 0.29) 100%) no-repeat, url('/DuckSource/resources/images/footer.png'), -moz-linear-gradient(top, #8B9A9C 0, #E3E7E8 100%) no-repeat;
+   background: -o-linear-gradient(top, rgba(117, 135, 138, 0.11) 0, rgba(249, 250, 250, 0.29) 100%) no-repeat, url('/DuckSource/resources/images/footer.png'), -o-linear-gradient(top, #8B9A9C 0, #E3E7E8 100%) no-repeat;
+   background: -ms-linear-gradient(top, rgba(117, 135, 138, 0.11) 0, rgba(249, 250, 250, 0.29) 100%) no-repeat, url('/DuckSource/resources/images/footer.png'), -ms-linear-gradient(top, #8B9A9C 0, #E3E7E8 100%) no-repeat;
+   -svg-background: linear-gradient(top, rgba(117, 135, 138, 0.11) 0, rgba(249, 250, 250, 0.29) 100%) no-repeat, url('/DuckSource/resources/images/footer.png'), linear-gradient(top, #8B9A9C 0, #E3E7E8 100%) no-repeat;
+   background: linear-gradient(to bottom, rgba(117, 135, 138, 0.11) 0, rgba(249, 250, 250, 0.29) 100%) no-repeat, url('/DuckSource/resources/images/footer.png'), linear-gradient(to bottom, #8B9A9C 0, #E3E7E8 100%) no-repeat;
    padding:10px;
    margin:20px auto 0;
    position: relative;
@@ -2666,7 +2666,7 @@ blockquote p,
 
 .art-rss-tag-icon
 {
-   background:  url('images/footerrssicon.png') no-repeat scroll;
+   background:  url('/DuckSource/resources/images/footerrssicon.png') no-repeat scroll;
    margin:0 auto;
    min-height:32px;
    min-width:32px;
@@ -2683,7 +2683,7 @@ blockquote p,
 
 .art-facebook-tag-icon
 {
-   background:  url('images/footerfacebookicon.png') no-repeat scroll;
+   background:  url('/DuckSource/resources/images/footerfacebookicon.png') no-repeat scroll;
    margin:0 auto;
    min-height:32px;
    min-width:32px;
@@ -2700,7 +2700,7 @@ blockquote p,
 
 .art-twitter-tag-icon
 {
-   background:  url('images/footertwittericon.png') no-repeat scroll;
+   background:  url('/DuckSource/resources/images/footertwittericon.png') no-repeat scroll;
    margin:0 auto;
    min-height:32px;
    min-width:32px;
@@ -2717,7 +2717,7 @@ blockquote p,
 
 .art-tumblr-tag-icon
 {
-   background:  url('images/tumblricon.png') no-repeat scroll;
+   background:  url('/DuckSource/resources/images/tumblricon.png') no-repeat scroll;
    margin:0 auto;
    min-height:32px;
    min-width:32px;
@@ -2734,7 +2734,7 @@ blockquote p,
 
 .art-pinterest-tag-icon
 {
-   background:  url('images/pinteresticon.png') no-repeat scroll;
+   background:  url('/DuckSource/resources/images/pinteresticon.png') no-repeat scroll;
    margin:0 auto;
    min-height:32px;
    min-width:32px;
@@ -2751,7 +2751,7 @@ blockquote p,
 
 .art-vimeo-tag-icon
 {
-   background:  url('images/vimeoicon.png') no-repeat scroll;
+   background:  url('/DuckSource/resources/images/vimeoicon.png') no-repeat scroll;
    margin:0 auto;
    min-height:32px;
    min-width:32px;
@@ -2768,7 +2768,7 @@ blockquote p,
 
 .art-youtube-tag-icon
 {
-   background:  url('images/youtubeicon.png') no-repeat scroll;
+   background:  url('/DuckSource/resources/images/youtubeicon.png') no-repeat scroll;
    margin:0 auto;
    min-height:32px;
    min-width:32px;
@@ -2785,7 +2785,7 @@ blockquote p,
 
 .art-linkedin-tag-icon
 {
-   background:  url('images/linkedinicon.png') no-repeat scroll;
+   background:  url('/DuckSource/resources/images/linkedinicon.png') no-repeat scroll;
    margin:0 auto;
    min-height:32px;
    min-width:32px;
@@ -2802,7 +2802,7 @@ blockquote p,
 
 .art-footer ul>li:before
 {
-   content:url('images/footerbullets.png');
+   content:url('/DuckSource/resources/images/footerbullets.png');
    margin-right:6px;
    bottom: 2px;
    position:relative;
@@ -2912,7 +2912,7 @@ blockquote p,
 
 .art-lightbox-wrapper .loading
 {
-   background: #fff url('images/preloader-01.gif') center center no-repeat;
+   background: #fff url('/DuckSource/resources/images/preloader-01.gif') center center no-repeat;
    border: 1px solid #b4b4b4;
    border-radius: 10px;
    box-shadow: 0 2px 5px #333;
