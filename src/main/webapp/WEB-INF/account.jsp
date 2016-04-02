@@ -1,8 +1,12 @@
-<%@page contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="edu.stevens.ssw690.DuckSource.*"%>
+<%@page import="java.awt.image.BufferedImage"%>
+<%@page import="javax.imageio.ImageIO"%>
+<%@page import="java.io.*"%>
+
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html dir="ltr" lang="en-US"><head>
@@ -26,6 +30,19 @@
 
 </style></head>
 <body>
+<%
+String b64 = "";
+if (session.getAttribute("profileimage") != null) {
+	BufferedImage bImage = (BufferedImage) session.getAttribute("profileimage");
+	ByteArrayOutputStream baos = new ByteArrayOutputStream();
+	ImageIO.write( bImage, "jpg", baos );
+	baos.flush();
+	byte[] imageInByteArray = baos.toByteArray();
+	baos.close();
+	b64 = javax.xml.bind.DatatypeConverter.printBase64Binary(imageInByteArray);
+}
+%>
+
 <div id="art-main">
 <header class="art-header">
 
@@ -64,7 +81,7 @@
     	<table style="border: none; margin: auto;">
     		<tr style="border: none;">
     			<td colspan="2" style="text-align: center; border: none;">
-    				<img width="201" height="200" alt="" class="art-lightbox" src='<c:url value='/resources/images/User1.png' />' style="margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; border-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px; ">
+    				<img src="data:image/jpg;base64, <%=b64%>" alt="Image not found”  /> width="201" height="200" class="art-lightbox" style="margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; border-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px; ">
     			</td>
     		</tr>
     		<tr style="border: none;">
@@ -99,7 +116,12 @@
     <div class="art-layout-cell layout-item-4" style="width: 33%" >
         <p><br></p>
     </div><div class="art-layout-cell layout-item-4" style="width: 34%" >
-        <table style="width: 100%; border: none;"><tbody><tr style="border: none;"><td class="auto-style1" style="text-align: center; border: none;"><a href="password?userId=${userId}" style="font-weight: bold;  ">Change Password</a></td></tr></tbody></table><br>
+        <table style="width: 100%; border: none;"><tbody>
+        	<tr style="border: none;"><td class="auto-style1" style="text-align: center; border: none;"><a href="password?userId=${userId}" style="font-weight: bold;  ">Change Password</a></td>
+        	</tr>
+        	<tr style="border: none;"><td class="auto-style1" style="text-align: center; border: none;"><a href="profileimg?userId=${userId}" style="font-weight: bold;  ">Change Profile Image</a></td>
+        	</tr>
+        	</tbody></table><br>
     </div><div class="art-layout-cell layout-item-4" style="width: 33%" >
         <p><br></p>
     </div>
@@ -113,7 +135,7 @@
                 </div>
             </div><footer class="art-footer">
 <p><a href="about?userId=${userId}" style="font-size: 13px;"><span style="color: rgb(22, 156, 227);">About</span></a><a href="#"></a></p>
-<p>Copyright � 2015. All Rights Reserved.</p>
+<p>Copyright © 2015. All Rights Reserved.</p>
 </footer>
 
     </div>

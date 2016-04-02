@@ -1,0 +1,22 @@
+Files Changed:
+
+edu.stevens.ssw690.DuckSource.controller/
+RegisterReviewController.java
+SubmitController.java
+
+edu.stevens.ssw690.DuckSource.model/
+DuckUser.java
+
+/DuckSource/src/main/webapp/WEB-INF/
+account.jsp
+
+Files Added:
+/DuckSource/src/main/webapp/resources/
+/images/User1.jpg
+
+/DuckSource/src/main/webapp/resources/sql/
+DuckUser_AlterTable.sql (copy this to MySQL command line to update the database)
+
+/DuckSource/src/main/webapp/WEB-INF
+profileimg.jsp
+

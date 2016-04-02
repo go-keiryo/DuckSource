@@ -43,6 +43,8 @@ public class DuckUser  implements Serializable {
 		@Column(name="registration_date")
 	    @DateTimeFormat(pattern = "MM/dd/yyyy")
 	    private Date registrationDate;
+		@Column(name="profile_image")
+		private String profileImage;
 	    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
 	    private Set<OpportunityRegistered> opportunitiesRegistered;
 	    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
@@ -124,6 +126,13 @@ public class DuckUser  implements Serializable {
 			this.registrationDate = registrationDate;
 		}
 		
+		public String getProfileImage() {
+			return profileImage;
+		}
+		
+		public void setProfileImage(String profileImage) {
+			this.profileImage = profileImage;
+		}
 		 public Set<OpportunityRegistered> getOpportunitiesRegistered() {
 				return opportunitiesRegistered;
 		}

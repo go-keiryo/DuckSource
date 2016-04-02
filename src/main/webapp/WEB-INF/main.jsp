@@ -123,10 +123,10 @@
 									</c:forEach>								
 									<c:choose>
 						    			<c:when test="${submitted eq true}">
-						    				<a href="resubmit?userId=${userId}&oppId=${o.id}&subId=${submitId}&message=&messageClass=">Resubmit</a>
+						    				<a href="resubmit?userId=${userId}&oppId=${o.id}&subId=${submitId}&message=&messageClass=">Resubmit</a><br><a href="timesheet?userId=${userId}&oppId=${o.id}&message=&messageClass=">Time Sheet</a> 
 						    			</c:when>    
 						    			<c:otherwise>
-						    				<a href="submit?userId=${userId}&oppId=${o.id}">Submit</a> <a href="deregister?userId=${userId}&oppId=${o.id}">Deregister</a>
+						    				<a href="submit?userId=${userId}&oppId=${o.id}">Submit</a><br><a href="deregister?userId=${userId}&oppId=${o.id}">Deregister</a><br><a href="timesheet?userId=${userId}&oppId=${o.id}&message=&messageClass=">Time Sheet</a> 
 										</c:otherwise>
 									</c:choose>
 								</td>

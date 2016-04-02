@@ -1,10 +1,17 @@
 package edu.stevens.ssw690.DuckSource.controller;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
+import javax.imageio.ImageIO;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -35,6 +42,8 @@ import edu.stevens.ssw690.DuckSource.service.ReviewIssueManager;
 
 @Controller
 @SessionAttributes("registerreview")
+@RequestMapping("/")
+
 public class RegisterReviewController extends MultiActionController {
 
 	@Autowired
@@ -55,16 +64,40 @@ public class RegisterReviewController extends MultiActionController {
 	@Autowired
 	ReviewIssueManager issueSvc;
 	 
-	
-    
-   
+	@Autowired
+    ServletContext context;
+
     
     @RequestMapping(value="/account", method = RequestMethod.GET)
-    public String getAccount(@RequestParam("userId") Integer userId, Model model) 
+    public String getAccount(@RequestParam("userId") Integer userId, Model model, HttpServletRequest request) 
     {
+    	
 		model.addAttribute("userId", userId);
 		DuckUser user = userSvc.findById(userId);
 		model.addAttribute("user", user);
+		
+		String profileImg = user.getProfileImage();
+	        
+        if (profileImg == null) {
+        	try {
+    			BufferedImage bImage = ImageIO.read(new File(context.getRealPath("/") + "resources/images/User1.jpg"));
+    			request.getSession().setAttribute("profileimage", bImage);
+    		} catch (IOException e1) {
+    			request.getSession().setAttribute("profileimage", null);
+    		}
+        	return "account";
+       }
+   	 	
+   	 	String root = context.getRealPath("/");
+   	 	String profileImage = root + File.separator + "userdata" +  File.separator +  user.getProfileImage();
+   	    
+   	 	try {
+			BufferedImage bImage = ImageIO.read(new File(profileImage));
+			request.getSession().setAttribute("profileimage", bImage);
+		} catch (IOException e1) {
+			request.getSession().setAttribute("profileimage", null);
+		}
+   	 	
 		return "account";
 	}
     
