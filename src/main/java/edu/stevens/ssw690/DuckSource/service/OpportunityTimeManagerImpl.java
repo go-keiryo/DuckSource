@@ -9,7 +9,14 @@ import org.springframework.stereotype.Service;
 import edu.stevens.ssw690.DuckSource.dao.OpportunityTimeDao;
 import edu.stevens.ssw690.DuckSource.model.OpportunityTime;
 
+/**
+ * 
+ * @author susan
+ * @see interface (OpportunityTimeManager)
+ * 
+ */
 @Service
+// Not to be called directly
 public class OpportunityTimeManagerImpl implements OpportunityTimeManager {
 
 	@Autowired

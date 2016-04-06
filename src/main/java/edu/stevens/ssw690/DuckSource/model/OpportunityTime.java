@@ -16,9 +16,17 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Formula;
 import org.springframework.format.annotation.DateTimeFormat;
 
+/**
+ * 
+ * @author susan
+ * 
+ *
+ */
+
 @Entity
 @Table(name = "opportunity_time")
 
+//Hours worked by user for an opportunity for one time interval in day
 public class OpportunityTime implements Serializable {
 
 private static final long serialVersionUID = 1L;

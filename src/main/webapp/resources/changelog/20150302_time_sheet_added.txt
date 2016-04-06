@@ -1,0 +1,57 @@
+Files Changed:
+
+edu.stevens.ssw690.DuckSource.controller/
+SubmitController.java
+added:
+getTimesheet
+onTimesheet
+getTimeforDisplay
+
+/DuckSource/src/main/webapp/WEB-INF/
+main.jsp
+added:
+link to Time Sheet 
+<a href="timesheet?userId=${userId}&oppId=${o.id}&message=&messageClass=">Time Sheet</a> 
+
+/DuckSource/
+pom.xml
+added:
+<dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-core</artifactId>
+    <version>2.6.3</version>
+</dependency>
+
+<dependency>
+	<groupId>com.fasterxml.jackson.core</groupId>
+	<artifactId>jackson-databind</artifactId>
+	<version>2.6.3</version>
+</dependency>
+   
+
+Files Added:
+edu.stevens.ssw690.DuckSource.dao/
+OpportunityTimeDao.java
+OpportunityTimeDaoImpl.java
+
+edu.stevens.ssw690.DuckSource.model/
+OpportunityTime.java
+
+DuckSource/src/main/java/edu/stevens/ssw690/DuckSource/service/
+OpportunityTimeManager.java
+OpportunityTimeManagerImpl.java
+
+/DuckSource/src/main/webapp/resources/css/
+TimeSheet.css
+
+/DuckSource/src/main/webapp/resources/js/
+TimeSheet.js
+
+/DuckSource/src/main/webapp/resources/sql/
+OpportunityTime_CreateTable.sql
+(copy this to MySQL command line to update the database)
+
+/DuckSource/src/main/webapp/WEB-INF/
+timesheet.jsp
+
+

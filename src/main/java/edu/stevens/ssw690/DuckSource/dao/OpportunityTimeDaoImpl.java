@@ -1,6 +1,5 @@
 package edu.stevens.ssw690.DuckSource.dao;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -15,9 +14,18 @@ import org.springframework.transaction.annotation.Transactional;
 
 import edu.stevens.ssw690.DuckSource.model.OpportunityTime;
 
+/**
+ * 
+ * @author susan
+ * 
+ * @see Interface (OpportunityTimeDao)
+ *
+ */
+
 @Repository
 @Transactional
 @Component
+// Not to be called directly
 public class OpportunityTimeDaoImpl implements OpportunityTimeDao {
 
 	@PersistenceContext 

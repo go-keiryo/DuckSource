@@ -53,6 +53,10 @@ import edu.stevens.ssw690.DuckSource.service.OpportunityRegisteredManager;
 import edu.stevens.ssw690.DuckSource.service.OpportunitySubmittedManager;
 import edu.stevens.ssw690.DuckSource.service.OpportunityTimeManager;
 
+/**
+ * @author susan
+ *
+ */
 @Controller
 @SessionAttributes("submit")
 public class SubmitController extends MultiActionController {
@@ -74,7 +78,18 @@ public class SubmitController extends MultiActionController {
     
 	private static final int BUFFER_SIZE = 4096;
 	
-	 @RequestMapping(value="/download", method = RequestMethod.GET)
+	 /**
+	 * Get's the file related to the submission and downloads it
+	 * if exists and can be opened.
+	 * @param request
+	 * @param response
+	 * @param userId
+	 * @param oppId
+	 * @param oppSubmitId
+	 * @param status
+	 * @param model
+	 */
+	@RequestMapping(value="/download", method = RequestMethod.GET)
 	    public void getDownload(HttpServletRequest request, HttpServletResponse response, 
 	    		@RequestParam("userId") Integer userId, @RequestParam("oppId") Integer oppId, 
 	    		@RequestParam("subId") Integer oppSubmitId, SessionStatus status, Model model) 
@@ -83,9 +98,9 @@ public class SubmitController extends MultiActionController {
 	    	OpportunitySubmitted opportunitySubmitted = opportunitySubmittedSvc.findById(oppSubmitId);
 	    	
 	    	@SuppressWarnings("unused")
+	    	// for future use
 			boolean error = false;
 	    	
-	        
 	        String root = getServletContext().getRealPath("/");
             String fullPath = root + File.separator + "userdata" +  File.separator +  opportunitySubmitted.getFilePath();
 	        
@@ -134,7 +149,20 @@ public class SubmitController extends MultiActionController {
 	        
 		}
 	 
-	 @RequestMapping(value="/submit", method = RequestMethod.POST)
+	 /**
+	 * Saves the file related to the submission and any comments
+	 * @param request
+	 * @param comments
+	 * @param file
+	 * @param userId
+	 * @param oppId
+	 * @param response
+	 * @param status
+	 * @param model
+	 * @return submit.jsp (if error) or resubmit.jsp (if successful)
+	 * model includes message (error or success) and class for styling message.
+	 */
+	@RequestMapping(value="/submit", method = RequestMethod.POST)
 	    public String onSubmit(HttpServletRequest request, @RequestParam("comments") String comments, 
 	    		 @RequestParam("file") MultipartFile file, @RequestParam("userId") Integer userId, 
 	    		 @RequestParam("oppId") Integer oppId,HttpServletResponse response, 
@@ -211,6 +239,17 @@ public class SubmitController extends MultiActionController {
 	        
 		}
 	    
+	    /**
+	     * Gets the page that allows the submission file for the opportunity to be resubmitted
+	     * Sets up the parameters needed to resubmit, adds them to the model
+	     * @param userId
+	     * @param oppId
+	     * @param subId
+	     * @param message
+	     * @param messageClass
+	     * @param model
+	     * @return resubmit.jsp
+	     */
 	    @RequestMapping(value="/resubmit", method = RequestMethod.GET)
 	    public String getResubmit(@RequestParam("userId") Integer userId, @RequestParam("oppId") Integer oppId, 
 	    		 @RequestParam("subId") Integer subId, @RequestParam("message") String message,  @RequestParam("messageClass") String messageClass, Model model) 
@@ -225,6 +264,18 @@ public class SubmitController extends MultiActionController {
 			return "resubmit";
 		}
 	    
+	    /**
+	     * Saves the file related to the re-submission and any comments
+	     * @param request
+	     * @param comments
+	     * @param file
+	     * @param userId
+	     * @param oppId
+	     * @param oppSubmitId
+	     * @param status
+	     * @param model
+	     * @return resubmit.jsp, model includes message (error or success) and class for styling message.
+	     */
 	    @RequestMapping(value="/resubmit", method = RequestMethod.POST)
 	    public String onResubmit(HttpServletRequest request, @RequestParam("comments") String comments, 
 	    		 @RequestParam("file") MultipartFile file, @RequestParam("userId") Integer userId, 
@@ -298,6 +349,12 @@ public class SubmitController extends MultiActionController {
 	        
 		}
 	    
+	    /**
+	     * Gets the page the allows the profile image to be changed
+	     * @param userId
+	     * @param model
+	     * @return profileimg.jsp
+	     */
 	    @RequestMapping(value="/profileimg", method = RequestMethod.GET)
 	    public String getProfileImage(@RequestParam("userId") Integer userId, Model model) 
 	    {
@@ -307,6 +364,14 @@ public class SubmitController extends MultiActionController {
 			return "profileimg";
 		}
 	    
+	    /**
+	     * @param request
+	     * @param file
+	     * @param userId
+	     * @param status
+	     * @param model
+	     * @return
+	     */
 	    @RequestMapping(value="/profileimg", method = RequestMethod.POST)
 	    public String onImageSubmit(HttpServletRequest request,
 	    		 @RequestParam("file") MultipartFile file, @RequestParam("userId") Integer userId, 
@@ -372,6 +437,18 @@ public class SubmitController extends MultiActionController {
 	        
 		}
 	    
+	    
+	    /**
+	     * Gets the time sheet for the current month/year
+	     * Time data formatted for display added to model in JSON format
+	     * message holds any errors and message class is css style for display
+	     * @param userId
+	     * @param oppId
+	     * @param message
+	     * @param messageClass
+	     * @param model
+	     * @return timesheet.jsp
+	     */
 	    @RequestMapping(value="/timesheet", method = RequestMethod.GET)
 	    public String getTimesheet(@RequestParam("userId") Integer userId, @RequestParam("oppId") Integer oppId, 
 	    		@RequestParam("message") String message,  @RequestParam("messageClass") String messageClass, Model model) 
@@ -383,8 +460,10 @@ public class SubmitController extends MultiActionController {
 	    	int month = cal.get(Calendar.MONTH);
 	    	int year = cal.get(Calendar.YEAR);
 	    	
+	    	// loads the time data from the database
 	    	List<String> workDays = getTimeforDisplay(userId, oppId, month, year);
 	    	
+	    	// convert to JSON
 	    	ObjectMapper mapper = new ObjectMapper();
 	    	String jsonTimeData = "";
 			try {
@@ -409,6 +488,27 @@ public class SubmitController extends MultiActionController {
 			return "timesheet";
 		}
 	    
+	    /**
+	     * Saves any changed time data to the database if it applies.
+	     * Data not saved if unchanged or user elects not to save it.
+	     * Time data formatted for display added to model in JSON format.
+	     * message holds errors/success or "" if no data save required
+	     * message class is css style for display
+	     * @param request
+	     * @param userId
+	     * @param oppId
+	     * @param month this is the current month
+	     * @param year this is the current year
+	     * @param newMonth this is the updated month (previous/next)
+	     * @param newYear this is the updated year (previous/next)
+	     * @param timeData data to potentially be saved
+	     * @param save flag if user wants the data saved
+	     * @param dirty flag if data has changed
+	     * @param status
+	     * @param model
+	     * @return timesheet.jsp model includes time data for month/year requested
+	     * 
+	     */
 	    @RequestMapping(value="/timesheet", method = RequestMethod.POST)
 	    public String onTimesheet(HttpServletRequest request,
 	    		 @RequestParam("userId") Integer userId, 
@@ -427,7 +527,11 @@ public class SubmitController extends MultiActionController {
 	    	Opportunity opportunity = opportunitySvc.findById(oppId);
 	    	String message = "";
 	    	String messageClass = "";
-    		 
+    		
+	    	/*
+	    	 *  don't save data if user elects not to
+	    	 *  or the data hasn't changed
+	    	 */
     		if (save == 1 && dirty == 1) {
     			 
     			 YearMonth yearMonth = YearMonth.of(year, month+1);
@@ -437,17 +541,22 @@ public class SubmitController extends MultiActionController {
         		 localDate = LocalDate.of(year, month+1, daysInMonth);
         		 Date endDate = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
     			 
+        		 // delete current time data in database for month
 		    	 opportunityTimeSvc.clearTime(userId, oppId, startDate, endDate);
 		    	 
 		    	 String[] days = timeData.split(",");
 		    	
 		    	 for (int i=0; i < days.length; i++) {
+		    		 // days with no work hours have single space
 		    		 if (days[i] != " ") {
 		    			 localDate = LocalDate.of(year, month+1, i+1);
 			    		 Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-		    			 String[] times = days[i].split("\\|");
+		    			 // multiple work hour intervals use | delimiter (escape |)
+			    		 String[] times = days[i].split("\\|");
 		    			 for (int j=0; j < times.length; j++) {
+		    				 // start time, end time use - delimiter
 		    				 String[] hours = times[j].split("-");
+		    				 // must have both start and end times
 		    				 if (hours.length == 2) {
 			    				 Time startTime = Time.valueOf(hours[0] + ":00");
 			    				 Time endTime = Time.valueOf(hours[1] + ":00");
@@ -457,6 +566,7 @@ public class SubmitController extends MultiActionController {
 			    				 oppTime.setWorkDate(date);
 			    				 oppTime.setStartTime(startTime);
 			    				 oppTime.setEndTime(endTime);
+			    				 // save
 			    				 opportunityTimeSvc.merge(oppTime);
 		    				 }
 		    			 }
@@ -465,17 +575,15 @@ public class SubmitController extends MultiActionController {
 		    	 
 		    	 message = "Time Sheet updated";
     		}
-	    	 
+	    	
+    		// switch to requested month/year
 	    	month = newMonth;
 	    	year = newYear;
+	    	
+	    	// loads the time data from the database
 	    	List<String> workDays = getTimeforDisplay(userId, oppId, month, year);
 	    	
-	    	LocalDate localDate = LocalDate.of(year, month+1, 1);
-   		    Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-	    	Calendar cal = Calendar.getInstance();
-	    	cal.setTime(date);
-	    	String title = cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.ENGLISH) + " " + cal.get(Calendar.YEAR);
-	        
+	    	// convert to JSON
 	    	ObjectMapper mapper = new ObjectMapper();
 	    	String jsonTimeData = "";
 			try {
@@ -484,7 +592,13 @@ public class SubmitController extends MultiActionController {
 				message = e.getMessage();
 				messageClass = "error";
 			}
-	    	
+			
+			LocalDate localDate = LocalDate.of(year, month+1, 1);
+   		    Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+	    	Calendar cal = Calendar.getInstance();
+	    	cal.setTime(date);
+	    	String title = cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.ENGLISH) + " " + cal.get(Calendar.YEAR);
+	            	
 	        model.addAttribute("opportunity", opportunity);
 			model.addAttribute("userId", userId);
 			model.addAttribute("message", message);
@@ -498,15 +612,26 @@ public class SubmitController extends MultiActionController {
 	        
 		}
 	    
+	    /**
+	     * Gets the Time Sheet Data for the month/year formatted for TimeSheet.js plugin
+	     * @param userId
+	     * @param oppId
+	     * @param month
+	     * @param year
+	     * @return A list of time strings for each day (comma delimiter, 1 per hour, 0 = off, 1 = work)
+	     */
 	    private List<String> getTimeforDisplay(int userId, int oppId, int month, int year) {
 	    	 List<String> workDays = new ArrayList<String>();
 	    	 YearMonth yearMonth = YearMonth.of(year, month+1);
 		     int daysInMonth = yearMonth.lengthOfMonth();
 	    	 for (int i=0; i <daysInMonth ; i++) {
-	    		 	LocalDate localDate = LocalDate.of(year, month+1, i+1);
+	    		 	 LocalDate localDate = LocalDate.of(year, month+1, i+1);
 		    		 Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+		    		 // get work hours for day from database
 		    		 List<OpportunityTime> oppTimeList = opportunityTimeSvc.getByDate(userId, oppId, date, date);
+		    		 // initialize with no hours worked
 		    		 Integer[] workHours =  {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+		    		 // if no works hours for day
 		    		 if (oppTimeList.isEmpty()) {
 		    			 workDays.add(i,Arrays.toString(workHours));
 		    		 } else {
@@ -516,10 +641,12 @@ public class SubmitController extends MultiActionController {
 		    					int start = timeCal.get(Calendar.HOUR_OF_DAY);
 		    					timeCal.setTime(oppTime.getEndTime());
 		    					int end = timeCal.get(Calendar.HOUR_OF_DAY);
+		    					// if 0 end time is midnight
 		    					if (end == 0) {
 		    						end = 24;
 		    					}
 		    					for (int j=start; j < end ; j++) {
+		    						// mark hours as worked
 		    						workHours[j] = 1;
 		    					}
 		    			 }
