@@ -47,8 +47,10 @@
         var rowRemarkLen = 0;
         var remarkHTML = '';
 
+        // data changed
         $("#dirty").val(1);
         
+        // provided by TimeSheet plugin
         for(var row= 0, rowStates=[]; row<rowsCount; ++row){
             rowRemark = [];
             rowStates = sheetStates[row];
@@ -69,11 +71,12 @@
 
     $(document).ready(function(){
     	
+    	// get data from model
     	var timeData = eval('('+'${timeData}'+')'); 
     	month = "${displayMonth}";
     	year = "${displayYear}";
     	
-    	var date = null
+    	var date = null;
     	if (month === "" || year === "" ) {
     		date = new Date();
     		month =  date.getMonth();
@@ -82,6 +85,7 @@
     		 date = new Date(year,month,1);
     	}
     	
+    	// update form fields
     	$("#displayMonth").val(month);
         $("#displayYear").val(year);
         $("#newMonth").val(month);
@@ -93,6 +97,7 @@
     	var days = endDate.getDate();
     	dimensions = [days,24];
     	
+    	// populate time sheet data array
         for (var i=0; i<days; i++) {
         	startDate.setDate(startDate.getDate() + 1);
         	var dd = startDate.getDate();
@@ -101,15 +106,20 @@
         	var dispDate = mm + "/" + dd + "/" + yyyy; 
     		dayList[i] =  {name:dispDate};
     		sheetData[i] = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+    	    // time exists for the day
     		if (timeData[i] != undefined) {
+    			// remove [] from string
     			timeData[i] = timeData[i].replace("[","").replace("]","");
+    			// to array
     			var currData = timeData[i].split(",");
     			for (var j=0; j<24; j++) {
+    				// to int
     				sheetData[i][j] = +currData[j];
     			}
     		}
     	}
     	
+    	// configure plugin
         var sheet = $("#J_timedSheet").TimeSheet({
             data: {
                 dimensions : dimensions,
@@ -128,6 +138,7 @@
         });
 
         updateRemark(sheet);
+        // data clean
         $("#dirty").val(0);
         
         $("#prevMonth").click(function(ev){
@@ -143,6 +154,7 @@
             $("#newYear").val(year);
             
             var dirty = $("#dirty").val();
+            // if data dirty ask before changing month
             if (+dirty === 1) {
             	var s = confirm("Save current Time Sheet?");
             	if (s == true) {
@@ -151,7 +163,7 @@
             		$("#save").val(0);
             	}
             }
-            
+            // submit the form
             $("#submit").click();
         });
         
@@ -168,6 +180,7 @@
             $("#newYear").val(year);
             
             var dirty =  $("#dirty").val();
+         	// if data dirty ask before changing month
             if (+dirty === 1) {
             	var s = confirm("Save current Time Sheet?");
             	if (s == true) {
@@ -176,7 +189,7 @@
             		$("#save").val(0);
             	}
             }
-            
+            // submit form
             $("#submit").click();
             
         });
@@ -191,6 +204,7 @@
              var rowRemarkLen = 0;
              var remark = '';
              
+             // provided by time sheet plugin
              for(var row = 0, rowStates=[]; row<rowsCount; ++row){
                  rowRemark = [];
                  rowStates = sheetStates[row];
@@ -208,8 +222,8 @@
                 remark = rowRemark.join("|");
                 rowTime[row] = remark==='' ? " " : remark;
              }
+             // send data as string to server
              $("#timeData").val(rowTime).toString();
-            
         });
     });
     
