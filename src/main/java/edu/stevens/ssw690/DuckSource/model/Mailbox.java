@@ -31,15 +31,15 @@ public class Mailbox implements Serializable {
     Integer id;
     @Column(name="folder")
     private String folder;
-    @Column(name="read")
-    private boolean read;
+    @Column(name="is_read")
+    private boolean isRead;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mail_message_id", nullable = false)
     private MailMessage mailMessage;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private DuckUser user;
-    @Formula("(select mail_message_id from mail_message m where m.mail_message_id = message_id)")
+    @Formula("(select mail_message_id from mail_message m where m.mail_message_id = mail_message_id)")
     private Integer messageId;
     @Formula("(select user_id from duck_user d where d.user_id = user_id)")
     private Integer userId;
@@ -57,10 +57,10 @@ public class Mailbox implements Serializable {
 		this.folder = folder;
 	}
 	public boolean isRead() {
-		return read;
+		return isRead;
 	}
 	public void setRead(boolean read) {
-		this.read = read;
+		this.isRead = read;
 	}
 	public DuckUser getUser() {
 		return user;
@@ -79,6 +79,12 @@ public class Mailbox implements Serializable {
 	}
 	public void setUserId(Integer userId) {
 		this.userId = userId;
+	}
+	public MailMessage getMailMessage() {
+		return mailMessage;
+	}
+	public void setMailMessage(MailMessage mailMessage) {
+		this.mailMessage = mailMessage;
 	}
     
     

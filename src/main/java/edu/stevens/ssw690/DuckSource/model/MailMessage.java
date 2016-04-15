@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -32,6 +33,8 @@ public class MailMessage implements Serializable {
     Integer id;
     @Column(name="sent_id")
     private Integer sentId;
+    @Column(name="send_to", columnDefinition = "TEXT", length = 65535)
+    private String to ;
     @Column(name="subject")
     private String subject;
     @Column(name="body", columnDefinition = "LONGTEXT", length = 65535)
@@ -71,6 +74,12 @@ public class MailMessage implements Serializable {
 	public void setSent(Date sent) {
 		this.sent = sent;
 	}
-
- 
+	public String getTo() {
+		return to;
+	}
+	public void setTo(String to) {
+		this.to = to;
+	}
+    
+   
 }

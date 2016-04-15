@@ -33,6 +33,9 @@ public class DuckUserManagerImpl implements DuckUserManager{
 		return duckUserDao.getDuckUser(username, password);
 	}
 
+	public DuckUser getDuckUser(String username) {
+		return duckUserDao.getDuckUser(username);
+	}
 	
 	public boolean getUsernameExists(String username) {
 		return duckUserDao.getUsernameExists(username);

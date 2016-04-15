@@ -36,7 +36,7 @@ public class MailboxDaoImpl implements MailboxDao {
 	 }
 	
 	public List<Mailbox> getByUserId(Integer id) {
-    	Query query = em.createQuery("from Mailbox d WHERE d.userId = :id)");
+    	Query query = em.createQuery("from Mailbox m WHERE m.userId = :id)");
     	query.setParameter("id", id);
 		@SuppressWarnings("unchecked")
 		List<Mailbox> list = (List<Mailbox>) query.getResultList();
@@ -44,7 +44,7 @@ public class MailboxDaoImpl implements MailboxDao {
 	}
 	
 	public List<Mailbox> getUserInbox(Integer id) {
-    	Query query = em.createQuery("from Mailbox d WHERE d.userId = :id and d.folder = 'Inbox')");
+    	Query query = em.createQuery("from Mailbox m WHERE m.userId = :id and d.folder = 'Inbox')");
     	query.setParameter("id", id);
 		@SuppressWarnings("unchecked")
 		List<Mailbox> list = (List<Mailbox>) query.getResultList();
@@ -52,11 +52,28 @@ public class MailboxDaoImpl implements MailboxDao {
 	}
 	
 	public List<Mailbox> getUserSent(Integer id) {
-    	Query query = em.createQuery("from Mailbox d WHERE d.userId = :id and d.folder = 'Sent')");
+    	Query query = em.createQuery("from Mailbox m WHERE m.userId = :id and m.folder = 'Sent')");
     	query.setParameter("id", id);
 		@SuppressWarnings("unchecked")
 		List<Mailbox> list = (List<Mailbox>) query.getResultList();
     	return list;
+	}
+	
+	public Mailbox getByMessageId(Integer id) {
+    	Mailbox mailbox = null;
+		Query query = em.createQuery("from Mailbox m WHERE m.MailMessage.Id = :id");
+    	query.setParameter("id", id);
+		@SuppressWarnings("unchecked")
+		List<Mailbox> list = (List<Mailbox>) query.getResultList();
+		int size = list.size();
+    	if (size > 0)
+    		mailbox = list.get(0);
+    	return mailbox;
+	}
+	
+	public void remove(Mailbox mailbox) {
+	        em.remove(em.merge(mailbox));
+	        em.flush();
 	}
 	
 	public Mailbox findById(BigInteger id) {

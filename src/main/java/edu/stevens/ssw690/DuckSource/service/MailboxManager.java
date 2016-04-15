@@ -14,5 +14,7 @@ public interface MailboxManager {
 	public List<Mailbox> getUserInbox(Integer id);
 	public List<Mailbox> getUserSent(Integer id);
 	public Mailbox findById(BigInteger id);
+	public Mailbox getByMessageId(Integer id);
+	public void remove(Mailbox mailbox);
 
 }

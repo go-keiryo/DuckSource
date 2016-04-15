@@ -3,6 +3,8 @@ package edu.stevens.ssw690.DuckSource.service;
 import java.math.BigInteger;
 import java.util.List;
 
+import javax.persistence.Query;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +39,14 @@ public class MailboxManagerImpl implements MailboxManager {
 		
 		public List<Mailbox> getUserSent(Integer id) {
 	    	return mailboxDao.getUserSent(id);
+		}
+		
+		public Mailbox getByMessageId(Integer id) {
+	    	return  mailboxDao.getByMessageId(id);
+		}
+		
+		public void remove(Mailbox mailbox) {
+			 mailboxDao.remove(mailbox);
 		}
 		
 		public Mailbox findById(BigInteger id) {

@@ -1,8 +1,6 @@
 package edu.stevens.ssw690.DuckSource.controller;
 
 import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -31,9 +29,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
@@ -45,12 +45,16 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import edu.stevens.ssw690.DuckSource.model.DuckUser;
+import edu.stevens.ssw690.DuckSource.model.MailDistribution;
+import edu.stevens.ssw690.DuckSource.model.MailMessage;
 import edu.stevens.ssw690.DuckSource.model.Mailbox;
 import edu.stevens.ssw690.DuckSource.model.Opportunity;
 import edu.stevens.ssw690.DuckSource.model.OpportunitySubmitted;
 import edu.stevens.ssw690.DuckSource.model.OpportunityTime;
 import edu.stevens.ssw690.DuckSource.model.WorkInterval;
 import edu.stevens.ssw690.DuckSource.service.DuckUserManager;
+import edu.stevens.ssw690.DuckSource.service.MailDistributionManager;
+import edu.stevens.ssw690.DuckSource.service.MailMessageManager;
 import edu.stevens.ssw690.DuckSource.service.MailboxManager;
 import edu.stevens.ssw690.DuckSource.service.OpportunityManager;
 import edu.stevens.ssw690.DuckSource.service.OpportunityRegisteredManager;
@@ -82,6 +86,12 @@ public class SubmitController extends MultiActionController {
 	
 	@Autowired
 	MailboxManager mailboxService; 
+	
+	@Autowired
+	MailMessageManager mailMessageService; 
+	
+	@Autowired
+	MailDistributionManager mailDistributionService; 
     
 	private static final int BUFFER_SIZE = 4096;
 	
@@ -427,24 +437,48 @@ public class SubmitController extends MultiActionController {
 		}
 	    
 	    @RequestMapping(value="/mailAngularJs", method = RequestMethod.POST)
-	    public void onMessaeSubmit(HttpServletRequest request,
-	    		 SessionStatus status, Model model) 
+	    public  @ResponseBody String onMesssageSubmit( @RequestBody MailMessage mailMessage )
 	    { 
-		    StringBuilder sb = new StringBuilder();
-	        BufferedReader br;
-			try {
-				br = request.getReader();
-				String str = null;
-		        while ((str = br.readLine()) != null) {
-		            sb.append(str);
-		        }
-		        System.out.println(str);
-		        
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+	    	
+	    	System.out.println(mailMessage.getSentId());
+	    	DuckUser fromUser = duckUserService.findById(mailMessage.getSentId());
+	    	DuckUser toUser = duckUserService.getDuckUser(mailMessage.getTo());
+	    	
+	    	mailMessage.setSent(Date.from(LocalDateTime.now().toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+	    	mailMessageService.persist(mailMessage);
+	    	
+	    	MailDistribution mailToDistribution = new MailDistribution();
+	    	mailToDistribution.setMailMessage(mailMessage);
+	    	mailToDistribution.setUser(toUser);
+	    	mailDistributionService.merge(mailToDistribution);
+	    	
+	    	//MailDistribution mailFromDistribution = new MailDistribution();
+	    	//mailFromDistribution.setMailMessage(mailMessage);
+	    	//mailToDistribution.setUser(fromUser);
+	    	//mailDistributionService.merge(mailFromDistribution);
+	    	
+	    	Mailbox inboxMail = new Mailbox();
+	    	inboxMail.setFolder("Inbox");
+	    	inboxMail.setMailMessage(mailMessage);
+	    	inboxMail.setUser(toUser);
+	    	mailboxService.merge(inboxMail);
+	    	
+	    	Mailbox sentMail = new Mailbox();
+	    	sentMail.setFolder("Sent");
+	    	sentMail.setMailMessage(mailMessage);
+	    	sentMail.setUser(fromUser);
+	    	mailboxService.persist(sentMail);
+	    
+	    	ObjectMapper mapper = new ObjectMapper();
+	    	
+	    	String json = "";
+    		try {
+				json = mapper.writeValueAsString(sentMail);
+			} catch (JsonProcessingException e) {
+				json = e.getMessage();
 			}
-	        
+    		
+    		return json;
 	    }
         
 	    /**

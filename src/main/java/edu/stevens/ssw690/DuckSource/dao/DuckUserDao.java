@@ -12,5 +12,6 @@ public interface  DuckUserDao {
     public void persist(DuckUser user);
     public void merge(DuckUser user); 
     public DuckUser getDuckUser(String username, String password);
+    public DuckUser getDuckUser(String username);
     public boolean getUsernameExists(String username);
 }

@@ -13,7 +13,7 @@
     <!--[if lte IE 7]><link rel="stylesheet" href="<c:url value="/resources/css/style.ie7.css" />" media="screen" /><![endif]-->
     <link rel="stylesheet" href="<c:url value="/resources/css/style.responsive.css" />" media="all">
 
-    <script src="<c:url value="/resources/js/jquery.js" />"></script>
+    <script src="<c:url value="/resources/js/jquery-1.11.3.min.js" />"></script>
     <script src="<c:url value="/resources/js/script.js" />"></script>
     <script src="<c:url value="/resources/js/script.responsive.js" />"></script>
 
@@ -29,7 +29,6 @@
    .error{color:#ff0000;font-weight:bold;}
  </style>
  <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css"/>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script  src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.min.js"></script>
     <script>
@@ -50,7 +49,7 @@
                 $scope.composeEmail.body =
                     "\n-------------------------------\n"
                     + "from: " + $scope.composeEmail.from + "\n"
-                    + "sent: " + $scope.composeEmail.date + "\n"
+                    + "sent: " + $scope.composeEmail.sent + "\n"
                     + "to: " + $scope.composeEmail.to + "\n"
                     + "subject: " + $scope.composeEmail.subject + "\n"
                     + $scope.composeEmail.body;
@@ -90,16 +89,17 @@
                 $scope.composeEmail.to = $scope.composeEmail.from;
 
                 // it’s coming from us
-                $scope.composeEmail.from = "${userId}";
+                $scope.composeEmail.sentId = "${userId}";
 
                 // show the compose email popup
                 $scope.isComposePopupVisible = true;
             };
 
             $scope.sendEmail = function () {
-                $http.post("/mailAngularJs", $scope.composeEmail).then(function (response) {
+            	$scope.composeEmail.sentId = "${userId}";
+                $http.post("mailAngularJs", $scope.composeEmail).then(function (data) {
                     $scope.isComposePopupVisible = false;
-                    $scope.composeEmail = response.data;
+                    $scope.composeEmail = data;
                     $scope.sentEmails.splice(0, 0, $scope.composeEmail);
                 });
             };
@@ -126,9 +126,6 @@
                 $scope.emails = response.data;
             });
             
-            $http.post("/sentMailAngularJs").then(function (response) {
-                $scope.emails = response.data;
-            });
         }
     </script>
 </head>

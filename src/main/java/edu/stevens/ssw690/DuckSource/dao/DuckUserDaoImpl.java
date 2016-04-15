@@ -61,6 +61,17 @@ public class DuckUserDaoImpl implements DuckUserDao{
     	return user;
     }
     
+    public DuckUser getDuckUser(String username) {
+    	DuckUser user = null;
+    	Query query = em.createQuery("from DuckUser u WHERE u.userName=:username)");
+    	query.setParameter("username", username);
+    	@SuppressWarnings("unchecked")
+		List<DuckUser> list = (List<DuckUser>) query.getResultList();
+    	if (list.size() > 0)
+    		user = list.get(0);
+    	return user;
+    }
+    
     public boolean getUsernameExists(String username) {
         boolean exists = false;
     	Query query = em.createQuery("from DuckUser u WHERE u.userName=:username)");
