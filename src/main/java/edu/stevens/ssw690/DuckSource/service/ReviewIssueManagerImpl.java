@@ -13,29 +13,29 @@ import edu.stevens.ssw690.DuckSource.model.ReviewIssue;
 public class ReviewIssueManagerImpl implements ReviewIssueManager {
 	
 	@Autowired
-	ReviewIssueDao dao;
+	ReviewIssueDao reviewIssueDao;
 
 	public void persist(ReviewIssue issue) {
-		dao.persist(issue);
+		reviewIssueDao.persist(issue);
 		
 	}
 
 	public void merge(ReviewIssue issue) {
-		dao.merge(issue);
+		reviewIssueDao.merge(issue);
 		
 	}
 
 	
 	public List<ReviewIssue> getAll() {
-		return dao.getAll();
+		return reviewIssueDao.getAll();
 	}
 
 	
 	public ReviewIssue getById(Integer id) {
-		return dao.getById(id);
+		return reviewIssueDao.getById(id);
 	}
 
 	public ReviewIssue findById(Integer id) {	
-		return dao.findById(id);
+		return reviewIssueDao.findById(id);
 	}
 }

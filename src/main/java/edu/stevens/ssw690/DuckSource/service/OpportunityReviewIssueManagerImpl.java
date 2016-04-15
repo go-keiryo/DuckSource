@@ -13,43 +13,43 @@ import edu.stevens.ssw690.DuckSource.model.OpportunitytReviewIssueExtended;
 public class OpportunityReviewIssueManagerImpl implements OpportunityReviewIssueManager {
 	
 	@Autowired
-	OpportunityReviewIssueDao dao;
+	OpportunityReviewIssueDao opportunityReviewIssueDao;
 
 	public void persist(OpportunityReviewIssue opportunityReviewIssue) {
-		dao.persist(opportunityReviewIssue);
+		opportunityReviewIssueDao.persist(opportunityReviewIssue);
 		
 	}
 
 	
 	public void merge(OpportunityReviewIssue opportunityReviewIssue) {
-		dao.merge(opportunityReviewIssue);
+		opportunityReviewIssueDao.merge(opportunityReviewIssue);
 		
 	}
 
 
 	public void remove(OpportunityReviewIssue opportunityReviewIssue) {
-		dao.remove(opportunityReviewIssue);
+		opportunityReviewIssueDao.remove(opportunityReviewIssue);
 		
 	}
 
 
 	public OpportunityReviewIssue findById(Integer id) {
-		return dao.findById(id);
+		return opportunityReviewIssueDao.findById(id);
 	}
 
 
 	public List<OpportunitytReviewIssueExtended> getByOpportunitySubmittedExtended(Integer opportunitySubmittedId) {
-		return dao.getByOpportunitySubmittedExtended(opportunitySubmittedId);
+		return opportunityReviewIssueDao.getByOpportunitySubmittedExtended(opportunitySubmittedId);
 	}
 
 
 	public List<OpportunityReviewIssue> getByOpportunitySubmitted(Integer opportunitySubmittedId) {
-		return dao.getByOpportunitySubmitted(opportunitySubmittedId);
+		return opportunityReviewIssueDao.getByOpportunitySubmitted(opportunitySubmittedId);
 	}
 
 
 	public List<OpportunityReviewIssue> getByOpportunity(Integer opportunityId) {
-		return dao.getByOpportunity(opportunityId);
+		return opportunityReviewIssueDao.getByOpportunity(opportunityId);
 	};
 
 }

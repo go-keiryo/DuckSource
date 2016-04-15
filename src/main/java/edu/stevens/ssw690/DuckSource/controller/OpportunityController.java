@@ -34,27 +34,27 @@ import edu.stevens.ssw690.DuckSource.utilities.DuckUtilities;
 public class OpportunityController extends MultiActionController {
 	
 	@Autowired
-	OpportunityManager opportunitySvc;
+	OpportunityManager opportunityService;
 	
 	@Autowired
-	OpportunityRegisteredManager opportunityRegisteredSvc; 
+	OpportunityRegisteredManager opportunityRegisteredService; 
 	
 	@Autowired
-	OpportunityReviewIssueManager opportunityReviewIssueSvc; 
+	OpportunityReviewIssueManager opportunityReviewIssueService; 
 	
 	@Autowired
-	OpportunitySubmittedManager opportunitySubmittedSvc; 
+	OpportunitySubmittedManager opportunitySubmittedService; 
 	
 	@Autowired
-	DuckUserManager userSvc;
+	DuckUserManager duckUserService;
 	
 	@Autowired
-	ReviewIssueManager issueSvc;
+	ReviewIssueManager reviewIssueService;
 	 
 	@ModelAttribute("allOpportunities")
 	public List<Opportunity> populateOpportunities()
     {
-       List<Opportunity> opportunities = opportunitySvc.getAllOpportunities();
+       List<Opportunity> opportunities = opportunityService.getAllOpportunities();
        return opportunities;
     }
 	 
@@ -63,7 +63,7 @@ public class OpportunityController extends MultiActionController {
     public String showDetailIndex(HttpServletRequest request, Model model)
     {
     	Integer oppId = Integer.parseInt(request.getParameter("oppId"));
-         Opportunity opportunity = opportunitySvc.findById(oppId);
+         Opportunity opportunity = opportunityService.findById(oppId);
          model.addAttribute("opportunity", opportunity);
          
          return "indexoppdetail";
@@ -79,7 +79,7 @@ public class OpportunityController extends MultiActionController {
     	} else {
     		 model.addAttribute("userId","");
     	}
-         Opportunity opportunity = opportunitySvc.findById(oppId);
+         Opportunity opportunity = opportunityService.findById(oppId);
          model.addAttribute("opportunity", opportunity);
          
          return "oppdetail";
@@ -91,10 +91,10 @@ public class OpportunityController extends MultiActionController {
 		String selectType = request.getParameter("select");
 		if (selectType.isEmpty() || selectType.equalsIgnoreCase("All Types")) {
 			model.addAttribute("userId",userId);
-			model.addAttribute("opportunities", opportunitySvc.getByOtherThanCreator(userId));
+			model.addAttribute("opportunities", opportunityService.getByOtherThanCreator(userId));
 		} else {
 			model.addAttribute("userId",userId);
-			model.addAttribute("opportunities", opportunitySvc.getByOtherThanCreatorByType(userId, selectType));
+			model.addAttribute("opportunities", opportunityService.getByOtherThanCreatorByType(userId, selectType));
 		}
 		
      return "findopp";
@@ -103,20 +103,9 @@ public class OpportunityController extends MultiActionController {
     @RequestMapping(value="/findopp", method = RequestMethod.GET)
     public String setupFindForm(@RequestParam("userId") Integer userId, Model model) 
     {
-		model.addAttribute("opportunities", opportunitySvc.getByOtherThanCreator(userId));
+		model.addAttribute("opportunities", opportunityService.getByOtherThanCreator(userId));
 		model.addAttribute("userId", userId);
 		return "findopp";
-	}
-    
-    @RequestMapping(value="/submit", method = RequestMethod.GET)
-    public String getSubmit(@RequestParam("userId") Integer userId, @RequestParam("oppId") Integer oppId, Model model) 
-    {
-    	Opportunity opportunity = opportunitySvc.findById(oppId);
-		model.addAttribute("opportunity", opportunity);
-		model.addAttribute("userId", userId);
-		model.addAttribute("message", "");
-		model.addAttribute("messageClass", "");
-		return "submit";
 	}
     
     @RequestMapping(value="/createopp", method = RequestMethod.GET)
@@ -187,17 +176,17 @@ public class OpportunityController extends MultiActionController {
         String description = opportunity.getDescription().replaceAll("(\r\n|\n)", "<br>");
 		
         if (DuckUtilities.isStringPopulated(opportunitytype) && (DuckUtilities.isStringPopulated(opportunitytitle) && (duckbills != null) && (registerdate != null) && (submitdate != null) && (DuckUtilities.isStringPopulated(description)))) {
-        	opportunitySvc.persist(new Opportunity(opportunitytype, opportunitytitle, duckbills, registerdate, submitdate, description, userId));
+        	opportunityService.persist(new Opportunity(opportunitytype, opportunitytitle, duckbills, registerdate, submitdate, description, userId));
         
         }
        
         status.setComplete();
         
-        DuckUser user = userSvc.findById(userId);
+        DuckUser user = duckUserService.findById(userId);
         model.addAttribute("user", user);
-        model.addAttribute("opportunities", opportunitySvc.getByCreator(userId));
-        model.addAttribute("opportunities_registered", opportunitySvc.getByRegistered(userId));
-        model.addAttribute("opportunities_submitted", opportunitySubmittedSvc.getBySubmitted(userId));
+        model.addAttribute("opportunities", opportunityService.getByCreator(userId));
+        model.addAttribute("opportunities_registered", opportunityService.getByRegistered(userId));
+        model.addAttribute("opportunities_submitted", opportunitySubmittedService.getBySubmitted(userId));
         model.addAttribute("userId", userId);
 		return "redirect:main";
        
@@ -209,7 +198,7 @@ public class OpportunityController extends MultiActionController {
     	 Integer userId = Integer.parseInt(request.getParameter("userId"));
     	 Integer oppId = Integer.parseInt(request.getParameter("oppId"));
     	 
-    	 Opportunity opportunityForm = opportunitySvc.findById(oppId);
+    	 Opportunity opportunityForm = opportunityService.findById(oppId);
     	 model.addAttribute("opportunityForm", opportunityForm);
          model.addAttribute("userId",userId);
          
@@ -227,7 +216,7 @@ public class OpportunityController extends MultiActionController {
          
         Integer userId = Integer.parseInt(request.getParameter("userId"));
         Integer oppId = Integer.parseInt(request.getParameter("userId"));
-        Opportunity currentOpportunity = opportunitySvc.findById(oppId);
+        Opportunity currentOpportunity = opportunityService.findById(oppId);
         
         boolean error = false;
         
@@ -274,13 +263,13 @@ public class OpportunityController extends MultiActionController {
         currentOpportunity.setSubmitDate(opportunity.getSubmitDate());
         currentOpportunity.setDescription(opportunity.getDescription().replaceAll("(\r\n|\n)", "<br>"));
         
-        opportunitySvc.merge(currentOpportunity);
+        opportunityService.merge(currentOpportunity);
         
-        DuckUser user = userSvc.findById(userId);
+        DuckUser user = duckUserService.findById(userId);
         model.addAttribute("user", user);
-        model.addAttribute("opportunities", opportunitySvc.getByCreator(userId));
-        model.addAttribute("opportunities_registered", opportunitySvc.getByRegistered(userId));
-        model.addAttribute("opportunities_submitted", opportunitySubmittedSvc.getBySubmitted(userId));
+        model.addAttribute("opportunities", opportunityService.getByCreator(userId));
+        model.addAttribute("opportunities_registered", opportunityService.getByRegistered(userId));
+        model.addAttribute("opportunities_submitted", opportunitySubmittedService.getBySubmitted(userId));
         model.addAttribute("userId", userId);
         
         status.setComplete();

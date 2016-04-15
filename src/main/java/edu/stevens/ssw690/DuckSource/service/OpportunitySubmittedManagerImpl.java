@@ -13,32 +13,32 @@ public class OpportunitySubmittedManagerImpl implements OpportunitySubmittedMana
 
 
 	@Autowired
-	OpportunitySubmittedDao dao;
+	OpportunitySubmittedDao opportunitySubmittedDao;
 
 	public void persist(OpportunitySubmitted opportunitySubmitted) {
-		dao.persist(opportunitySubmitted);
+		opportunitySubmittedDao.persist(opportunitySubmitted);
 		
 	}
 
 	public void merge(OpportunitySubmitted opportunitySubmitted) {
-		dao.merge(opportunitySubmitted);
+		opportunitySubmittedDao.merge(opportunitySubmitted);
 		
 	}
 
 	public List<OpportunitySubmitted> getBySubmitted(Integer userId) {
-		return dao.getBySubmitted(userId);
+		return opportunitySubmittedDao.getBySubmitted(userId);
 	}
 
 	public OpportunitySubmitted getBySubmittedOpportunity(Integer userId, Integer opportunityId) {
-		return dao.getBySubmittedOpportunity(userId, opportunityId);
+		return opportunitySubmittedDao.getBySubmittedOpportunity(userId, opportunityId);
 	}
 
 	public OpportunitySubmitted findById(Integer id) {
-		return dao.findById(id);
+		return opportunitySubmittedDao.findById(id);
 	}
 
 	public List<OpportunitySubmitted> getByOpportunity(Integer opportunityId) {
-		return dao.getByOpportunity(opportunityId);
+		return opportunitySubmittedDao.getByOpportunity(opportunityId);
 	}
 
 }

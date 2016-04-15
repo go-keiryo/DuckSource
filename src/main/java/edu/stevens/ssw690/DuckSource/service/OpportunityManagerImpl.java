@@ -13,60 +13,60 @@ import edu.stevens.ssw690.DuckSource.model.Opportunity;
 public class OpportunityManagerImpl implements OpportunityManager {
 
 	@Autowired
-	OpportunityDao dao;
+	OpportunityDao opportunityDao;
 	
 	public void persist(Opportunity opportunity) {
-		dao.persist(opportunity);
+		opportunityDao.persist(opportunity);
 	}
 
 	public List<Opportunity> getAllOpportunities() {
-		return dao.getAllOpportunities();
+		return opportunityDao.getAllOpportunities();
 	}
 
 	public Opportunity getOpportunity(String title) {
-		return dao.getOpportunity(title);
+		return opportunityDao.getOpportunity(title);
 	}
 
 	public List<Opportunity> getByCreator(Integer creator) {
-		return dao.getByCreator(creator);
+		return opportunityDao.getByCreator(creator);
 	}
 
 	public List<Opportunity> getByType(String oppType) {
-		return  dao.getByType(oppType);
+		return  opportunityDao.getByType(oppType);
 	}
 
 	public List<Opportunity> getByOtherThanCreator(Integer userId) {
-		return dao.getByOtherThanCreator(userId);
+		return opportunityDao.getByOtherThanCreator(userId);
 	}
 	public List<Opportunity> getByOtherThanCreatorByType(Integer userId, String oppType) {
-		return dao.getByOtherThanCreatorByType(userId, oppType);
+		return opportunityDao.getByOtherThanCreatorByType(userId, oppType);
 	}
 
 	public Opportunity findById(Integer id) {
-		return dao.findById(id);
+		return opportunityDao.findById(id);
 	}
 
 	public void merge(Opportunity opportunity) {
-		dao.merge(opportunity);
+		opportunityDao.merge(opportunity);
 		
 	}
 
 	public List<Opportunity> getByRegistered(Integer userId) {
-		return dao.getByRegistered(userId);
+		return opportunityDao.getByRegistered(userId);
 	}
 
 	
 	public Opportunity getById(Integer id) {
-		return dao.getById(id);
+		return opportunityDao.getById(id);
 	}
 
 	public List<Opportunity> getBySubmitted(Integer userId) {
-		return dao.getBySubmitted(userId);
+		return opportunityDao.getBySubmitted(userId);
 	}
 
 	@Override
 	public Opportunity getBySubmittedOpportunity(Integer userId, Integer opportunityId) {
-		return dao.getBySubmittedOpportunity(userId, opportunityId);
+		return opportunityDao.getBySubmittedOpportunity(userId, opportunityId);
 	}
  
 }

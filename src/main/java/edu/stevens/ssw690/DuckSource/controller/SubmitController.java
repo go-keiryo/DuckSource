@@ -1,6 +1,7 @@
 package edu.stevens.ssw690.DuckSource.controller;
 
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -44,10 +45,13 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import edu.stevens.ssw690.DuckSource.model.DuckUser;
+import edu.stevens.ssw690.DuckSource.model.Mailbox;
 import edu.stevens.ssw690.DuckSource.model.Opportunity;
 import edu.stevens.ssw690.DuckSource.model.OpportunitySubmitted;
 import edu.stevens.ssw690.DuckSource.model.OpportunityTime;
+import edu.stevens.ssw690.DuckSource.model.WorkInterval;
 import edu.stevens.ssw690.DuckSource.service.DuckUserManager;
+import edu.stevens.ssw690.DuckSource.service.MailboxManager;
 import edu.stevens.ssw690.DuckSource.service.OpportunityManager;
 import edu.stevens.ssw690.DuckSource.service.OpportunityRegisteredManager;
 import edu.stevens.ssw690.DuckSource.service.OpportunitySubmittedManager;
@@ -62,19 +66,22 @@ import edu.stevens.ssw690.DuckSource.service.OpportunityTimeManager;
 public class SubmitController extends MultiActionController {
 
 	@Autowired
-	OpportunityManager opportunitySvc;
+	OpportunityManager opportunityService;
 	
 	@Autowired
-	OpportunityRegisteredManager opportunityRegisteredSvc; 
+	OpportunityRegisteredManager opportunityRegisteredService; 
 	
 	@Autowired
-	OpportunitySubmittedManager opportunitySubmittedSvc; 
+	OpportunitySubmittedManager opportunitySubmittedService; 
 	
 	@Autowired
-	DuckUserManager userSvc;
+	DuckUserManager duckUserService;
 	
 	@Autowired
-	OpportunityTimeManager opportunityTimeSvc; 
+	OpportunityTimeManager opportunityTimeService; 
+	
+	@Autowired
+	MailboxManager mailboxService; 
     
 	private static final int BUFFER_SIZE = 4096;
 	
@@ -95,7 +102,7 @@ public class SubmitController extends MultiActionController {
 	    		@RequestParam("subId") Integer oppSubmitId, SessionStatus status, Model model) 
 	    {
 	    	
-	    	OpportunitySubmitted opportunitySubmitted = opportunitySubmittedSvc.findById(oppSubmitId);
+	    	OpportunitySubmitted opportunitySubmitted = opportunitySubmittedService.findById(oppSubmitId);
 	    	
 	    	@SuppressWarnings("unused")
 	    	// for future use
@@ -149,6 +156,17 @@ public class SubmitController extends MultiActionController {
 	        
 		}
 	 
+	@RequestMapping(value="/submit", method = RequestMethod.GET)
+    public String getSubmit(@RequestParam("userId") Integer userId, @RequestParam("oppId") Integer oppId, Model model) 
+    {
+    	Opportunity opportunity = opportunityService.findById(oppId);
+		model.addAttribute("opportunity", opportunity);
+		model.addAttribute("userId", userId);
+		model.addAttribute("message", "");
+		model.addAttribute("messageClass", "");
+		return "submit";
+	}
+	
 	 /**
 	 * Saves the file related to the submission and any comments
 	 * @param request
@@ -168,8 +186,8 @@ public class SubmitController extends MultiActionController {
 	    		 @RequestParam("oppId") Integer oppId,HttpServletResponse response, 
 	    		 SessionStatus status, Model model) 
 	    {
-	    	 DuckUser user =  userSvc.findById(userId);
-	    	 Opportunity opportunity = opportunitySvc.findById(oppId);
+	    	 DuckUser user =  duckUserService.findById(userId);
+	    	 Opportunity opportunity = opportunityService.findById(oppId);
 	    	
 	    	 boolean error = false;
 	    	 String message = "";
@@ -225,7 +243,7 @@ public class SubmitController extends MultiActionController {
 	        opportunitySubmitted.setComment(comments);
 	        opportunitySubmitted.setOpportunity(opportunity);
 	    	opportunitySubmitted.setUser(user);
-	    	opportunitySubmittedSvc.persist(opportunitySubmitted);
+	    	opportunitySubmittedService.persist(opportunitySubmitted);
 	        
 	        model.addAttribute("opportunity", opportunity);
 			model.addAttribute("userId", userId);
@@ -254,8 +272,8 @@ public class SubmitController extends MultiActionController {
 	    public String getResubmit(@RequestParam("userId") Integer userId, @RequestParam("oppId") Integer oppId, 
 	    		 @RequestParam("subId") Integer subId, @RequestParam("message") String message,  @RequestParam("messageClass") String messageClass, Model model) 
 	    {
-	    	Opportunity opportunity = opportunitySvc.findById(oppId);
-	    	OpportunitySubmitted opportunitySubmitted = opportunitySubmittedSvc.findById(subId);
+	    	Opportunity opportunity = opportunityService.findById(oppId);
+	    	OpportunitySubmitted opportunitySubmitted = opportunitySubmittedService.findById(subId);
 			model.addAttribute("opportunity", opportunity);
 			model.addAttribute("opportunitySubmitted", opportunitySubmitted);
 			model.addAttribute("userId", userId);
@@ -282,9 +300,9 @@ public class SubmitController extends MultiActionController {
 	    		 @RequestParam("oppId") Integer oppId, @RequestParam("subId") Integer oppSubmitId,
 	    		 SessionStatus status, Model model) 
 	    {
-	    	 DuckUser user =  userSvc.findById(userId);
-	    	 Opportunity opportunity = opportunitySvc.findById(oppId);
-	    	 OpportunitySubmitted opportunitySubmitted = opportunitySubmittedSvc.findById(oppSubmitId);
+	    	 DuckUser user =  duckUserService.findById(userId);
+	    	 Opportunity opportunity = opportunityService.findById(oppId);
+	    	 OpportunitySubmitted opportunitySubmitted = opportunitySubmittedService.findById(oppSubmitId);
 	    	
 	    	 boolean error = false;
 	    	 String message = "";
@@ -337,7 +355,7 @@ public class SubmitController extends MultiActionController {
 	        opportunitySubmitted.setFilePath(filePath);
 	        opportunitySubmitted.setComment(comments);
 	        opportunitySubmitted.setSubmissionDate(Date.from(LocalDateTime.now().toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
-	    	opportunitySubmittedSvc.merge(opportunitySubmitted);
+	    	opportunitySubmittedService.merge(opportunitySubmitted);
 	        
 	        model.addAttribute("opportunity", opportunity);
 	        model.addAttribute("opportunitySubmitted", opportunitySubmitted);
@@ -349,6 +367,86 @@ public class SubmitController extends MultiActionController {
 	        
 		}
 	    
+	    /**
+	     * Gets the page for the user's mailbox
+	     * @param userId
+	     * @param model
+	     * @return mail.jsp
+	     */
+	    @RequestMapping(value="/mail", method = RequestMethod.GET)
+	    public String getdUCKmAIL(@RequestParam("userId") Integer userId, Model model) 
+	    {
+			model.addAttribute("userId", userId);
+			DuckUser user = new DuckUser();
+	   	 	model.addAttribute("user", user);
+			return "mail";
+		}
+	    
+	    @RequestMapping(value="/inboxMailAngularJs", method = RequestMethod.GET)
+	    public void getInbox(@RequestParam("userId") Integer userId, Model model,  HttpServletResponse response) 
+	    {
+	    	List<Mailbox> inbox =  mailboxService.getUserInbox(userId);
+	    	ObjectMapper mapper = new ObjectMapper();
+	    	
+	    	for (Mailbox obj : inbox) {
+	    		try {
+					String json = mapper.writeValueAsString(obj);
+					response.setContentType("application/json");
+	                response.getWriter().write(json);
+				} catch (JsonProcessingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+	   	 	
+		}
+	    
+	    @RequestMapping(value="/sentMailAngularJs", method = RequestMethod.GET)
+	    public void getSent(@RequestParam("userId") Integer userId, Model model,  HttpServletResponse response) 
+	    {
+	    	List<Mailbox> inbox =  mailboxService.getUserSent(userId);
+	    	ObjectMapper mapper = new ObjectMapper();
+	    	
+	    	for (Mailbox obj : inbox) {
+	    		try {
+					String json = mapper.writeValueAsString(obj);
+					response.setContentType("application/json");
+	                response.getWriter().write(json);
+				} catch (JsonProcessingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+		}
+	    
+	    @RequestMapping(value="/mailAngularJs", method = RequestMethod.POST)
+	    public void onMessaeSubmit(HttpServletRequest request,
+	    		 SessionStatus status, Model model) 
+	    { 
+		    StringBuilder sb = new StringBuilder();
+	        BufferedReader br;
+			try {
+				br = request.getReader();
+				String str = null;
+		        while ((str = br.readLine()) != null) {
+		            sb.append(str);
+		        }
+		        System.out.println(str);
+		        
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	        
+	    }
+        
 	    /**
 	     * Gets the page the allows the profile image to be changed
 	     * @param userId
@@ -377,7 +475,7 @@ public class SubmitController extends MultiActionController {
 	    		 @RequestParam("file") MultipartFile file, @RequestParam("userId") Integer userId, 
 	    		 SessionStatus status, Model model) 
 	    {
-	    	 DuckUser user =  userSvc.findById(userId);
+	    	 DuckUser user =  duckUserService.findById(userId);
 	    	
 	    	 boolean error = false;
 	    	 String message = "";
@@ -425,7 +523,7 @@ public class SubmitController extends MultiActionController {
 	        }
 	        
 	        user.setProfileImage(profileImage);
-			userSvc.merge(user);
+			duckUserService.merge(user);
 			
 	        status.setComplete();
 	        
@@ -453,7 +551,7 @@ public class SubmitController extends MultiActionController {
 	    public String getTimesheet(@RequestParam("userId") Integer userId, @RequestParam("oppId") Integer oppId, 
 	    		@RequestParam("message") String message,  @RequestParam("messageClass") String messageClass, Model model) 
 	    {
-	    	Opportunity opportunity = opportunitySvc.findById(oppId);
+	    	Opportunity opportunity = opportunityService.findById(oppId);
 	    	
 	    	Calendar cal = Calendar.getInstance();
 	    	String title = cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.ENGLISH) + " " + cal.get(Calendar.YEAR);
@@ -461,7 +559,7 @@ public class SubmitController extends MultiActionController {
 	    	int year = cal.get(Calendar.YEAR);
 	    	
 	    	// loads the time data from the database
-	    	List<String> workDays = getTimeforDisplay(userId, oppId, month, year);
+	    	List<String> workDays = opportunityTimeService.getTimeforDisplay(userId, oppId, month, year);
 	    	
 	    	// convert to JSON
 	    	ObjectMapper mapper = new ObjectMapper();
@@ -523,8 +621,8 @@ public class SubmitController extends MultiActionController {
 	    		 SessionStatus status, Model model) 
 	    {
 	  
-	    	DuckUser user =  userSvc.findById(userId);
-	    	Opportunity opportunity = opportunitySvc.findById(oppId);
+	    	DuckUser user =  duckUserService.findById(userId);
+	    	Opportunity opportunity = opportunityService.findById(oppId);
 	    	String message = "";
 	    	String messageClass = "";
     		
@@ -542,38 +640,24 @@ public class SubmitController extends MultiActionController {
         		 Date endDate = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
     			 
         		 // delete current time data in database for month
-		    	 opportunityTimeSvc.clearTime(userId, oppId, startDate, endDate);
+		    	 opportunityTimeService.clearTime(userId, oppId, startDate, endDate);
 		    	 
-		    	 String[] days = timeData.split(",");
+		         // get the time data as WorkIntervals
+		    	 List<WorkInterval> workIntervals = opportunityTimeService.getTimeforStorage(timeData, year, month);
 		    	
-		    	 for (int i=0; i < days.length; i++) {
-		    		 // days with no work hours have single space
-		    		 if (days[i] != " ") {
-		    			 localDate = LocalDate.of(year, month+1, i+1);
-			    		 Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-		    			 // multiple work hour intervals use | delimiter (escape |)
-			    		 String[] times = days[i].split("\\|");
-		    			 for (int j=0; j < times.length; j++) {
-		    				 // start time, end time use - delimiter
-		    				 String[] hours = times[j].split("-");
-		    				 // must have both start and end times
-		    				 if (hours.length == 2) {
-			    				 Time startTime = Time.valueOf(hours[0] + ":00");
-			    				 Time endTime = Time.valueOf(hours[1] + ":00");
-			    				 OpportunityTime oppTime = new OpportunityTime();
-			    				 oppTime.setUser(user);
-			    				 oppTime.setOpportunity(opportunity);
-			    				 oppTime.setWorkDate(date);
-			    				 oppTime.setStartTime(startTime);
-			    				 oppTime.setEndTime(endTime);
-			    				 // save
-			    				 opportunityTimeSvc.merge(oppTime);
-		    				 }
-		    			 }
-		    		 }
-		    	 }
+		    	 // add them to the database
+		 		for (WorkInterval workInterval : workIntervals) {
+		 			 OpportunityTime oppTime = new OpportunityTime();
+					 oppTime.setUser(user);
+					 oppTime.setOpportunity(opportunity);
+					 oppTime.setWorkDate(workInterval.getWorkDate());
+					 oppTime.setStartTime(workInterval.getStartTime());
+					 oppTime.setEndTime(workInterval.getEndTime());
+					 // save
+					 opportunityTimeService.merge(oppTime);
+		 		}
 		    	 
-		    	 message = "Time Sheet updated";
+		    	message = "Time Sheet updated";
     		}
 	    	
     		// switch to requested month/year
@@ -581,7 +665,7 @@ public class SubmitController extends MultiActionController {
 	    	year = newYear;
 	    	
 	    	// loads the time data from the database
-	    	List<String> workDays = getTimeforDisplay(userId, oppId, month, year);
+	    	List<String> workDays = opportunityTimeService.getTimeforDisplay(userId, oppId, month, year);
 	    	
 	    	// convert to JSON
 	    	ObjectMapper mapper = new ObjectMapper();
@@ -611,48 +695,6 @@ public class SubmitController extends MultiActionController {
 			return "timesheet";
 	        
 		}
-	    
-	    /**
-	     * Gets the Time Sheet Data for the month/year formatted for TimeSheet.js plugin
-	     * @param userId
-	     * @param oppId
-	     * @param month
-	     * @param year
-	     * @return A list of time strings for each day (comma delimiter, 1 per hour, 0 = off, 1 = work)
-	     */
-	    private List<String> getTimeforDisplay(int userId, int oppId, int month, int year) {
-	    	 List<String> workDays = new ArrayList<String>();
-	    	 YearMonth yearMonth = YearMonth.of(year, month+1);
-		     int daysInMonth = yearMonth.lengthOfMonth();
-	    	 for (int i=0; i <daysInMonth ; i++) {
-	    		 	 LocalDate localDate = LocalDate.of(year, month+1, i+1);
-		    		 Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-		    		 // get work hours for day from database
-		    		 List<OpportunityTime> oppTimeList = opportunityTimeSvc.getByDate(userId, oppId, date, date);
-		    		 // initialize with no hours worked
-		    		 Integer[] workHours =  {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-		    		 // if no works hours for day
-		    		 if (oppTimeList.isEmpty()) {
-		    			 workDays.add(i,Arrays.toString(workHours));
-		    		 } else {
-		    			 for (OpportunityTime oppTime : oppTimeList) {
-		    					Calendar timeCal = Calendar.getInstance();
-		    					timeCal.setTime(oppTime.getStartTime());
-		    					int start = timeCal.get(Calendar.HOUR_OF_DAY);
-		    					timeCal.setTime(oppTime.getEndTime());
-		    					int end = timeCal.get(Calendar.HOUR_OF_DAY);
-		    					// if 0 end time is midnight
-		    					if (end == 0) {
-		    						end = 24;
-		    					}
-		    					for (int j=start; j < end ; j++) {
-		    						// mark hours as worked
-		    						workHours[j] = 1;
-		    					}
-		    			 }
-		    			 workDays.add(i,Arrays.toString(workHours));
-		    		 }
-	    	 }
-			return workDays;
-		}
+	 
+	   
 }

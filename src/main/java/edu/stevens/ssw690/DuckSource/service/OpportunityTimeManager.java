@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import edu.stevens.ssw690.DuckSource.model.OpportunityTime;
+import edu.stevens.ssw690.DuckSource.model.WorkInterval;
 
 /**
  * 
@@ -72,4 +73,23 @@ public interface OpportunityTimeManager {
 		 * @param endDate
 		 */
 		public void clearTime(Integer userId,Integer oppId,Date startDate, Date endDate);
+		
+		 /**
+	     * Gets the Time Sheet Data for the month/year formatted for TimeSheet.js plugin
+	     * @param userId
+	     * @param oppId
+	     * @param month
+	     * @param year
+	     * @return A list of time strings for each day (comma delimiter, 1 per hour, 0 = off, 1 = work)
+	     */
+		public List<String> getTimeforDisplay(int userId, int oppId, int month, int year);
+		
+		/**
+		 * Takes string returned from view and formats it for storage
+		 * @param timeData
+		 * @param year
+		 * @param month
+		 * @return a list WorkInteral objects
+		 */
+		public List<WorkInterval> getTimeforStorage(String timeData, int year, int month);
 }

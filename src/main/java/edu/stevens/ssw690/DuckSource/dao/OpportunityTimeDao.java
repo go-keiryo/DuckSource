@@ -66,7 +66,7 @@ public interface OpportunityTimeDao {
 	public List<OpportunityTime> getByDate(Integer userId, Integer opportunityId, Date startDate, Date endDate);
 	
 	/**
-	 * Deletes hours worked by for opportunity and date range
+	 * Deletes hours worked by user for opportunity and date range
 	 * @param userId
 	 * @param oppId
 	 * @param startDate

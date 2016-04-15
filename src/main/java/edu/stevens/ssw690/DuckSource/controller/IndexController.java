@@ -29,20 +29,20 @@ import edu.stevens.ssw690.DuckSource.utilities.EmailValidator;
 public class IndexController extends MultiActionController {
 	
 	@Autowired
-	DuckUserManager userSvc;
+	DuckUserManager duckUserService ;
 	
 	@Autowired
-	OpportunityManager opportunitySvc;
+	OpportunityManager opportunityService;
 	
 	@Autowired
-	OpportunitySubmittedManager opportunitySubmittedSvc;
+	OpportunitySubmittedManager opportunitySubmittedService;
 	
 	private static EmailValidator emailValidator;
  
 	@ModelAttribute("allDuckUsers")
 	public List<DuckUser> populateDuckUsers()
     {
-       List<DuckUser> duckusers = userSvc.getAll();
+       List<DuckUser> duckusers = duckUserService.getAll();
        return duckusers;
     }
 	
@@ -87,7 +87,7 @@ public class IndexController extends MultiActionController {
             result.rejectValue("userName", "error.username");
             error = true;
         } else {
-        	if (userSvc.getUsernameExists(user.getUserName())) {
+        	if (duckUserService.getUsernameExists(user.getUserName())) {
         		result.rejectValue("userName", "error.usernameinuse");
         		error = true;
         	}
@@ -114,12 +114,12 @@ public class IndexController extends MultiActionController {
 		
         user.setRegistrationDate(Date.from(LocalDateTime.now().toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
        
-        userSvc.persist(user);
+        duckUserService.persist(user);
         Integer userId = user.getId();
 		model.addAttribute("user", user);
-		model.addAttribute("opportunities", opportunitySvc.getByCreator(userId));
-		model.addAttribute("opportunities_registered", opportunitySvc.getByRegistered(userId));
-		model.addAttribute("opportunities_submitted", opportunitySubmittedSvc.getBySubmitted(userId));
+		model.addAttribute("opportunities", opportunityService.getByCreator(userId));
+		model.addAttribute("opportunities_registered", opportunityService.getByRegistered(userId));
+		model.addAttribute("opportunities_submitted", opportunitySubmittedService.getBySubmitted(userId));
 		model.addAttribute("userId", userId);
 		
 		return "redirect:main";
@@ -128,16 +128,16 @@ public class IndexController extends MultiActionController {
 	
 	@RequestMapping(value="/index", method = RequestMethod.GET)
 	public String returntIndex(HttpServletRequest request, Model model) {
-		model.addAttribute("opportunities", opportunitySvc.getAllOpportunities());
-		model.addAttribute("users", userSvc.getAll());
+		model.addAttribute("opportunities", opportunityService.getAllOpportunities());
+		model.addAttribute("users", duckUserService.getAll());
        return "../index";
    }
 
 	
 	@RequestMapping(value="/", method = RequestMethod.GET)
 	 public String getIndex(HttpServletRequest request, Model model) {
-		model.addAttribute("opportunities", opportunitySvc.getAllOpportunities());
-		model.addAttribute("users", userSvc.getAll());
+		model.addAttribute("opportunities", opportunityService.getAllOpportunities());
+		model.addAttribute("users", duckUserService.getAll());
        return "../index";
    }
 
@@ -145,11 +145,11 @@ public class IndexController extends MultiActionController {
 	 public String getIndexUpdate(HttpServletRequest request, Model model) {
 		String selectType = request.getParameter("select");
 		if (selectType.isEmpty() || selectType.equalsIgnoreCase("All Types")) {
-			model.addAttribute("opportunities", opportunitySvc.getAllOpportunities());
+			model.addAttribute("opportunities", opportunityService.getAllOpportunities());
 		} else {
-			model.addAttribute("opportunities", opportunitySvc.getByType(selectType));
+			model.addAttribute("opportunities", opportunityService.getByType(selectType));
 		}
-		model.addAttribute("users", userSvc.getAll());
+		model.addAttribute("users", duckUserService.getAll());
 		
       return "../index";
    }
@@ -178,11 +178,11 @@ public class IndexController extends MultiActionController {
 			return "redirect:../index";
 		} else {
 			Integer userId = Integer.parseInt(userid);
-			DuckUser user =userSvc.findById(userId);
+			DuckUser user =duckUserService.findById(userId);
 			model.addAttribute("user", user);
-    		model.addAttribute("opportunities", opportunitySvc.getByCreator(userId));
-    		model.addAttribute("opportunities_registered", opportunitySvc.getByRegistered(userId));
-    		model.addAttribute("opportunities_submitted", opportunitySubmittedSvc.getBySubmitted(userId));
+    		model.addAttribute("opportunities", opportunityService.getByCreator(userId));
+    		model.addAttribute("opportunities_registered", opportunityService.getByRegistered(userId));
+    		model.addAttribute("opportunities_submitted", opportunitySubmittedService.getBySubmitted(userId));
     		model.addAttribute("userId", userId);
     		return "main";
 		}
@@ -200,32 +200,32 @@ public class IndexController extends MultiActionController {
         }
         	 		
         if (username != null && password !=null) {
-        	DuckUser user =userSvc.getDuckUser(username, password);
+        	DuckUser user =duckUserService.getDuckUser(username, password);
         	if (user == null) {
         		if (selectType.isEmpty() || selectType.equalsIgnoreCase("All Types")) {
-        			model.addAttribute("opportunities", opportunitySvc.getAllOpportunities());
+        			model.addAttribute("opportunities", opportunityService.getAllOpportunities());
         		} else {
-        			model.addAttribute("opportunities", opportunitySvc.getByType(selectType));
+        			model.addAttribute("opportunities", opportunityService.getByType(selectType));
         		}
-        		model.addAttribute("users", userSvc.getAll());
+        		model.addAttribute("users", duckUserService.getAll());
         		model.addAttribute("message", "Invalid Username or Password");
         		return "../index";
         	} else {
         		Integer userId = user.getId();
         		model.addAttribute("user", user);
-        		model.addAttribute("opportunities", opportunitySvc.getByCreator(userId));
-        		model.addAttribute("opportunities_registered", opportunitySvc.getByRegistered(userId));
-        		model.addAttribute("opportunities_submitted", opportunitySubmittedSvc.getBySubmitted(userId));
+        		model.addAttribute("opportunities", opportunityService.getByCreator(userId));
+        		model.addAttribute("opportunities_registered", opportunityService.getByRegistered(userId));
+        		model.addAttribute("opportunities_submitted", opportunitySubmittedService.getBySubmitted(userId));
         		model.addAttribute("userId", userId);
         		return "main";
         	}
         } else {
     		if (selectType.isEmpty() || selectType.equalsIgnoreCase("All types")) {
-    			model.addAttribute("opportunities", opportunitySvc.getAllOpportunities());
+    			model.addAttribute("opportunities", opportunityService.getAllOpportunities());
     		} else {
-    			model.addAttribute("opportunities", opportunitySvc.getByType(selectType));
+    			model.addAttribute("opportunities", opportunityService.getByType(selectType));
     		}
-    		model.addAttribute("users", userSvc.getAll());
+    		model.addAttribute("users", duckUserService.getAll());
         	return "../index";
         }
     }

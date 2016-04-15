@@ -12,31 +12,31 @@ import edu.stevens.ssw690.DuckSource.model.OpportunityRegistered;
 public class OpportunityRegisteredManagerImpl implements OpportunityRegisteredManager {
 
 	@Autowired
-	OpportunityRegisteredDao dao;
+	OpportunityRegisteredDao opportunityRegisteredDao;
 
 	public void persist(OpportunityRegistered opportunityRegistered) {
-		dao.persist(opportunityRegistered);;
+		opportunityRegisteredDao.persist(opportunityRegistered);;
 	}
 
 	public void merge(OpportunityRegistered opportunityRegistered) {
-		dao.merge(opportunityRegistered);
+		opportunityRegisteredDao.merge(opportunityRegistered);
 	}
 
 	public List<OpportunityRegistered> getByRegistered(Integer userId) {
-		return dao.getByRegistered(userId);
+		return opportunityRegisteredDao.getByRegistered(userId);
 	}
 
 	public OpportunityRegistered getByRegisteredOpportunity(Integer userId, Integer opportunityId) {
-		return dao.getByRegisteredOpportunity(userId, opportunityId);
+		return opportunityRegisteredDao.getByRegisteredOpportunity(userId, opportunityId);
 	}
 
 	public void remove(OpportunityRegistered opportunityRegistered) {
-		dao.remove(opportunityRegistered);
+		opportunityRegisteredDao.remove(opportunityRegistered);
 		
 	}
 
 	public OpportunityRegistered findById(Integer id) {
-		return dao.findById(id);
+		return opportunityRegisteredDao.findById(id);
 	}
 
 }

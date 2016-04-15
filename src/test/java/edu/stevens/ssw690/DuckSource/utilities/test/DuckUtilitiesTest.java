@@ -1,15 +1,14 @@
-package edu.stevens.ssw690.DuckSource.utilities;
+package edu.stevens.ssw690.DuckSource.utilities.test;
 
 import static org.junit.Assert.*;
 
 import java.math.BigDecimal;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Locale;
 
 import org.junit.Test;
+
+import edu.stevens.ssw690.DuckSource.utilities.DuckUtilities;
 
 public class DuckUtilitiesTest {
 
