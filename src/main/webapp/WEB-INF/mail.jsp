@@ -163,7 +163,9 @@
             	if ($scope.composeEmail.to === undefined) {
             		alert("To is required");
             	} else {
-            		$scope.composeEmail.to = to;
+            		if (sendTo != "") {
+            			$scope.composeEmail.to = sendTo;
+            		}
 	            	$scope.composeEmail.userId = "${userId}";
 	                $http.post("mailAngularJs", $scope.composeEmail).then(function (response) {
 	                    $scope.isComposePopupVisible = false;
@@ -215,7 +217,7 @@
         }
     </script>
     <script>
-        var to = "";
+        var SendTo = "";
     	$(function() {
         	var users = ${users};
         	$(".userlist").autocomplete({
@@ -228,7 +230,7 @@
     	             e.preventDefault();
     	             return false;
     	          } else {
-    	        	 to = this.value;
+    	        	 SendTo = this.value;
     	        	  return true;
     	          }
         	});
