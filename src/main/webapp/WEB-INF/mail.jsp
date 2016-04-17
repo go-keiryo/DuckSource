@@ -33,7 +33,7 @@
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.min.js"></script>
     <script>
         // Full blog post at: http://www.simplygoodcode.com/2013/12/how-to-make-email-web-app-using-angular.html
-
+        
         function EmailController($scope, $http) {
             $scope.isPopupVisible = false;
             $scope.isComposePopupVisible = false;
@@ -44,19 +44,26 @@
             $scope.forward = function () {
                 $scope.isPopupVisible = false;
                 $scope.composeEmail = {};
-                angular.copy($scope.selectedEmail, $scope.composeEmail);
-
+                angular.copy($scope.selectedEmail.mailMessage,$scope.composeEmail);
+                
+                var sent = new Date($scope.composeEmail.sent);
+                var formattedSent = [sent.getMonth()+1,
+                                sent.getDate(),
+                                sent.getFullYear()].join('/')+' '+
+                                [sent.getHours(),
+                                sent.getMinutes(),
+                                sent.getSeconds()].join(':');
                 $scope.composeEmail.body =
                     "\n-------------------------------\n"
-                    + "from: " + $scope.composeEmail.from + "\n"
-                    + "sent: " + $scope.composeEmail.sent + "\n"
+                    + "from: " + $scope.composeEmail.user.userName + "\n"
+                    + "sent: " + formattedSent  + "\n"
                     + "to: " + $scope.composeEmail.to + "\n"
                     + "subject: " + $scope.composeEmail.subject + "\n"
                     + $scope.composeEmail.body;
 
                 $scope.composeEmail.subject = "FW: " + $scope.composeEmail.subject;
                 $scope.composeEmail.to = "";
-                $scope.composeEmail.from = "me";
+                $scope.composeEmail.from = "${userId}";
                 $scope.isComposePopupVisible = true;
             };
 
@@ -69,14 +76,22 @@
                 $scope.composeEmail = {};
 
                 // copy the data from selectedEmail into composeEmail
-                angular.copy($scope.selectedEmail, $scope.composeEmail);
+                angular.copy($scope.selectedEmail.mailMessage,$scope.composeEmail);
 
+                // format the date and time sent
+                var sent = new Date($scope.composeEmail.sent);
+                var formattedSent = [sent.getMonth()+1,
+                                sent.getDate(),
+                                sent.getFullYear()].join('/')+' '+
+                                [sent.getHours(),
+                                sent.getMinutes(),
+                                sent.getSeconds()].join(':');
                 // edit the body to prefix it with a line and the 
                 // original email information
                 $scope.composeEmail.body =
                     "\n-------------------------------\n"
-                    + "from: " + $scope.composeEmail.from + "\n"
-                    + "sent: " + $scope.composeEmail.date + "\n"
+                    + "from: " + $scope.composeEmail.user.userName + "\n"
+                    + "sent: " + formattedSent + "\n"
                     + "to: " + $scope.composeEmail.to + "\n"
                     + "subject: " + $scope.composeEmail.subject + "\n"
                     + $scope.composeEmail.body;
@@ -86,20 +101,20 @@
 
                 // the email is going to the person who sent it 
                 // to us so populate the `to` with `from`
-                $scope.composeEmail.to = $scope.composeEmail.from;
+                $scope.composeEmail.to = $scope.composeEmail.user.userName;
 
                 // it’s coming from us
-                $scope.composeEmail.sentId = "${userId}";
+                $scope.composeEmail.userId = "${userId}";
 
                 // show the compose email popup
                 $scope.isComposePopupVisible = true;
             };
 
             $scope.sendEmail = function () {
-            	$scope.composeEmail.sentId = "${userId}";
-                $http.post("mailAngularJs", $scope.composeEmail).then(function (data) {
+            	$scope.composeEmail.userId = "${userId}";
+                $http.post("mailAngularJs", $scope.composeEmail).then(function (response) {
                     $scope.isComposePopupVisible = false;
-                    $scope.composeEmail = data;
+                    $scope.composeEmail = response.data;
                     $scope.sentEmails.splice(0, 0, $scope.composeEmail);
                 });
             };
@@ -122,10 +137,25 @@
                 $scope.isPopupVisible = false;
             };
             
-            $http.post("/inboxMailAngularJs").then(function (response) {
-                $scope.emails = response.data;
-            });
+            var userId = "${userId}";
             
+         	$http({
+         	    url: "inboxMailAngularJs", 
+         	    method: "get",
+         	    params: {userId: userId}
+         	 }).then(function (response) {
+         		 alert(response.data);
+                 $scope.emails = response.data;
+             });
+         	
+         	$http({
+         	    url: "sentMailAngularJs", 
+         	    method: "get",
+         	    params: {userId: userId}
+         	 }).then(function (response) {
+         		 alert(response.data);
+                 $scope.sentEmails = response.data;
+             });
         }
     </script>
 </head>
@@ -177,37 +207,52 @@
             <a ng-click="activeTab='sent'">Sent</a>
         </li>
     </ul>    
-    <table ng-show="activeTab=='inbox'" class="table table-bordered table-condensed">
+    <table ng-show="activeTab=='inbox'" class="table table-bordered table-condensed" style="border:2px solid">
+         <thead>
+			  <tr>
+			     <th>From</th>
+			     <th>Subject</th>
+			     <th>Sent</th>
+			  </tr>
+		 </thead>
         <tbody>
-            <tr ng-repeat="email in emails" ng-click="showPopup(email)">
-                <td>{{ email.from }}</td>
-                <td>{{ email.subject }}</td>
-                <td>{{ email.date }}</td>
+            <tr ng-repeat="email in emails track by $index" ng-click="showPopup(email)">
+                <td>{{ email.mailMessage.user.userName }}</td>
+                <td>{{ email.mailMessage.subject }}</td>
+                <td>{{ email.mailMessage.sent | date:'MM/dd/yyyy HH:mm:ss' }}</td>
             </tr>
         </tbody>
     </table>
-    <table ng-show="activeTab=='sent'" class="table table-bordered table-condensed">
+    <table ng-show="activeTab=='sent'" class="table table-bordered table-condensed" style="border:2px solid">
+        <thead>
+			  <tr>
+			     <th>To</th>
+			     <th>Subject</th>
+			     <th>Sent</th>
+			  </tr>
+		 </thead>
         <tbody>
-            <tr ng-repeat="email in sentEmails" ng-click="showPopup(email)">
-                <td>{{ email.to }}</td>
-                <td>{{ email.subject }}</td>
-                <td>{{ email.date | date:'MMM d' }}</td>
+            <tr ng-repeat="email in sentEmails track by $index" ng-click="showPopup(email)">
+                <td>{{ email.mailMessage.to }}</td>
+                <td>{{ email.mailMessage.subject }}</td>
+                <td>{{ email.mailMessage.sent | date:'MM/dd/yyyy HH:mm:ss' }}</td>
             </tr>
         </tbody>
     </table>
+    <br><br>
     <button class="btn btn-primary" ng-click="showComposePopup()">New Message</button>
     
     <div class="modal" ng-show="isPopupVisible">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="closePopup()">&times;</button>
-            <h3>{{selectedEmail.subject}}</h3>
+            <h3>{{selectedEmail.mailMessage.subject}}</h3>
         </div>
         <div class="modal-body">
-            <strong>From:</strong> {{selectedEmail.from}}<br />
-            <strong>To:</strong> {{selectedEmail.to}}<br />
-            <strong>Date:</strong> {{selectedEmail.date | date:'MMM d' }}<br />
+            <strong>From:</strong> {{selectedEmail.mailMessage.user.userName}}<br />
+            <strong>To:</strong> {{selectedEmail.mailMessage.to}}<br />
+            <strong>Date:</strong> {{selectedEmail.mailMessage.sent | date:'MM/dd/yyyy HH:mm:ss' }}<br />
             <br />
-            <span style="white-space:pre">{{selectedEmail.body}}</span>
+            <span style="white-space:pre">{{selectedEmail.mailMessage.body}}</span>
         </div>
         <div class="modal-footer">
             <a href="#" class="btn" ng-click="forward()">Forward</a>

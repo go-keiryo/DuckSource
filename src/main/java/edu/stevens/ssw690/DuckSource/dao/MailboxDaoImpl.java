@@ -44,7 +44,7 @@ public class MailboxDaoImpl implements MailboxDao {
 	}
 	
 	public List<Mailbox> getUserInbox(Integer id) {
-    	Query query = em.createQuery("from Mailbox m WHERE m.userId = :id and d.folder = 'Inbox')");
+    	Query query = em.createQuery("from Mailbox m WHERE m.userId = :id and m.folder = 'Inbox')");
     	query.setParameter("id", id);
 		@SuppressWarnings("unchecked")
 		List<Mailbox> list = (List<Mailbox>) query.getResultList();

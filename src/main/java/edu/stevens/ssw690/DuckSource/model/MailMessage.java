@@ -10,11 +10,18 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Formula;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "mail_message")
@@ -27,12 +34,13 @@ public class MailMessage implements Serializable {
     }
 	
 	// Persistent Fields:
-    @Id 
+    @Id
     @Column(name="mail_message_id")
     @GeneratedValue
     Integer id;
-    @Column(name="sent_id")
-    private Integer sentId;
+    @OneToOne
+    @JoinColumn(name="user_id", nullable = false)
+    DuckUser user;
     @Column(name="send_to", columnDefinition = "TEXT", length = 65535)
     private String to ;
     @Column(name="subject")
@@ -40,21 +48,24 @@ public class MailMessage implements Serializable {
     @Column(name="body", columnDefinition = "LONGTEXT", length = 65535)
     private String body ;
     @Column(name="sent")
-    @DateTimeFormat(pattern = "MM/dd/yyyy hh:mm")
+    @DateTimeFormat(pattern = "MM/dd/yyyy HH:mm")
     private Date sent;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "mailMessage")
     private Set<MailDistribution> mailDistribution;
-	public Integer getId() {
+    @Formula("(select user_id from duck_user d where d.user_id = user_id)")
+    private Integer userId;
+    
+    public Integer getId() {
 		return id;
 	}
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public Integer getSentId() {
-		return sentId;
+	public Integer getUserId() {
+		return userId;
 	}
-	public void setSentId(Integer sentId) {
-		this.sentId = sentId;
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 	public String getSubject() {
 		return subject;
@@ -79,6 +90,12 @@ public class MailMessage implements Serializable {
 	}
 	public void setTo(String to) {
 		this.to = to;
+	}
+	public DuckUser getUser() {
+		return user;
+	}
+	public void setUser(DuckUser user) {
+		this.user = user;
 	}
     
    

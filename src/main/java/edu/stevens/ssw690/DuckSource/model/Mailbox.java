@@ -14,6 +14,10 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Formula;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
 @Table(name = "mail_box")
 public class Mailbox implements Serializable {
@@ -33,10 +37,10 @@ public class Mailbox implements Serializable {
     private String folder;
     @Column(name="is_read")
     private boolean isRead;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "mail_message_id", nullable = false)
     private MailMessage mailMessage;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     private DuckUser user;
     @Formula("(select mail_message_id from mail_message m where m.mail_message_id = mail_message_id)")
@@ -83,6 +87,7 @@ public class Mailbox implements Serializable {
 	public MailMessage getMailMessage() {
 		return mailMessage;
 	}
+	
 	public void setMailMessage(MailMessage mailMessage) {
 		this.mailMessage = mailMessage;
 	}

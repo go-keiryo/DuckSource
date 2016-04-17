@@ -1,6 +1,6 @@
 CREATE TABLE DuckDb.`mail_message` (
   `mail_message_id` int(11) NOT NULL AUTO_INCREMENT,
-  `sent_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
   `sent` DATETIME NOT NULL,
   `send_to` TEXT NOT NULL,
   `subject` varchar(45),

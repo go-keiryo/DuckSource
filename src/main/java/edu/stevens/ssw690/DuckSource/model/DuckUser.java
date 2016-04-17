@@ -15,6 +15,10 @@ import javax.persistence.Transient;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
 @Table(name = "duck_user")
 public class DuckUser  implements Serializable {
@@ -45,9 +49,11 @@ public class DuckUser  implements Serializable {
 	    private Date registrationDate;
 		@Column(name="profile_image")
 		private String profileImage;
-	    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+		@JsonIgnore
+		@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
 	    private Set<OpportunityRegistered> opportunitiesRegistered;
-	    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+		@JsonIgnore
+		@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
 	    private Set<OpportunitySubmitted> opportunitiesSubmitted;
 	    
 	    public Integer getId() {
