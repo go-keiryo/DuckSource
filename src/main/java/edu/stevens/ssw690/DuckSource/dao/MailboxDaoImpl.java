@@ -71,6 +71,14 @@ public class MailboxDaoImpl implements MailboxDao {
     	return mailbox;
 	}
 	
+	public int getUnreadCount(Integer id) {
+		Query query = em.createQuery("from Mailbox m WHERE m.userId = :id and m.isRead = false and m.folder = 'Inbox'");
+    	query.setParameter("id", id);
+		@SuppressWarnings("unchecked")
+		List<Mailbox> list = (List<Mailbox>) query.getResultList();
+		return list.size();
+	}
+	
 	public void remove(Mailbox mailbox) {
 	        em.remove(em.merge(mailbox));
 	        em.flush();

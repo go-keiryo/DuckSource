@@ -121,7 +121,7 @@ if (session.getAttribute("profileimage") != null) {
         	</tr>
         	<tr style="border: none;"><td class="auto-style1" style="text-align: center; border: none;"><a href="profileimg?userId=${userId}" style="font-weight: bold;  ">Change Profile Image</a></td>
         	</tr>
-        	<tr style="border: none;"><td class="auto-style1" style="text-align: center; border: none;"><a href="mail?userId=${userId}" style="font-weight: bold;  ">Duck Mail</a></td>
+        	<tr style="border: none;"><td class="auto-style1" style="text-align: center; border: none;"><a href="mail?userId=${userId}" style="font-weight: bold;  ">Duck Mail ${unread}</a></td>
         	</tr>
         	</tbody></table><br>
     </div><div class="art-layout-cell layout-item-4" style="width: 33%" >

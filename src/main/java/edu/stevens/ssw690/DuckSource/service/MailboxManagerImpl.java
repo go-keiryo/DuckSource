@@ -52,4 +52,8 @@ public class MailboxManagerImpl implements MailboxManager {
 		public Mailbox findById(BigInteger id) {
 	    	return mailboxDao.findById(id);
 		}
+		
+		public int getUnreadCount(Integer id) {
+			return mailboxDao.getUnreadCount(id);
+		}
 }

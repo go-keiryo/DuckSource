@@ -8,6 +8,7 @@
 <html dir="ltr" lang="en-US"><head>
     <title>Duck Mail</title>
     
+     <link rel="stylesheet" href="<c:url value="/resources/css/jquery-ui.min.css" />" media="screen">
     <!--[if lt IE 9]><script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
     <link rel="stylesheet" href="<c:url value="/resources/css/style.css" />" media="screen">
     <!--[if lte IE 7]><link rel="stylesheet" href="<c:url value="/resources/css/style.ie7.css" />" media="screen" /><![endif]-->
@@ -16,7 +17,9 @@
     <script src="<c:url value="/resources/js/jquery-1.11.3.min.js" />"></script>
     <script src="<c:url value="/resources/js/script.js" />"></script>
     <script src="<c:url value="/resources/js/script.responsive.js" />"></script>
-
+    <script src="<c:url value="/resources/js/jquery-ui.min.js" />"></script>
+    <script src="<c:url value="/resources/js/valida.2.1.6.min.js" />"></script>
+    
 <style>.art-content .art-postcontent-0 .layout-item-0 { color: #232929; background: #ECEEEF url('<c:url value='/resources/images/6cd8d.png' />') scroll;  border-collapse: separate; border-radius: 15px;  }
 .art-content .art-postcontent-0 .layout-item-1 { color: #212627; background: #C0C8C9 url('<c:url value='/resources/images/66838.png' />') scroll; padding-top: 10px;padding-right: 10px;padding-bottom: 10px;padding-left: 10px; border-top-left-radius: 15px;border-bottom-left-radius: 15px;  }
 .art-content .art-postcontent-0 .layout-item-2 { color: #212627; background: #DEE2E3 url('<c:url value='/resources/images/a8c2a.png' />') scroll; padding-top: 10px;padding-right: 10px;padding-bottom: 10px;padding-left: 10px;  }
@@ -27,6 +30,62 @@
 </style>
 <style>
    .error{color:#ff0000;font-weight:bold;}
+   .bold{font-weight:bold;}
+   .notbold{font-weight:normal;}
+   .ui-autocomplete-input {
+	  border: 1px solid #DDD !important;
+	  padding-top: 0px !important;
+	  z-index: 1511;
+	  position: relative;
+	}
+	.ui-autocomplete {
+	  position: absolute;
+	  top: 0;
+	  left: 0;
+	  z-index: 1510 !important;
+	  float: left;
+	  display: none;
+	  min-width: 160px;
+	  width: 160px;
+	  padding: 4px 0;
+	  margin: 2px 0 0 0;
+	  list-style: none;
+	  background-color: #ffffff;
+	  border-color: #ccc;
+	  border-color: rgba(0, 0, 0, 0.2);
+	  border-style: solid;
+	  border-width: 1px;
+	  -webkit-border-radius: 2px;
+	  -moz-border-radius: 2px;
+	  border-radius: 2px;
+	  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+	  -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+	  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+	  -webkit-background-clip: padding-box;
+	  -moz-background-clip: padding;
+	  background-clip: padding-box;
+	  *border-right-width: 2px;
+	  *border-bottom-width: 2px;
+	}
+	.ui-menu-item > a.ui-corner-all {
+	    display: block;
+	    padding: 3px 15px;
+	    clear: both;
+	    font-weight: normal;
+	    line-height: 18px;
+	    color: #555555;
+	    white-space: nowrap;
+	    text-decoration: none;
+	}
+	.ui-state-hover, .ui-state-active {
+	      color: #ffffff;
+	      text-decoration: none;
+	      background-color: #0088cc;
+	      border-radius: 0px;
+	      -webkit-border-radius: 0px;
+	      -moz-border-radius: 0px;
+	      background-image: none;
+	}
  </style>
  <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css"/>
     <script  src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
@@ -34,7 +93,7 @@
     <script>
         // Full blog post at: http://www.simplygoodcode.com/2013/12/how-to-make-email-web-app-using-angular.html
         
-        function EmailController($scope, $http) {
+        function EmailController($scope, $http, $filter) {
             $scope.isPopupVisible = false;
             $scope.isComposePopupVisible = false;
             $scope.composeEmail = {};
@@ -46,17 +105,12 @@
                 $scope.composeEmail = {};
                 angular.copy($scope.selectedEmail.mailMessage,$scope.composeEmail);
                 
-                var sent = new Date($scope.composeEmail.sent);
-                var formattedSent = [sent.getMonth()+1,
-                                sent.getDate(),
-                                sent.getFullYear()].join('/')+' '+
-                                [sent.getHours(),
-                                sent.getMinutes(),
-                                sent.getSeconds()].join(':');
+                var sent = $filter('date')(new Date($scope.composeEmail.sent), 'MM/dd/yyyy HH:mm:ss');
+                
                 $scope.composeEmail.body =
                     "\n-------------------------------\n"
                     + "from: " + $scope.composeEmail.user.userName + "\n"
-                    + "sent: " + formattedSent  + "\n"
+                    + "sent: " + sent  + "\n"
                     + "to: " + $scope.composeEmail.to + "\n"
                     + "subject: " + $scope.composeEmail.subject + "\n"
                     + $scope.composeEmail.body;
@@ -79,19 +133,14 @@
                 angular.copy($scope.selectedEmail.mailMessage,$scope.composeEmail);
 
                 // format the date and time sent
-                var sent = new Date($scope.composeEmail.sent);
-                var formattedSent = [sent.getMonth()+1,
-                                sent.getDate(),
-                                sent.getFullYear()].join('/')+' '+
-                                [sent.getHours(),
-                                sent.getMinutes(),
-                                sent.getSeconds()].join(':');
+                var sent = $filter('date')(new Date($scope.composeEmail.sent), 'MM/dd/yyyy HH:mm:ss');
+                
                 // edit the body to prefix it with a line and the 
                 // original email information
                 $scope.composeEmail.body =
                     "\n-------------------------------\n"
                     + "from: " + $scope.composeEmail.user.userName + "\n"
-                    + "sent: " + formattedSent + "\n"
+                    + "sent: " + sent + "\n"
                     + "to: " + $scope.composeEmail.to + "\n"
                     + "subject: " + $scope.composeEmail.subject + "\n"
                     + $scope.composeEmail.body;
@@ -111,12 +160,16 @@
             };
 
             $scope.sendEmail = function () {
-            	$scope.composeEmail.userId = "${userId}";
-                $http.post("mailAngularJs", $scope.composeEmail).then(function (response) {
-                    $scope.isComposePopupVisible = false;
-                    $scope.composeEmail = response.data;
-                    $scope.sentEmails.splice(0, 0, $scope.composeEmail);
-                });
+            	if ($scope.composeEmail.to === undefined) {
+            		alert("To is required");
+            	} else {
+	            	$scope.composeEmail.userId = "${userId}";
+	                $http.post("mailAngularJs", $scope.composeEmail).then(function (response) {
+	                    $scope.isComposePopupVisible = false;
+	                    $scope.composeEmail = response.data;
+	                    $scope.sentEmails.splice(0, 0, $scope.composeEmail);
+	                });
+            	}
             };
 
             $scope.showComposePopup = function () {
@@ -129,8 +182,12 @@
             };
 
             $scope.showPopup = function (email) {
-                $scope.isPopupVisible = true;
                 $scope.selectedEmail = email;
+                $scope.selectedEmail.userId = "${userId}";
+                $http.post("mailReadAngularJs", $scope.selectedEmail).then(function (response) {
+                	selectedEmail.isRead = true;
+                });
+                $scope.isPopupVisible = true;
             };
 
             $scope.closePopup = function () {
@@ -144,7 +201,6 @@
          	    method: "get",
          	    params: {userId: userId}
          	 }).then(function (response) {
-         		 alert(response.data);
                  $scope.emails = response.data;
              });
          	
@@ -153,10 +209,26 @@
          	    method: "get",
          	    params: {userId: userId}
          	 }).then(function (response) {
-         		 alert(response.data);
                  $scope.sentEmails = response.data;
              });
         }
+    </script>
+    <script>
+    	$(function() {
+        	var users = ${users};
+        	$(".userlist").autocomplete({
+        	      source: users
+        	});
+        	$(".userlist").on('blur', function(e) {
+    	    	var found = jQuery.inArray(this.value, users ) 
+    	    	 if(found < 0) {
+    	             this.focus();
+    	             e.preventDefault();
+    	             return false;
+    	          }
+        	});
+        	 $(".form").valida();
+          })
     </script>
 </head>
 <body>
@@ -207,7 +279,7 @@
             <a ng-click="activeTab='sent'">Sent</a>
         </li>
     </ul>    
-    <table ng-show="activeTab=='inbox'" class="table table-bordered table-condensed" style="border:2px solid">
+    <table ng-show="activeTab=='inbox'" width=64%>
          <thead>
 			  <tr>
 			     <th>From</th>
@@ -217,13 +289,13 @@
 		 </thead>
         <tbody>
             <tr ng-repeat="email in emails track by $index" ng-click="showPopup(email)">
-                <td>{{ email.mailMessage.user.userName }}</td>
-                <td>{{ email.mailMessage.subject }}</td>
-                <td>{{ email.mailMessage.sent | date:'MM/dd/yyyy HH:mm:ss' }}</td>
+                <td ng-class='{bold : email.read == false, notbold: email.read == true}'>{{ email.mailMessage.user.userName }}</td>
+                <td ng-class='{bold : email.read == false, notbold: email.read == true}'>{{ email.mailMessage.subject }}</td>
+                <td ng-class='{bold : email.read == false, notbold: email.read == true}'>{{ email.mailMessage.sent | date:'MM/dd/yyyy HH:mm:ss' }}</td>
             </tr>
         </tbody>
     </table>
-    <table ng-show="activeTab=='sent'" class="table table-bordered table-condensed" style="border:2px solid">
+    <table ng-show="activeTab=='sent'" width=64%>
         <thead>
 			  <tr>
 			     <th>To</th>
@@ -266,9 +338,9 @@
             <button type="button" class="close" ng-click="closeComposePopup()">&times;</button>
             <h3>New Message</h3>
         </div>
-        <div class="modal-body">
-            <form>
-                <input type="text" placeholder="To" style="width:95%;"
+        <div id="dialog" class="modal-body">
+            <form class="form">
+               	 <input type="text" class="userlist" placeholder="To" style="width:95%;" required="true"
                     ng-model="composeEmail.to"><br />
                 <input type="text" placeholder="Subject" style="width:95%;"
                     ng-model="composeEmail.subject"><br />

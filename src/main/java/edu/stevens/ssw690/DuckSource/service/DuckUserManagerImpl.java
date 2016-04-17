@@ -51,4 +51,8 @@ public class DuckUserManagerImpl implements DuckUserManager{
 		return duckUserDao.getById(id);
 	}
 	
+	public List<String> getAllUserNames() {
+		return duckUserDao.getAllUserNames();
+	}
+	
 }

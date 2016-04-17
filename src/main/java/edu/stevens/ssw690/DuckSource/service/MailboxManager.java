@@ -16,5 +16,6 @@ public interface MailboxManager {
 	public Mailbox findById(BigInteger id);
 	public Mailbox getByMessageId(Integer id);
 	public void remove(Mailbox mailbox);
+	public int getUnreadCount(Integer id);
 
 }

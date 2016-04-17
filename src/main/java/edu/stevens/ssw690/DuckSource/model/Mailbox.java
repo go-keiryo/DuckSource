@@ -60,11 +60,11 @@ public class Mailbox implements Serializable {
 	public void setFolder(String folder) {
 		this.folder = folder;
 	}
-	public boolean isRead() {
+	public boolean getRead() {
 		return isRead;
 	}
-	public void setRead(boolean read) {
-		this.isRead = read;
+	public void setRead(boolean isRead) {
+		this.isRead = isRead;
 	}
 	public DuckUser getUser() {
 		return user;

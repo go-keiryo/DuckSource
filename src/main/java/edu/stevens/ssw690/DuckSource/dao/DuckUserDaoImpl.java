@@ -83,4 +83,11 @@ public class DuckUserDaoImpl implements DuckUserDao{
     	}
     	return exists;
     }
+    
+    public List<String> getAllUserNames() {
+    	Query query = em.createQuery("select QUOTE(userName) from DuckUser)");
+    	@SuppressWarnings("unchecked")
+		List<String> list = (List<String>) query.getResultList();
+    	return list;
+    }
 }

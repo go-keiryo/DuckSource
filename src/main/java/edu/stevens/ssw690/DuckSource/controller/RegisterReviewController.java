@@ -34,6 +34,7 @@ import edu.stevens.ssw690.DuckSource.model.OpportunityReviewIssue;
 import edu.stevens.ssw690.DuckSource.model.OpportunitySubmitted;
 import edu.stevens.ssw690.DuckSource.model.ReviewIssue;
 import edu.stevens.ssw690.DuckSource.service.DuckUserManager;
+import edu.stevens.ssw690.DuckSource.service.MailboxManager;
 import edu.stevens.ssw690.DuckSource.service.OpportunityManager;
 import edu.stevens.ssw690.DuckSource.service.OpportunityRegisteredManager;
 import edu.stevens.ssw690.DuckSource.service.OpportunityReviewIssueManager;
@@ -66,6 +67,9 @@ public class RegisterReviewController extends MultiActionController {
 
 	@Autowired
 	ServletContext context;
+	
+	@Autowired
+	MailboxManager mailboxService; 
 
 	@RequestMapping(value = "/account", method = RequestMethod.GET)
 	public String getAccount(@RequestParam("userId") Integer userId, Model model, HttpServletRequest request) {
@@ -73,6 +77,9 @@ public class RegisterReviewController extends MultiActionController {
 		model.addAttribute("userId", userId);
 		DuckUser user = duckUserService.findById(userId);
 		model.addAttribute("user", user);
+		int cnt= mailboxService.getUnreadCount(userId);
+		model.addAttribute("unread", "(" + cnt + ")");
+		
 
 		String profileImg = user.getProfileImage();
 

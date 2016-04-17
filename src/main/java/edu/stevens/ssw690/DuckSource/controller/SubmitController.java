@@ -1,23 +1,18 @@
 package edu.stevens.ssw690.DuckSource.controller;
 
 import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -27,10 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -41,12 +33,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonGenerationException;
-import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.JsonToken;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import edu.stevens.ssw690.DuckSource.model.DuckUser;
@@ -392,32 +379,23 @@ public class SubmitController extends MultiActionController {
 	    public String getDuckMail(@RequestParam("userId") Integer userId, Model model) 
 	    {
 			model.addAttribute("userId", userId);
+			List<String> userNames = duckUserService.getAllUserNames();
+			model.addAttribute("users", userNames);
 			return "mail";
 		}
 	    
 	    @RequestMapping(value="/mailUser", method = RequestMethod.GET, produces="application/json")
-	    public @ResponseBody String getDuckMailUser(@RequestParam("userId") Integer userId) throws JsonProcessingException 
+	    public @ResponseBody DuckUser getDuckMailUser(@RequestParam("userId") Integer userId) throws JsonProcessingException 
 	    {
-	    	System.out.println(userId);
 			DuckUser user = duckUserService.findById(userId);
-			ObjectMapper mapper = new ObjectMapper();
-			
-			String json = mapper.writeValueAsString(user);
-	    	System.out.println(json);
-			return json;
+			return user;
 	    }
 	    
 	    @RequestMapping(value="/inboxMailAngularJs", method = RequestMethod.GET, produces="application/json")
 	    public @ResponseBody List<Mailbox> getInbox(@RequestParam("userId") Integer userId) throws JsonProcessingException 
 	    {
 	    	DuckUser user = duckUserService.findById(userId);
-	    	System.out.println(user.getUserName());
-	    	System.out.println(user.getId());
 	    	List<Mailbox> inbox =  mailboxService.getUserInbox(user.getId());
-	    	ObjectMapper mapper = new ObjectMapper();
-	    	
-	    	String json = mapper.writeValueAsString(inbox);
-	    	System.out.println(json);
 	    	
 	    	return inbox;
 	    	
@@ -427,29 +405,28 @@ public class SubmitController extends MultiActionController {
 	    public @ResponseBody List<Mailbox> getSent(@RequestParam("userId") Integer userId) throws JsonProcessingException 
 	    {
 	    	DuckUser user = duckUserService.findById(userId);
-	    	System.out.println(user.getUserName());
-	    	System.out.println(user.getId());
 	    	List<Mailbox> sent =  mailboxService.getUserSent(user.getId());
-	    	System.out.println(sent.size());
-	    	
-	    	ObjectMapper mapper = new ObjectMapper();
-	    	
-	    	String json = mapper.writeValueAsString(sent);
-	    	System.out.println(json);
 	    	
 	    	return sent;
 			
 		}
 	    
+	    @RequestMapping(value="/mailReadAngularJs", method = RequestMethod.POST) 
+	    public @ResponseBody Mailbox onMesssageRead( @RequestBody Mailbox mailbox )  throws JsonProcessingException
+	    { 
+	
+	    	mailbox.setRead(true);
+	    	mailboxService.merge(mailbox);
+	    	
+	    	return mailbox;
+	    	
+	    }
+	    
 	    @RequestMapping(value="/mailAngularJs", method = RequestMethod.POST) 
 	    public @ResponseBody Mailbox onMesssageSubmit( @RequestBody MailMessage mailMessage )  throws JsonProcessingException
 	    { 
-	    	System.out.println("sent email called");
 	    	DuckUser fromUser = duckUserService.findById(mailMessage.getUserId());
 	    	DuckUser toUser = duckUserService.getDuckUser(mailMessage.getTo());
-	    	
-	    	System.out.println("from: " + mailMessage.getUserId());
-	    	System.out.println("to: " + mailMessage.getTo());
 	    	
 	    	boolean newMessage = false;
 	    	MailMessage newMailMessage = null;
@@ -505,11 +482,6 @@ public class SubmitController extends MultiActionController {
 	    	}
 	    	sentMail.setUser(fromUser);
 	    	mailboxService.persist(sentMail);
-	    
-	    	ObjectMapper mapper = new ObjectMapper();
-	    	String json = mapper.writeValueAsString(sentMail);
-   
-	    	System.out.println(json);
 	    	
     		return sentMail;
 	    }

@@ -14,4 +14,5 @@ public interface DuckUserManager {
     public DuckUser getDuckUser(String username, String password);
     public DuckUser getDuckUser(String username);
     public boolean getUsernameExists(String username);
+    public List<String> getAllUserNames();
 }
