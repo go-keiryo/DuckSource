@@ -217,7 +217,7 @@
         }
     </script>
     <script>
-        var SendTo = "";
+        var sendTo = "";
     	$(function() {
         	var users = ${users};
         	$(".userlist").autocomplete({
@@ -226,11 +226,12 @@
         	$(".userlist").on('blur', function(e) {
     	    	var found = jQuery.inArray(this.value, users ) 
     	    	 if(found < 0) {
+    	    		 sendTo="";
     	             this.focus();
     	             e.preventDefault();
     	             return false;
     	          } else {
-    	        	 SendTo = this.value;
+    	        	 sendTo = this.value;
     	        	  return true;
     	          }
         	});
