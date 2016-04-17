@@ -163,6 +163,7 @@
             	if ($scope.composeEmail.to === undefined) {
             		alert("To is required");
             	} else {
+            		$scope.composeEmail.to = to;
 	            	$scope.composeEmail.userId = "${userId}";
 	                $http.post("mailAngularJs", $scope.composeEmail).then(function (response) {
 	                    $scope.isComposePopupVisible = false;
@@ -214,6 +215,7 @@
         }
     </script>
     <script>
+        var to = "";
     	$(function() {
         	var users = ${users};
         	$(".userlist").autocomplete({
@@ -225,6 +227,9 @@
     	             this.focus();
     	             e.preventDefault();
     	             return false;
+    	          } else {
+    	        	 to = this.value;
+    	        	  return true;
     	          }
         	});
         	 $(".form").valida();
@@ -340,8 +345,8 @@
         </div>
         <div id="dialog" class="modal-body">
             <form class="form">
-               	 <input type="text" class="userlist" placeholder="To" style="width:95%;" required="true"
-                    ng-model="composeEmail.to"><br />
+               	 <input type="text" class="userlist" placeholder="To" style="width:95%;" 
+                    ng-model="composeEmail.to" onEditChange required="true"><br />
                 <input type="text" placeholder="Subject" style="width:95%;"
                     ng-model="composeEmail.subject"><br />
                 <textarea style="width:95%;" rows="10" 
