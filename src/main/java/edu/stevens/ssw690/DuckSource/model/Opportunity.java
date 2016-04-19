@@ -2,6 +2,7 @@ package edu.stevens.ssw690.DuckSource.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Set;
 
@@ -12,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Future;
 
 import org.hibernate.annotations.Formula;
@@ -45,11 +47,9 @@ public class Opportunity implements Serializable {
     private BigDecimal duckbills;
     @Column(name="register_date")
     @DateTimeFormat(pattern = "MM/dd/yyyy")
-    @Future
     private Date registerDate;
     @Column(name="submit_date")
     @DateTimeFormat(pattern = "MM/dd/yyyy")
-    @Future
     private Date submitDate;
     @Column(name="description", columnDefinition = "TEXT", length = 65535)
     private String description ;
@@ -63,8 +63,14 @@ public class Opportunity implements Serializable {
     private Set<OpportunityRegistered> opportunitiesRegistered;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "opportunity")
     private Set<OpportunitySubmitted> opportunitiesSubmitted;
+    @Transient
+    private String formattedSubmitDate;
+    @Transient
+    private String formattedRegisterDate;
+    @Transient
+    private String payment;
     
-	public Integer getId() {
+    public Integer getId() {
 		return id;
 	}
 	public void setId(Integer id) {
@@ -157,5 +163,28 @@ public class Opportunity implements Serializable {
 		 return "Opportunity [id=" + id + ", Type=" + opportunityType
 				 + ", title=" + opportunityTitle + ", duckbill$=" + duckbills.toString() + "]";
 	 }
+	public String getFormattedSubmitDate() {
+		
+		formattedSubmitDate = new SimpleDateFormat("MM/dd/yyyy").format(submitDate);
+		return formattedSubmitDate;
+	}
+	public void setFormattedSubmitDate(String formattedSubmitDate) {
+		this.formattedSubmitDate = formattedSubmitDate;
+	}
+	public String getFormattedRegisterDate() {
+		formattedRegisterDate = new SimpleDateFormat("MM/dd/yyyy").format(registerDate);
+		return formattedRegisterDate;
+	}
+	public void setFormattedRegisterDate(String formattedRegisterDate) {
+		this.formattedRegisterDate = formattedRegisterDate;
+	}
+	public String getPayment() {
+		return DuckUtilities.formatAsCurrency(duckbills);
+	}
+	public void setPayment(String payment) {
+		this.payment = payment;
+	}
+	 
+	 
 	 
 }

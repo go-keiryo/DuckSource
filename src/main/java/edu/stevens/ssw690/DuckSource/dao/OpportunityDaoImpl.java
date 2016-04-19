@@ -3,13 +3,16 @@ package edu.stevens.ssw690.DuckSource.dao;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import edu.stevens.ssw690.DuckSource.model.Mailbox;
 import edu.stevens.ssw690.DuckSource.model.Opportunity;
+import edu.stevens.ssw690.DuckSource.model.OpportunityExcel;
 
 @Repository
 @Transactional
@@ -51,7 +54,23 @@ public class OpportunityDaoImpl implements OpportunityDao {
         return query.getResultList();
     }
     
-    // Retrieves the Opportunity:
+ // Retrieves all the Opportunities for Excel:
+    @SuppressWarnings("unchecked")
+	public List<OpportunityExcel> getAllOpportunitiesForExcel() {
+        Query query = em.createQuery("Select o.opportunityTitle as title, o.description as description, o.opportunityType as category, o.duckbills as payment, DATE_FORMAT(o.registerDate, '%m/%d/%Y') as registerBy, DATE_FORMAT(o.submitDate, '%m/%d/%Y') as submitBy FROM  Opportunity o ORDER BY o.submitDate)");
+        List<OpportunityExcel> list = (List<OpportunityExcel>) query.getResultList();
+        return list;
+    }
+    
+    // Retrieves all the Opportunities for Excel:
+        @SuppressWarnings("unchecked")
+    	public List<Opportunity> getAllOpportunitiesForExcelExport() {
+            Query query = em.createQuery("FROM  Opportunity o ORDER BY o.submitDate)");
+            List<Opportunity> list = (List<Opportunity>) query.getResultList();
+            return list;
+        }
+        
+    // Retrieves the Opportunity: 
     public Opportunity getOpportunity(String title) {
     	Opportunity opp = null;;
     	TypedQuery<Opportunity> query = em.createQuery(

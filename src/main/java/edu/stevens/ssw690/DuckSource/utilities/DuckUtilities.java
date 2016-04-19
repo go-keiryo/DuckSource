@@ -6,20 +6,9 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.YearMonth;
-import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
-import edu.stevens.ssw690.DuckSource.model.OpportunityTime;
-import edu.stevens.ssw690.DuckSource.service.OpportunityTimeManager;
+import java.text.NumberFormat;
 
 public class DuckUtilities {
 	
@@ -68,6 +57,11 @@ public class DuckUtilities {
 		} else {
 			return true;
 		}
+	}
+	
+	public static String formatAsCurrency(BigDecimal number) {
+		NumberFormat defaultFormat = NumberFormat.getCurrencyInstance();
+		return defaultFormat.format(number);
 	}
 	 
 }

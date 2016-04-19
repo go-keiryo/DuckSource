@@ -3,6 +3,7 @@ package edu.stevens.ssw690.DuckSource.service;
 import java.util.List;
 
 import edu.stevens.ssw690.DuckSource.model.Opportunity;
+import edu.stevens.ssw690.DuckSource.model.OpportunityExcel;
 
 public interface OpportunityManager {
 	
@@ -19,5 +20,7 @@ public interface OpportunityManager {
     public List<Opportunity> getByType(String oppType);
     public List<Opportunity> getByOtherThanCreator(Integer userId);
     public List<Opportunity> getByOtherThanCreatorByType(Integer userId, String oppType);
+    public List<OpportunityExcel> getAllOpportunitiesForExcel();
+    public List<Opportunity> getAllOpportunitiesForExcelExport();
 
 }

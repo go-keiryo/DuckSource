@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import edu.stevens.ssw690.DuckSource.dao.OpportunityDao;
 import edu.stevens.ssw690.DuckSource.model.Opportunity;
+import edu.stevens.ssw690.DuckSource.model.OpportunityExcel;
 
 
 @Service
@@ -67,6 +68,14 @@ public class OpportunityManagerImpl implements OpportunityManager {
 	@Override
 	public Opportunity getBySubmittedOpportunity(Integer userId, Integer opportunityId) {
 		return opportunityDao.getBySubmittedOpportunity(userId, opportunityId);
+	}
+	
+	public List<OpportunityExcel> getAllOpportunitiesForExcel() {
+		return opportunityDao.getAllOpportunitiesForExcel();
+	}
+	
+	public List<Opportunity> getAllOpportunitiesForExcelExport() {
+	   return opportunityDao.getAllOpportunitiesForExcelExport();
 	}
  
 }

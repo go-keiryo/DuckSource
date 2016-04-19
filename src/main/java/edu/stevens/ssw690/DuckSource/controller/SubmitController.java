@@ -7,10 +7,13 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.time.ZoneId;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -20,6 +23,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.jxls.template.SimpleExporter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,6 +45,7 @@ import edu.stevens.ssw690.DuckSource.model.MailDistribution;
 import edu.stevens.ssw690.DuckSource.model.MailMessage;
 import edu.stevens.ssw690.DuckSource.model.Mailbox;
 import edu.stevens.ssw690.DuckSource.model.Opportunity;
+import edu.stevens.ssw690.DuckSource.model.OpportunityExcel;
 import edu.stevens.ssw690.DuckSource.model.OpportunitySubmitted;
 import edu.stevens.ssw690.DuckSource.model.OpportunityTime;
 import edu.stevens.ssw690.DuckSource.model.WorkInterval;
@@ -87,6 +92,73 @@ public class SubmitController extends MultiActionController {
     
 	private static final int BUFFER_SIZE = 4096;
 	
+	@RequestMapping(value="/export", method = RequestMethod.GET)
+    public void getExcel(HttpServletRequest request, HttpServletResponse response) 
+    {
+		@SuppressWarnings("unused")
+    	// for future use
+		boolean error = false;
+    
+        Date today = new Date();
+        String fileName = new SimpleDateFormat("yyyyMMdd").format(today) + "_DuckSource_Opportunities.xls";
+        String root = getServletContext().getRealPath("/");
+        String fullPath = root + File.separator + "userdata" +  File.separator + fileName;
+        OutputStream outputStream;
+        
+		try {
+			outputStream = new FileOutputStream(fullPath);
+	        List<Opportunity> opportunities = opportunityService.getAllOpportunitiesForExcelExport();
+	        List<String> headers = Arrays.asList("Title","Description","Type","Payment","Register By","Submit By");
+	        SimpleExporter exporter = new SimpleExporter();
+	        exporter.gridExport(headers, opportunities, "opportunityTitle,description,opportunityType,payment,formattedRegisterDate,formattedSubmitDate", outputStream);
+		} catch (FileNotFoundException e) {
+			error = true;
+		}
+		
+        File downloadFile = new File(fullPath);
+	    FileInputStream inputStream = null;
+	     
+		try {
+			inputStream = new FileInputStream(downloadFile);
+		} catch (FileNotFoundException e) {
+			error = true;
+		}
+	      
+	    ServletContext context = request.getServletContext();
+	    String mimeType = context.getMimeType(fullPath);
+	    if (mimeType == null) {
+	        mimeType = "application/octet-stream";
+	    }
+	         
+	    response.setContentType(mimeType);
+	    response.setContentLength((int) downloadFile.length());
+	  
+	    String headerKey = "Content-Disposition";
+	    String headerValue = String.format("attachment; filename=\"%s\"",
+	    downloadFile.getName());
+	    response.setHeader(headerKey, headerValue);
+  
+        outputStream = null;
+		try {
+			outputStream = response.getOutputStream();
+		} catch (IOException e) {
+			error = true;
+		}
+  
+        byte[] buffer = new byte[BUFFER_SIZE];
+        int bytesRead = -1;
+  
+        try {
+			while ((bytesRead = inputStream.read(buffer)) != -1) {
+			     outputStream.write(buffer, 0, bytesRead);
+			 }
+			inputStream.close();
+			outputStream.close();
+        } catch (IOException e) {
+			error = true;
+		}
+        
+	}
 	 /**
 	 * Get's the file related to the submission and downloads it
 	 * if exists and can be opened.
