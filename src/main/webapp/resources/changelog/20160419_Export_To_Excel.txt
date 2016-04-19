@@ -1,0 +1,26 @@
+Change Log for Export Opportunities to Excel
+
+Files changed
+
+edu.stevens.ssw690.DuckSource.controller
+SubmitController.java
+
+edu.stevens.ssw690.DuckSource.dao
+OpportunityDao.java
+OpportunityDaoImpl.java
+
+edu.stevens.ssw690.DuckSource.model
+Opportunity.java
+
+edu.stevens.ssw690.DuckSource.service
+OpportunityManager.java
+OpportunityManagerImpl.java
+
+edu.stevens.ssw690.DuckSource.utilities
+DuckUtilities.java
+
+src.main.webapp.WEB-INF
+main.jsp
+
+pom.xml
+

@@ -10,9 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import edu.stevens.ssw690.DuckSource.model.Mailbox;
 import edu.stevens.ssw690.DuckSource.model.Opportunity;
-import edu.stevens.ssw690.DuckSource.model.OpportunityExcel;
 
 @Repository
 @Transactional
@@ -52,14 +50,6 @@ public class OpportunityDaoImpl implements OpportunityDao {
         TypedQuery<Opportunity> query = em.createQuery(
             "FROM  Opportunity o ORDER BY o.id",  Opportunity.class);
         return query.getResultList();
-    }
-    
- // Retrieves all the Opportunities for Excel:
-    @SuppressWarnings("unchecked")
-	public List<OpportunityExcel> getAllOpportunitiesForExcel() {
-        Query query = em.createQuery("Select o.opportunityTitle as title, o.description as description, o.opportunityType as category, o.duckbills as payment, DATE_FORMAT(o.registerDate, '%m/%d/%Y') as registerBy, DATE_FORMAT(o.submitDate, '%m/%d/%Y') as submitBy FROM  Opportunity o ORDER BY o.submitDate)");
-        List<OpportunityExcel> list = (List<OpportunityExcel>) query.getResultList();
-        return list;
     }
     
     // Retrieves all the Opportunities for Excel:

@@ -45,7 +45,6 @@ import edu.stevens.ssw690.DuckSource.model.MailDistribution;
 import edu.stevens.ssw690.DuckSource.model.MailMessage;
 import edu.stevens.ssw690.DuckSource.model.Mailbox;
 import edu.stevens.ssw690.DuckSource.model.Opportunity;
-import edu.stevens.ssw690.DuckSource.model.OpportunityExcel;
 import edu.stevens.ssw690.DuckSource.model.OpportunitySubmitted;
 import edu.stevens.ssw690.DuckSource.model.OpportunityTime;
 import edu.stevens.ssw690.DuckSource.model.WorkInterval;
