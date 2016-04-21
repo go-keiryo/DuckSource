@@ -670,6 +670,10 @@ public class SubmitController extends MultiActionController {
 	    public String getTimesheet(@RequestParam("userId") Integer userId, @RequestParam("oppId") Integer oppId, 
 	    		@RequestParam("message") String message,  @RequestParam("messageClass") String messageClass, Model model) 
 	    {
+	    	if (userId == null || oppId == null) {
+	    		return "main";
+	    	}
+	    	
 	    	Opportunity opportunity = opportunityService.findById(oppId);
 	    	
 	    	Calendar cal = Calendar.getInstance();
