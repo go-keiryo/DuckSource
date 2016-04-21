@@ -99,6 +99,7 @@
             $scope.composeEmail = {};
             $scope.activeTab = "inbox";
             $scope.sentEmails = [];
+            $scope.emails = [];
 
             $scope.forward = function () {
                 $scope.isPopupVisible = false;
@@ -117,7 +118,7 @@
 
                 $scope.composeEmail.subject = "FW: " + $scope.composeEmail.subject;
                 $scope.composeEmail.to = "";
-                $scope.composeEmail.from = "${userId}";
+                $scope.composeEmail.userId = "${userId}";
                 $scope.isComposePopupVisible = true;
             };
 
@@ -158,17 +159,35 @@
                 // show the compose email popup
                 $scope.isComposePopupVisible = true;
             };
-
+            
+            $scope.remove = function () {
+            	$scope.isPopupVisible = false; 
+            	var folder =  $scope.selectedEmail.folder;
+            	 $http.post("mailDeleteAngularJs", $scope.selectedEmail.id).then(function (response) {
+            		 if (folder === "Inbox") {
+                		 $scope.emails = $scope.emails
+                         	.filter(function (el) {
+                            	return el.id !==  $scope.selectedEmail.id;
+                         });
+            		 } else {
+            			 $scope.sentEmails = $scope.sentEmails
+                      		.filter(function (el) {
+                           		return el.id !==  $scope.selectedEmail.id;
+                      	});
+            		 }
+                 });
+            }
+            
             $scope.sendEmail = function () {
-            	if ($scope.composeEmail.to === undefined) {
+            	if ($scope.composeEmail.to === undefined || $scope.composeEmail.to === "") {
             		alert("To is required");
             	} else {
             		if (sendTo != "") {
             			$scope.composeEmail.to = sendTo;
             		}
 	            	$scope.composeEmail.userId = "${userId}";
-	                $http.post("mailAngularJs", $scope.composeEmail).then(function (response) {
-	                    $scope.isComposePopupVisible = false;
+	            	$http.post("mailAngularJs", $scope.composeEmail).then(function (response) {
+	                	$scope.isComposePopupVisible = false;
 	                    $scope.composeEmail = response.data;
 	                    $scope.sentEmails.splice(0, 0, $scope.composeEmail);
 	                });
@@ -188,7 +207,7 @@
                 $scope.selectedEmail = email;
                 $scope.selectedEmail.userId = "${userId}";
                 $http.post("mailReadAngularJs", $scope.selectedEmail).then(function (response) {
-                	selectedEmail.isRead = true;
+                	email.isRead = true;
                 });
                 $scope.isPopupVisible = true;
             };
@@ -337,6 +356,7 @@
         <div class="modal-footer">
             <a href="#" class="btn" ng-click="forward()">Forward</a>
             <a href="#" class="btn" ng-click="reply()">Reply</a>
+            <a href="#" class="btn" ng-click="remove()">Delete</a>
             <a href="#" class="btn btn-primary" ng-click="closePopup()">Close</a>
         </div>
     </div>

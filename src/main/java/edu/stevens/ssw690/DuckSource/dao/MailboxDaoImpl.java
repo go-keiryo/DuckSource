@@ -84,7 +84,7 @@ public class MailboxDaoImpl implements MailboxDao {
 	        em.flush();
 	}
 	
-	public Mailbox findById(BigInteger id) {
+	public Mailbox findById(Integer id) {
     	return em.find(Mailbox.class, id);
 	}
 }

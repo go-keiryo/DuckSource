@@ -482,8 +482,8 @@ public class SubmitController extends MultiActionController {
 			
 		}
 	    
-	    @RequestMapping(value="/mailReadAngularJs", method = RequestMethod.POST) 
-	    public @ResponseBody Mailbox onMesssageRead( @RequestBody Mailbox mailbox )  throws JsonProcessingException
+	    @RequestMapping(value="/mailReadAngularJs", method = RequestMethod.POST, produces="application/json") 
+	    public @ResponseBody Mailbox onMesssageRead( @RequestBody Mailbox mailbox )
 	    { 
 	
 	    	mailbox.setRead(true);
@@ -493,9 +493,10 @@ public class SubmitController extends MultiActionController {
 	    	
 	    }
 	    
-	    @RequestMapping(value="/mailAngularJs", method = RequestMethod.POST) 
-	    public @ResponseBody Mailbox onMesssageSubmit( @RequestBody MailMessage mailMessage )  throws JsonProcessingException
+	    @RequestMapping(value="/mailAngularJs", method = RequestMethod.POST, produces="application/json") 
+	    public @ResponseBody Mailbox onMesssageSubmit( @RequestBody MailMessage mailMessage )
 	    { 
+	    	
 	    	DuckUser fromUser = duckUserService.findById(mailMessage.getUserId());
 	    	DuckUser toUser = duckUserService.getDuckUser(mailMessage.getTo());
 	    	
@@ -556,7 +557,15 @@ public class SubmitController extends MultiActionController {
 	    	
     		return sentMail;
 	    }
-        
+	    
+	    @RequestMapping(value="/mailDeleteAngularJs", method = RequestMethod.POST) 
+	    public @ResponseBody String onMesssageRemove( @RequestBody int mailboxId )
+	    {
+	    	Mailbox mailbox = mailboxService.findById(mailboxId);
+	    	mailboxService.remove(mailbox);
+	    	return "deleted";
+	    }
+	    
 	    /**
 	     * Gets the page the allows the profile image to be changed
 	     * @param userId

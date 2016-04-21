@@ -49,7 +49,7 @@ public class MailboxManagerImpl implements MailboxManager {
 			 mailboxDao.remove(mailbox);
 		}
 		
-		public Mailbox findById(BigInteger id) {
+		public Mailbox findById(Integer id) {
 	    	return mailboxDao.findById(id);
 		}
 		
