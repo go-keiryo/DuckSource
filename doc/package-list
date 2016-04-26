@@ -1,0 +1,9 @@
+edu.stevens.ssw690.DuckSource.controller
+edu.stevens.ssw690.DuckSource.controller.test
+edu.stevens.ssw690.DuckSource.dao
+edu.stevens.ssw690.DuckSource.dao.test
+edu.stevens.ssw690.DuckSource.model
+edu.stevens.ssw690.DuckSource.service
+edu.stevens.ssw690.DuckSource.test
+edu.stevens.ssw690.DuckSource.utilities
+edu.stevens.ssw690.DuckSource.utilities.test
