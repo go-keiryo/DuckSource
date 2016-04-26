@@ -71,6 +71,13 @@ public class RegisterReviewController extends MultiActionController {
 	@Autowired
 	MailboxManager mailboxService; 
 
+	/**
+	 * Get the user's account page
+	 * @param userId
+	 * @param model
+	 * @param request
+	 * @return account.jsp
+	 */
 	@RequestMapping(value = "/account", method = RequestMethod.GET)
 	public String getAccount(@RequestParam("userId") Integer userId, Model model, HttpServletRequest request) {
 
@@ -106,6 +113,12 @@ public class RegisterReviewController extends MultiActionController {
 		return "account";
 	}
 
+	/**
+	 * Gets the password change page
+	 * @param userId
+	 * @param model
+	 * @return password.jsp
+	 */
 	@RequestMapping(value = "/password", method = RequestMethod.GET)
 	public String getPassword(@RequestParam("userId") Integer userId, Model model) {
 		model.addAttribute("userId", userId);
@@ -115,6 +128,15 @@ public class RegisterReviewController extends MultiActionController {
 		return "password";
 	}
 
+	/**
+	 * Validates and saves the new password
+	 * @param request
+	 * @param user
+	 * @param result
+	 * @param status
+	 * @param model
+	 * @return pasword.jsp if error otherwise account.jsp
+	 */
 	@RequestMapping(value = "/password", method = RequestMethod.POST)
 	public String submitPasswordForm(HttpServletRequest request, @ModelAttribute("userForm") DuckUser user,
 			BindingResult result, SessionStatus status, Model model) {
@@ -166,6 +188,13 @@ public class RegisterReviewController extends MultiActionController {
 
 	}
 
+	/**
+	 * Registers a user for an opportunity
+	 * @param request
+	 * @param status
+	 * @param model
+	 * @return main.jsp
+	 */
 	@RequestMapping(value = "/register")
 	public String registerForOpp(HttpServletRequest request, SessionStatus status, Model model) {
 		Integer userId = Integer.parseInt(request.getParameter("userId"));
@@ -188,6 +217,13 @@ public class RegisterReviewController extends MultiActionController {
 		return "redirect:main";
 	}
 
+	/**
+	 * De-registers user from an opportunity
+	 * @param request
+	 * @param status
+	 * @param model
+	 * @return main.jsp
+	 */
 	@RequestMapping(value = "/deregister")
 	public String deregisterForOpp(HttpServletRequest request, SessionStatus status, Model model) {
 		Integer userId = Integer.parseInt(request.getParameter("userId"));
@@ -207,6 +243,12 @@ public class RegisterReviewController extends MultiActionController {
 		return "redirect:main";
 	}
 
+	/**
+	 * Gets the review opportunity page
+	 * @param request
+	 * @param model
+	 * @return reviewopp.jsp
+	 */
 	@RequestMapping(value = "/reviewopp", method = RequestMethod.GET)
 	public String getReviewOpp(HttpServletRequest request, Model model) {
 		Integer userId = Integer.parseInt(request.getParameter("userId"));
@@ -222,6 +264,12 @@ public class RegisterReviewController extends MultiActionController {
 		return "reviewopp";
 	}
 
+	/**
+	 * Gets the edit review page
+	 * @param request
+	 * @param model
+	 * @return editreview.jsp
+	 */
 	@RequestMapping(value = "/editreview", method = RequestMethod.GET)
 	public String getEditReviewOpp(HttpServletRequest request, Model model) {
 		Integer userId = Integer.parseInt(request.getParameter("userId"));
@@ -241,6 +289,17 @@ public class RegisterReviewController extends MultiActionController {
 		return "editreview";
 	}
 
+	/**
+	 * Save a review issue to an opportunity
+	 * @param reviewStatus
+	 * @param userId
+	 * @param oppId
+	 * @param subId
+	 * @param response
+	 * @param status
+	 * @param model
+	 * @return reviewopp.jsp
+	 */
 	@RequestMapping(value = "/savereview", method = RequestMethod.POST)
 	public String getSaveReviewOpp(@RequestParam("reviewStatus") String reviewStatus,
 			@RequestParam("userId") Integer userId, @RequestParam("oppId") Integer oppId,
@@ -261,6 +320,12 @@ public class RegisterReviewController extends MultiActionController {
 		return "reviewopp";
 	}
 
+	/**
+	 * Gets the add review issue page
+	 * @param request
+	 * @param model
+	 * @return addissue.jsp
+	 */
 	@RequestMapping(value = "/addissue", method = RequestMethod.GET)
 	public String getReviewIssue(HttpServletRequest request, Model model) {
 		Integer userId = Integer.parseInt(request.getParameter("userId"));
@@ -288,6 +353,22 @@ public class RegisterReviewController extends MultiActionController {
 		return "addissue";
 	}
 
+	/** Validate and save a new review issue
+	 * Saves a new 
+	 * @param userId
+	 * @param oppId
+	 * @param subId
+	 * @param formname
+	 * @param loc
+	 * @param opportunityReviewIssue
+	 * @param reviewResult
+	 * @param reviewIssue
+	 * @param issueResult
+	 * @param response
+	 * @param status
+	 * @param model
+	 * @return addissue.jsp
+	 */
 	@RequestMapping(value = "/addissue", method = RequestMethod.POST)
 	public String saveReviewIssue(@RequestParam("userId") Integer userId, @RequestParam("oppId") Integer oppId,
 			@RequestParam("subId") Integer subId, @RequestParam("formname") String formname,
@@ -363,6 +444,12 @@ public class RegisterReviewController extends MultiActionController {
 		return "redirect:reviewopp";
 	}
 
+	/**
+	 * Gets the review issues for an opportunity page
+	 * @param request
+	 * @param model
+	 * @return reviewoppissues.jsp
+	 */
 	@RequestMapping(value = "/reviewoppissues", method = RequestMethod.GET)
 	public String getReviewIssues(HttpServletRequest request, Model model) {
 		Integer userId = Integer.parseInt(request.getParameter("userId"));
@@ -380,6 +467,12 @@ public class RegisterReviewController extends MultiActionController {
 		return "reviewoppissues";
 	}
 
+	/**
+	 * Get the edit a review issue for an opportunity page
+	 * @param request
+	 * @param model
+	 * @return editissue.jsp
+	 */
 	@RequestMapping(value = "/editissue", method = RequestMethod.GET)
 	public String getEditReviewIssue(HttpServletRequest request, Model model) {
 		Integer userId = Integer.parseInt(request.getParameter("userId"));
@@ -406,6 +499,22 @@ public class RegisterReviewController extends MultiActionController {
 		return "editissue";
 	}
 
+	/**
+	 * Validates and saves an updated review issue for an opportunity
+	 * @param userId
+	 * @param oppId
+	 * @param subId
+	 * @param formname
+	 * @param reviewId
+	 * @param opportunityReviewIssue
+	 * @param reviewResult
+	 * @param reviewIssue
+	 * @param issueResult
+	 * @param response
+	 * @param status
+	 * @param model
+	 * @return editissue.jsp if error otherwise reviewoppissues.jsp
+	 */
 	@RequestMapping(value = "/editissue", method = RequestMethod.POST)
 	public String saveEditReviewIssue(@RequestParam("userId") Integer userId, @RequestParam("oppId") Integer oppId,
 			@RequestParam("subId") Integer subId, @RequestParam("formname") String formname,
@@ -477,6 +586,19 @@ public class RegisterReviewController extends MultiActionController {
 
 	}
 
+	/**
+	 * Deletes a review issue for an opportunity
+	 * @param userId
+	 * @param oppId
+	 * @param subId
+	 * @param reviewId
+	 * @param opportunityReviewIssue
+	 * @param reviewIssue
+	 * @param response
+	 * @param status
+	 * @param model
+	 * @return reviewoppissues.jsp
+	 */
 	@RequestMapping(value = "/deleteissue")
 	public String deleteissue(@RequestParam("userId") Integer userId, @RequestParam("oppId") Integer oppId,
 			@RequestParam("subId") Integer subId, @RequestParam("reviewId") Integer reviewId,

@@ -91,6 +91,11 @@ public class SubmitController extends MultiActionController {
     
 	private static final int BUFFER_SIZE = 4096;
 	
+	/**
+	 * Exports all opportunities to Excel
+	 * @param request
+	 * @param response
+	 */
 	@RequestMapping(value="/export", method = RequestMethod.GET)
     public void getExcel(HttpServletRequest request, HttpServletResponse response) 
     {
@@ -98,6 +103,7 @@ public class SubmitController extends MultiActionController {
     	// for future use
 		boolean error = false;
     
+		// name the export file using current date
         Date today = new Date();
         String fileName = new SimpleDateFormat("yyyyMMdd").format(today) + "_DuckSource_Opportunities.xls";
         String root = getServletContext().getRealPath("/");
@@ -105,6 +111,7 @@ public class SubmitController extends MultiActionController {
         OutputStream outputStream;
         
 		try {
+			// define headers and fields to export write to output stream
 			outputStream = new FileOutputStream(fullPath);
 	        List<Opportunity> opportunities = opportunityService.getAllOpportunitiesForExcelExport();
 	        List<String> headers = Arrays.asList("Title","Description","Type","Payment","Register By","Submit By");
@@ -114,6 +121,7 @@ public class SubmitController extends MultiActionController {
 			error = true;
 		}
 		
+		// open new file input stream for download
         File downloadFile = new File(fullPath);
 	    FileInputStream inputStream = null;
 	     
@@ -123,15 +131,18 @@ public class SubmitController extends MultiActionController {
 			error = true;
 		}
 	      
+		// set type to application
 	    ServletContext context = request.getServletContext();
 	    String mimeType = context.getMimeType(fullPath);
 	    if (mimeType == null) {
 	        mimeType = "application/octet-stream";
 	    }
-	         
+	       
+	    // set response length and type
 	    response.setContentType(mimeType);
 	    response.setContentLength((int) downloadFile.length());
-	  
+	   
+	    // set up header
 	    String headerKey = "Content-Disposition";
 	    String headerValue = String.format("attachment; filename=\"%s\"",
 	    downloadFile.getName());
@@ -148,6 +159,7 @@ public class SubmitController extends MultiActionController {
         int bytesRead = -1;
   
         try {
+        	 // write file contents
 			while ((bytesRead = inputStream.read(buffer)) != -1) {
 			     outputStream.write(buffer, 0, bytesRead);
 			 }
@@ -158,6 +170,7 @@ public class SubmitController extends MultiActionController {
 		}
         
 	}
+	
 	 /**
 	 * Get's the file related to the submission and downloads it
 	 * if exists and can be opened.
@@ -229,6 +242,13 @@ public class SubmitController extends MultiActionController {
 	        
 		}
 	 
+	/**
+	 * Gets the opportunity submission oage
+	 * @param userId
+	 * @param oppId
+	 * @param model
+	 * @return submit.jsp
+	 */
 	@RequestMapping(value="/submit", method = RequestMethod.GET)
     public String getSubmit(@RequestParam("userId") Integer userId, @RequestParam("oppId") Integer oppId, Model model) 
     {
@@ -455,6 +475,12 @@ public class SubmitController extends MultiActionController {
 			return "mail";
 		}
 	    
+	    /**
+	     * Get the current user object in json format
+	     * @param userId
+	     * @return user
+	     * @throws JsonProcessingException
+	     */
 	    @RequestMapping(value="/mailUser", method = RequestMethod.GET, produces="application/json")
 	    public @ResponseBody DuckUser getDuckMailUser(@RequestParam("userId") Integer userId) throws JsonProcessingException 
 	    {
@@ -462,6 +488,12 @@ public class SubmitController extends MultiActionController {
 			return user;
 	    }
 	    
+	    /**
+	     * Get the current user's inbox in json format
+	     * @param userId
+	     * @return mailbox (inbox)
+	     * @throws JsonProcessingException
+	     */
 	    @RequestMapping(value="/inboxMailAngularJs", method = RequestMethod.GET, produces="application/json")
 	    public @ResponseBody List<Mailbox> getInbox(@RequestParam("userId") Integer userId) throws JsonProcessingException 
 	    {
@@ -472,6 +504,12 @@ public class SubmitController extends MultiActionController {
 	    	
 		}
 	    
+	    /**
+	     * Get the current user's sent mailbox in json format
+	     * @param userId
+	     * @return mailbox (sent)
+	     * @throws JsonProcessingException
+	     */
 	    @RequestMapping(value="/sentMailAngularJs", method = RequestMethod.GET, produces="application/json")
 	    public @ResponseBody List<Mailbox> getSent(@RequestParam("userId") Integer userId) throws JsonProcessingException 
 	    {
@@ -482,6 +520,11 @@ public class SubmitController extends MultiActionController {
 			
 		}
 	    
+	    /**
+	     * Marks the current message read in mailbox
+	     * @param mailbox
+	     * @return updated mailbox
+	     */
 	    @RequestMapping(value="/mailReadAngularJs", method = RequestMethod.POST, produces="application/json") 
 	    public @ResponseBody Mailbox onMesssageRead( @RequestBody Mailbox mailbox )
 	    { 
@@ -493,6 +536,11 @@ public class SubmitController extends MultiActionController {
 	    	
 	    }
 	    
+	    /**
+	     * Creates new mail message updates mailbox and distribution list
+	     * @param mailMessage
+	     * @return mailbox (sent item)
+	     */
 	    @RequestMapping(value="/mailAngularJs", method = RequestMethod.POST, produces="application/json") 
 	    public @ResponseBody Mailbox onMesssageSubmit( @RequestBody MailMessage mailMessage )
 	    { 
@@ -500,13 +548,18 @@ public class SubmitController extends MultiActionController {
 	    	DuckUser fromUser = duckUserService.findById(mailMessage.getUserId());
 	    	DuckUser toUser = duckUserService.getDuckUser(mailMessage.getTo());
 	    	
+	    
+	    	//if mail message received is a reply a new message needs to be created.
 	    	boolean newMessage = false;
 	    	MailMessage newMailMessage = null;
+	    	
 	    	mailMessage.setSent(Calendar.getInstance().getTime());
+	    	// if the user object is null it is not a reply, add user and save
 	    	if (mailMessage.getUser() == null) {
 	    		mailMessage.setUser(fromUser);
 	    		mailMessageService.persist(mailMessage);
 	    	} else {
+	    		// it is a reply, so create a new message, copy from original and save
 	            newMessage = true;
 	    		newMailMessage = new MailMessage();
 	    		newMailMessage.setUser(fromUser);
@@ -517,6 +570,7 @@ public class SubmitController extends MultiActionController {
 	    		mailMessageService.persist(newMailMessage);
 	    	}
 	    	
+	    	// set up distribution (for later use when message can be sent to multiple users
 	    	MailDistribution mailToDistribution = new MailDistribution();
 	    	if (newMessage) {
 	    		mailToDistribution.setMailMessage(newMailMessage);
@@ -535,6 +589,7 @@ public class SubmitController extends MultiActionController {
 	    	mailFromDistribution.setUser(fromUser);
 	    	mailDistributionService.persist(mailFromDistribution);
 	    	
+	    	// set up new inbox entry, add message and save
 	    	Mailbox inboxMail = new Mailbox();
 	    	inboxMail.setFolder("Inbox");
 	    	if (newMessage) {
@@ -545,6 +600,7 @@ public class SubmitController extends MultiActionController {
 	    	inboxMail.setUser(toUser);
 	    	mailboxService.persist(inboxMail);
 	    	
+	    	// set up new sent entry, add message and save
 	    	Mailbox sentMail = new Mailbox();
 	    	sentMail.setFolder("Sent");
 	    	if (newMessage) {
@@ -555,9 +611,15 @@ public class SubmitController extends MultiActionController {
 	    	sentMail.setUser(fromUser);
 	    	mailboxService.persist(sentMail);
 	    	
+	    	//return sent mailbox item
     		return sentMail;
 	    }
 	    
+	    /**
+	     * Deletes the mailbox item by id
+	     * @param mailboxId
+	     * @return status (deleted)
+	     */
 	    @RequestMapping(value="/mailDeleteAngularJs", method = RequestMethod.POST) 
 	    public @ResponseBody String onMesssageRemove( @RequestBody int mailboxId )
 	    {
@@ -581,13 +643,13 @@ public class SubmitController extends MultiActionController {
 			return "profileimg";
 		}
 	    
-	    /**
+	    /** Saves user's profile image as file
 	     * @param request
 	     * @param file
 	     * @param userId
 	     * @param status
 	     * @param model
-	     * @return
+	     * @return profileimage.jsp if error otherwise account.jsp
 	     */
 	    @RequestMapping(value="/profileimg", method = RequestMethod.POST)
 	    public String onImageSubmit(HttpServletRequest request,
@@ -602,6 +664,7 @@ public class SubmitController extends MultiActionController {
 	    	 String profileImage = "";
 	    	 String name = file.getOriginalFilename();
 	    	
+	    	 // if file user uploaded isn't empty, write it to file 
 	    	 if (!file.isEmpty()) {
 	             try {
 	                 byte[] bytes = file.getBytes();
@@ -620,6 +683,7 @@ public class SubmitController extends MultiActionController {
 	                 stream.write(bytes);
 	                 stream.close();
 	  
+	                 // add username to file path so unique
 	                 profileImage = user.getUserName() + File.separator + name;
 	                 message = name + " successfully uploaded";
 	             } catch (Exception e) {
@@ -636,7 +700,9 @@ public class SubmitController extends MultiActionController {
 
 	        if (error) {
 	    		model.addAttribute("userId", userId);
+	    		// error message
 	    		model.addAttribute("message", message);
+	    		// class to show error in red
 	    		model.addAttribute("messageClass", messageClass);
 	    		return "profileimg";
 	        }

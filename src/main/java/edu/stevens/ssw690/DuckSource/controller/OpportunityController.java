@@ -50,7 +50,11 @@ public class OpportunityController extends MultiActionController {
 	
 	@Autowired
 	ReviewIssueManager reviewIssueService;
-	 
+	
+	/**
+	 * Gets a list of all opportunities
+	 * @return list of opportunities
+	 */
 	@ModelAttribute("allOpportunities")
 	public List<Opportunity> populateOpportunities()
     {
@@ -59,6 +63,12 @@ public class OpportunityController extends MultiActionController {
     }
 	 
     
+	/**
+	 * Gets the opportunity detail page from the index page
+	 * @param request
+	 * @param model
+	 * @return indexoppdetail.jsp
+	 */
     @RequestMapping(value="/indexoppdetail", method = RequestMethod.GET)
     public String showDetailIndex(HttpServletRequest request, Model model)
     {
@@ -69,6 +79,12 @@ public class OpportunityController extends MultiActionController {
          return "indexoppdetail";
     }
     
+    /**
+     * Gets the opportunity detail page from the main (home) page
+     * @param request
+     * @param model
+     * @return oppdetail.jsp
+     */
     @RequestMapping(value="/oppdetail", method = RequestMethod.GET)
     public String showDetail(HttpServletRequest request, Model model)
     {
@@ -85,6 +101,12 @@ public class OpportunityController extends MultiActionController {
          return "oppdetail";
     }
     
+    /**
+     * Gets the opportunities page for the selected type excluding those the user created
+     * @param request
+     * @param model
+     * @return findopp.jsp
+     */
     @RequestMapping(value="/findupdate", method = RequestMethod.GET)
 	 public String getFindUpdate(HttpServletRequest request, Model model) {
     	Integer userId = Integer.parseInt( request.getParameter("userId"));
@@ -100,6 +122,12 @@ public class OpportunityController extends MultiActionController {
      return "findopp";
   }
     
+    /**
+     * Gets the opportunities page excluding those the user created
+     * @param userId
+     * @param model
+     * @return findopp.jsp
+     */
     @RequestMapping(value="/findopp", method = RequestMethod.GET)
     public String setupFindForm(@RequestParam("userId") Integer userId, Model model) 
     {
@@ -108,6 +136,12 @@ public class OpportunityController extends MultiActionController {
 		return "findopp";
 	}
     
+    /**
+     * Gets the page to create a new opportunity
+     * @param request
+     * @param model
+     * @return createopp.jsp
+     */
     @RequestMapping(value="/createopp", method = RequestMethod.GET)
     public String getCreateOpp(HttpServletRequest request, Model model)
     {
@@ -120,6 +154,15 @@ public class OpportunityController extends MultiActionController {
          return "createopp";
     }
     
+    /**
+     * Validates and save a new opportunity
+     * @param opportunity
+     * @param result
+     * @param status
+     * @param request
+     * @param model
+     * @return createopp.jsp if errors, otherwise main.jsp
+     */
     @RequestMapping(value="/createopp", method = RequestMethod.POST)
     public  String setCreateOpp(@Valid @ModelAttribute("opportunityForm") Opportunity opportunity,
                            BindingResult result, SessionStatus status, HttpServletRequest request, Model model)
@@ -192,6 +235,12 @@ public class OpportunityController extends MultiActionController {
        
     }
     
+    /**
+     * Gets the edit opportunity page
+     * @param request
+     * @param model
+     * @return editopp.jsp
+     */
     @RequestMapping(value="/editopp", method = RequestMethod.GET)
     public String getEditOpp(HttpServletRequest request, Model model)
     {
@@ -205,6 +254,15 @@ public class OpportunityController extends MultiActionController {
          return "editopp";
     }
     
+    /**
+     * Validates and updates an existing opportunity
+     * @param opportunity
+     * @param result
+     * @param status
+     * @param request
+     * @param model
+     * @return editopp.jsp if error, otherwise main.jsp
+     */
     @RequestMapping(value="/editopp", method = RequestMethod.POST)
     public  String setEditOpp(@Valid @ModelAttribute("opportunityForm") Opportunity opportunity,
                            BindingResult result, SessionStatus status, HttpServletRequest request, Model model)

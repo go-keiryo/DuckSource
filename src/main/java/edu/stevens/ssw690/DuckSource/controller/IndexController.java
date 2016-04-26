@@ -39,6 +39,10 @@ public class IndexController extends MultiActionController {
 	
 	private static EmailValidator emailValidator;
  
+	/**
+	 * Gets a list of all Users
+	 * @return list of DuckUser objects
+	 */
 	@ModelAttribute("allDuckUsers")
 	public List<DuckUser> populateDuckUsers()
     {
@@ -46,6 +50,12 @@ public class IndexController extends MultiActionController {
        return duckusers;
     }
 	
+	/**
+	 * Gets the sign up page
+	 * @param request
+	 * @param model
+	 * @return signup.jsp
+	 */
 	@RequestMapping(value="/signup", method = RequestMethod.GET)
 	 public String getSignup(HttpServletRequest request, Model model) {
 		DuckUser userForm = new DuckUser();
@@ -53,6 +63,14 @@ public class IndexController extends MultiActionController {
         return "signup";
     }
 	
+	/**
+	 * Validates and saves new user sign up
+	 * @param user
+	 * @param result
+	 * @param status
+	 * @param model
+	 * @return signup.jsp if error, otherwise main.jsp
+	 */
 	@RequestMapping(value="/signup", method = RequestMethod.POST)
 	public String postSignup(@ModelAttribute("userForm") DuckUser user,
             BindingResult result, SessionStatus status, Model model) {
@@ -126,6 +144,12 @@ public class IndexController extends MultiActionController {
     	
     }
 	
+	/**
+	 * Gets index page with and all opportunities and users
+	 * @param request
+	 * @param model
+	 * @return index.jsp
+	 */
 	@RequestMapping(value="/index", method = RequestMethod.GET)
 	public String returntIndex(HttpServletRequest request, Model model) {
 		model.addAttribute("opportunities", opportunityService.getAllOpportunities());
@@ -133,7 +157,12 @@ public class IndexController extends MultiActionController {
        return "../index";
    }
 
-	
+	/**
+	 * Gets index page with and all opportunities and users
+	 * @param request
+	 * @param model
+	 * @return index.jsp
+	 */
 	@RequestMapping(value="/", method = RequestMethod.GET)
 	 public String getIndex(HttpServletRequest request, Model model) {
 		model.addAttribute("opportunities", opportunityService.getAllOpportunities());
@@ -141,6 +170,12 @@ public class IndexController extends MultiActionController {
        return "../index";
    }
 
+	/**
+	 * Gets index page with selected type of opportunity and all users
+	 * @param request
+	 * @param model
+	 * @return index.jsp
+	 */
 	@RequestMapping(value="/indexupdate")
 	 public String getIndexUpdate(HttpServletRequest request, Model model) {
 		String selectType = request.getParameter("select");
@@ -154,16 +189,34 @@ public class IndexController extends MultiActionController {
       return "../index";
    }
 	
+	/**
+	 * Gets the about page from the index page
+	 * @param request
+	 * @param model
+	 * @return indexabout.jsp
+	 */
 	@RequestMapping(value="/indexabout", method = RequestMethod.GET)
 	public String getIndexAbout(HttpServletRequest request, Model model) {
 		return "indexabout";
     }
 	
+	/**
+	 * Gets the reset password page
+	 * @param request
+	 * @param model
+	 * @return resetpassword.jsp
+	 */
 	@RequestMapping(value="/resetpassword", method = RequestMethod.GET)
 	public String getReset(HttpServletRequest request, Model model) {
 		return "resetpassword";
 	}
 	
+	/**
+	 * Gets the about page with userId
+	 * @param request
+	 * @param model
+	 * @return about.jsp
+	 */
 	@RequestMapping(value="/about", method = RequestMethod.GET)
 	public String getAbout(HttpServletRequest request, Model model) {
 		String userId = request.getParameter("userId");
@@ -171,6 +224,12 @@ public class IndexController extends MultiActionController {
 		return "about";
     }
 	
+	/**
+	 * Gets the main (home) page with user, and opportunities registered and submitted
+	 * @param request
+	 * @param model
+	 * @return main.jsp
+	 */
 	@RequestMapping(value="/main", method = RequestMethod.GET)
 	 public String getMain(HttpServletRequest request, Model model) {
 		String userid = request.getParameter("userId");
@@ -188,6 +247,12 @@ public class IndexController extends MultiActionController {
 		}
   }
 	
+	/**
+	 * Validates user name and password on index page
+	 * @param request
+	 * @param model
+	 * @return index.jsp if error otherwise main.jsp
+	 */
 	@RequestMapping(value="/main", method = RequestMethod.POST)
 	public String login(HttpServletRequest request, Model model) {
       
@@ -200,7 +265,7 @@ public class IndexController extends MultiActionController {
         }
         	 		
         if (username != null && password !=null) {
-        	DuckUser user =duckUserService.getDuckUser(username, password);
+        	DuckUser user = duckUserService.getDuckUser(username, password);
         	if (user == null) {
         		if (selectType.isEmpty() || selectType.equalsIgnoreCase("All Types")) {
         			model.addAttribute("opportunities", opportunityService.getAllOpportunities());

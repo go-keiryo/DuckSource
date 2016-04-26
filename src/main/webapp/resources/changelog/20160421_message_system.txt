@@ -1,0 +1,17 @@
+Change Log for Message System
+
+Files changed
+
+edu.stevens.ssw690.DuckSource.controller
+SubmitController.java
+
+edu.stevens.ssw690.DuckSource.dao
+MailboxDao
+MailboxDaoImpl
+
+edu.stevens.ssw690.DuckSource.service
+MailboxManager
+MailboxManagerImpl
+
+src.main.webapp.WEB-INF
+mail.jsp
