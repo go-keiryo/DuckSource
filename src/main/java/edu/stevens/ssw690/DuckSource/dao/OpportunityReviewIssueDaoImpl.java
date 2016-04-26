@@ -18,6 +18,12 @@ import edu.stevens.ssw690.DuckSource.model.OpportunityRegistered;
 import edu.stevens.ssw690.DuckSource.model.OpportunityReviewIssue;
 import edu.stevens.ssw690.DuckSource.model.OpportunitytReviewIssueExtended;
 
+/**
+ * 
+ * @author susan
+ * @see OpportunityReviewIssue
+ *
+ */
 @Repository
 @Transactional
 @Component

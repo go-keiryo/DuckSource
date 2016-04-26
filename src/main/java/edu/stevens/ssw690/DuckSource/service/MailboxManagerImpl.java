@@ -1,15 +1,19 @@
 package edu.stevens.ssw690.DuckSource.service;
 
-import java.math.BigInteger;
 import java.util.List;
-
-import javax.persistence.Query;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import edu.stevens.ssw690.DuckSource.dao.MailboxDao;
 import edu.stevens.ssw690.DuckSource.model.Mailbox;
+
+/**
+ * 
+ * @author susan
+ * @see interface (MailboxManager)
+ * 
+ */
 
 @Service
 public class MailboxManagerImpl implements MailboxManager {

@@ -8,13 +8,17 @@ import org.springframework.stereotype.Service;
 import edu.stevens.ssw690.DuckSource.dao.ReviewIssueDao;
 import edu.stevens.ssw690.DuckSource.model.ReviewIssue;
 
-
+/**
+ * 
+ * @author susan
+ * @see ReviewIssueManager
+ *
+ */
 @Service
 public class ReviewIssueManagerImpl implements ReviewIssueManager {
 	
 	@Autowired
 	ReviewIssueDao reviewIssueDao;
-
 	public void persist(ReviewIssue issue) {
 		reviewIssueDao.persist(issue);
 		

@@ -23,6 +23,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+/**
+ * 
+ * @author susan
+ * 
+ *
+ */
+
 @Entity
 @Table(name = "mail_message")
 public class MailMessage implements Serializable {

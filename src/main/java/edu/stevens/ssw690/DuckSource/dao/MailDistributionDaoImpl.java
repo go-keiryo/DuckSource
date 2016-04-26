@@ -1,6 +1,5 @@
 package edu.stevens.ssw690.DuckSource.dao;
 
-import java.math.BigInteger;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -13,6 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import edu.stevens.ssw690.DuckSource.model.MailDistribution;
 
+/**
+ * 
+ * @author susan
+ * @see Interface  MailDistributionDao
+ *
+ */
 @Repository
 @Transactional
 @Component
@@ -35,7 +40,7 @@ public class MailDistributionDaoImpl implements MailDistributionDao {
 	    return result;
 	 }
 	
-	public List<MailDistribution> getByMessageId(BigInteger id) {
+	public List<MailDistribution> getByMessageId(Integer id) {
     	Query query = em.createQuery("from MailDistribution d WHERE d.messageId = :id)");
     	query.setParameter("id", id);
 		@SuppressWarnings("unchecked")
@@ -43,7 +48,7 @@ public class MailDistributionDaoImpl implements MailDistributionDao {
     	return list;
 	}
 	
-	public MailDistribution findById(BigInteger id) {
+	public MailDistribution findById(Integer id) {
     	return em.find(MailDistribution.class, id);
 	}
 	

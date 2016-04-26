@@ -8,6 +8,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * 
+ * @author susan
+ * 
+ *
+ */
+
 @Entity
 @Table(name = "review_issue")
 public class ReviewIssue implements Serializable {

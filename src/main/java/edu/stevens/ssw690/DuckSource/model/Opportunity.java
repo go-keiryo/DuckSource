@@ -23,6 +23,13 @@ import org.springframework.format.annotation.NumberFormat.Style;
 
 import edu.stevens.ssw690.DuckSource.utilities.DuckUtilities;
 
+/**
+ * 
+ * @author susan
+ * 
+ *
+ */
+
 @Entity
 @Table(name = "opportunity")
 public class Opportunity implements Serializable {

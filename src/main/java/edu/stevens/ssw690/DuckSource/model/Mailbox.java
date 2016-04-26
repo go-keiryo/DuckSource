@@ -18,6 +18,13 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+/**
+ * 
+ * @author susan
+ * 
+ *
+ */
+
 @Entity
 @Table(name = "mail_box")
 public class Mailbox implements Serializable {

@@ -2,6 +2,13 @@ package edu.stevens.ssw690.DuckSource.model;
 
 import java.util.Date;
 
+/**
+ * 
+ * @author susan
+ * 
+ *
+ */
+
 public class OpportunitytReviewIssueExtended {
 	
 	private int id;

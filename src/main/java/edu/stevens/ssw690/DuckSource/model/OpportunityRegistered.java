@@ -15,6 +15,13 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Formula;
 import org.springframework.format.annotation.DateTimeFormat;
 
+/**
+ * 
+ * @author susan
+ * 
+ *
+ */
+
 @Entity
 @Table(name = "opportunity_registered")
 public class OpportunityRegistered implements Serializable {

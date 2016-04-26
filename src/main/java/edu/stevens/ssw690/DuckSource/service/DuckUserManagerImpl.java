@@ -9,6 +9,13 @@ import org.springframework.stereotype.Service;
 import edu.stevens.ssw690.DuckSource.dao.DuckUserDao;
 import edu.stevens.ssw690.DuckSource.model.DuckUser;
 
+/**
+ * 
+ * @author susan
+ * @see interface (DuckUserManager)
+ * 
+ */
+
 @Service
 public class DuckUserManagerImpl implements DuckUserManager{
 

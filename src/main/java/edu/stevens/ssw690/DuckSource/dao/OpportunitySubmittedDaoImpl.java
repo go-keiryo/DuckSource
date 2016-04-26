@@ -13,6 +13,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import edu.stevens.ssw690.DuckSource.model.OpportunitySubmitted;
 
+/**
+ * 
+ * @author susan
+ * @see  OpportunitySubmittedDao
+ *
+ */
 @Repository
 @Transactional
 @Component

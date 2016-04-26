@@ -1,6 +1,5 @@
 package edu.stevens.ssw690.DuckSource.service;
 
-import java.math.BigInteger;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +8,12 @@ import org.springframework.stereotype.Service;
 import edu.stevens.ssw690.DuckSource.dao.MailDistributionDao;
 import edu.stevens.ssw690.DuckSource.model.MailDistribution;
 
+/**
+ * 
+ * @author susan
+ * @see Interface  MailDistributionManager
+ *
+ */
 @Service
 public class MailDistributionManagerImpl implements MailDistributionManager {
 
@@ -27,11 +32,11 @@ public class MailDistributionManagerImpl implements MailDistributionManager {
 	    return  mailDistributionDao.getAll();
 	 }
 	
-	public List<MailDistribution> getByMessageId(BigInteger id) {
+	public List<MailDistribution> getByMessageId(Integer id) {
     	return  mailDistributionDao.getByMessageId(id);
 	}
 	
-	public MailDistribution findById(BigInteger id) {
+	public MailDistribution findById(Integer id) {
     	return  mailDistributionDao.findById(id);
 	}
 }

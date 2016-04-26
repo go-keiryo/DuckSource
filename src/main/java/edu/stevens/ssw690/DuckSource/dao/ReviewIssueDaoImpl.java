@@ -12,6 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import edu.stevens.ssw690.DuckSource.model.ReviewIssue;
 
+/**
+ * 
+ * @author susan
+ * @see  ReviewIssueDao
+ *
+ */
 @Repository
 @Transactional
 @Component

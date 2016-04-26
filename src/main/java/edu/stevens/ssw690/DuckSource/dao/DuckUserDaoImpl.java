@@ -12,6 +12,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import edu.stevens.ssw690.DuckSource.model.DuckUser;
 
+/**
+ * 
+ * @author susan
+ * 
+ * @see Interface (DuckUserDao)
+ *
+ */
 @Repository
 @Transactional
 @Component

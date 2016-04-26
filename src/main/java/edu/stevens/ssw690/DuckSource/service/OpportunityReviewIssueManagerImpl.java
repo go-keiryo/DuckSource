@@ -9,6 +9,12 @@ import edu.stevens.ssw690.DuckSource.dao.OpportunityReviewIssueDao;
 import edu.stevens.ssw690.DuckSource.model.OpportunityReviewIssue;
 import edu.stevens.ssw690.DuckSource.model.OpportunitytReviewIssueExtended;
 
+/**
+ * 
+ * @author susan
+ * @see OpportunityReviewIssueManager
+ *
+ */
 @Service
 public class OpportunityReviewIssueManagerImpl implements OpportunityReviewIssueManager {
 	

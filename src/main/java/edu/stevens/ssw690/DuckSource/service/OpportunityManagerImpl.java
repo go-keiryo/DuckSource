@@ -8,6 +8,12 @@ import org.springframework.stereotype.Service;
 import edu.stevens.ssw690.DuckSource.dao.OpportunityDao;
 import edu.stevens.ssw690.DuckSource.model.Opportunity;
 
+/**
+ * 
+ * @author susan
+ * @see OpportunityManager
+ *
+ */
 @Service
 public class OpportunityManagerImpl implements OpportunityManager {
 

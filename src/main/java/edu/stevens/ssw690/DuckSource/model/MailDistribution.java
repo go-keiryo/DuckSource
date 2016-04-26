@@ -14,6 +14,13 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Formula;
 
+/**
+ * 
+ * @author susan
+ * 
+ *
+ */
+
 @Entity
 @Table(name = "mail_distribution")
 public class MailDistribution implements Serializable {

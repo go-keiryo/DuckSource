@@ -1,6 +1,5 @@
 package edu.stevens.ssw690.DuckSource.dao;
 
-import java.math.BigInteger;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -12,6 +11,13 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import edu.stevens.ssw690.DuckSource.model.Mailbox;
+
+/**
+ * 
+ * @author susan
+ * @see interface (MailboxDao)
+ * 
+ */
 
 @Repository
 @Transactional
