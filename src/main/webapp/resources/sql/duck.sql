@@ -27,6 +27,7 @@ CREATE TABLE DuckDb.`opportunity` (
   `submit_date` DATE NOT NULL,
   `description` TEXT NOT NULL,
   `creator_id` int(11) NOT NULL,
+  `payment_method` varchar(45) NOT NULL,
   `opportunity_registered_id` int(11),
   `opportunity_submitted_id` int(11),
   `opportunity_review_id` int(11),

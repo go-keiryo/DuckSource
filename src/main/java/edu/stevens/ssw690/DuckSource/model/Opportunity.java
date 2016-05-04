@@ -62,6 +62,8 @@ public class Opportunity implements Serializable {
     private String description ;
     @Column(name="creator_id")
     private Integer creatorId;
+    @Column(name="payment_method")
+    private String paymentMethod;
     @Formula("(select count(*) from opportunity_registered r where r.opportunity_id = opportunity_id)")
     private Integer registeredCount;
     @Formula("(select count(*) from opportunity_submitted s where s.opportunity_id = opportunity_id)")
@@ -190,6 +192,12 @@ public class Opportunity implements Serializable {
 	}
 	public void setPayment(String payment) {
 		this.payment = payment;
+	}
+	public String getPaymentMethod() {
+		return paymentMethod;
+	}
+	public void setPaymentMethod(String paymentMethod) {
+		this.paymentMethod = paymentMethod;
 	}
 	 
 	 

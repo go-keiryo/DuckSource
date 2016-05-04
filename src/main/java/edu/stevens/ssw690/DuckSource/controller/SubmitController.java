@@ -116,7 +116,7 @@ public class SubmitController extends MultiActionController {
 	        List<Opportunity> opportunities = opportunityService.getAllOpportunitiesForExcelExport();
 	        List<String> headers = Arrays.asList("Title","Description","Type","Payment","Register By","Submit By");
 	        SimpleExporter exporter = new SimpleExporter();
-	        exporter.gridExport(headers, opportunities, "opportunityTitle,description,opportunityType,payment,formattedRegisterDate,formattedSubmitDate", outputStream);
+	        exporter.gridExport(headers, opportunities, "opportunityTitle,description,opportunityType,paymentMethod,formattedRegisterDate,formattedSubmitDate", outputStream);
 		} catch (FileNotFoundException e) {
 			error = true;
 		}
